@@ -133,3 +133,19 @@
   .locationTypes.homeTypes, .locationTypes.siteTypes, .homeNameFields, .companyLocationFields, .addressFields, .mapLocation, .sameAddress { grid-template-columns: 1fr; }
   .sameAddress > b { grid-column: auto; }
 }
+
+/* Shop Victoire navigation replaces the former sizing sidebar. */
+.shopBrand i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 4px; color: #fff; background: #9a8500; font-size: 13px; font-style: normal; font-weight: 700; }
+.newQuote { display: flex; align-items: center; justify-content: center; gap: 9px; height: 40px; margin-bottom: 18px; color: #fff; background: #ff5a00; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 600; }
+.newQuote:hover { background: #e95000; }
+
+@media (min-width: 1001px) {
+  .shell > aside { width: 280px; padding: 30px; }
+  main { width: calc(100% - 280px); margin-left: 280px; }
+  .brand.shopBrand { gap: 9px; margin: 0 7px 20px; color: #535353; font-size: 18px; }
+  .newQuote { width: 100%; }
+  .shell nav { gap: 7px; }
+  .shell nav a { height: 35px; padding: 0; gap: 12px; color: #505050; font-size: 14px; font-weight: 500; }
+  .shell nav a:hover, .shell nav a.active { color: #303030; background: transparent; }
+  .shell nav a.active::before { display: none; }
+}
