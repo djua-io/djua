@@ -128,6 +128,31 @@
 .locationSummary .summaryCurrent i { color: #fff; background: #ff5a00; }
 .locationSummary .summaryComplete small { color: #31405a; }
 .locationSummary .summaryCurrent small { color: #171717; }
+.clientFormCard .formActions { justify-content: space-between; }
+
+.quoteListToolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0; }
+.quoteListToolbar h1 { margin: 0; }
+.quoteListFilters { display: flex; align-items: center; gap: 10px; }
+.quoteListSearch { width: 285px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 12px; color: #6e7788; border: 1px solid #dfe3ea; border-radius: 7px; background: #fff; }
+.quoteListSearch input { width: 100%; border: 0; outline: 0; background: transparent; }
+.quoteListTable { overflow: hidden; border: 1px solid #e7eaee; border-radius: 8px; }
+.quoteListHeader, .quoteListRow { display: grid; grid-template-columns: 1.15fr 1fr .9fr .8fr 34px; gap: 14px; align-items: center; }
+.quoteListHeader { min-height: 42px; padding: 0 16px; color: #747d8e; background: #fafbfc; font-size: 11px; font-weight: 650; }
+.quoteListRow { width: 100%; min-height: 76px; padding: 10px 16px; text-align: left; color: #1e2634; background: #fff; border: 0; border-top: 1px solid #edf0f3; }
+.quoteListRow:hover { background: #fffaf6; }
+.quoteListClient { display: flex; align-items: center; gap: 10px; }
+.quoteListClient i { width: 34px; height: 34px; display: grid; place-items: center; color: #ff5a00; background: #fff2e8; border-radius: 50%; font-style: normal; }
+.quoteListRow b { display: block; font-size: 12px; }
+.quoteListRow small { display: block; margin-top: 3px; color: #737b8c; font-size: 11px; }
+.quoteListRow strong { color: #ff5a00; font-size: 14px; }
+
+@media (max-width: 1000px) {
+  .newQuote { width: 40px; height: 40px; margin: 0 auto 18px; padding: 0; font-size: 0; border-radius: 7px; }
+  .newQuote svg { width: 18px; height: 18px; }
+  .quoteListToolbar { align-items: stretch; flex-direction: column; }
+  .quoteListFilters { justify-content: space-between; }
+  .quoteListSearch { flex: 1; width: auto; }
+}
 
 @media (max-width: 800px) {
   .locationTypes.homeTypes, .locationTypes.siteTypes, .homeNameFields, .companyLocationFields, .addressFields, .mapLocation, .sameAddress { grid-template-columns: 1fr; }
