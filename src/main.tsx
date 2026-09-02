@@ -41,7 +41,7 @@ function AddAppliance({close,add}:{close:()=>void,add:(a:Appliance)=>void}){
   const timeToMinutes=(value:string)=>{const match=value.trim().match(/^(\d{1,2})(?:[:h](\d{1,2}))?$/i);return match?Number(match[1])*60+Number(match[2]||0):0};
   const hours=slots.reduce((total,slot)=>Math.max(0,total+(timeToMinutes(slot.to)-timeToMinutes(slot.from))/60),0);
   const period:Appliance['period']=slots.some(slot=>Number(slot.from.slice(0,2))<6||Number(slot.to.slice(0,2))>18)?(slots.some(slot=>Number(slot.from.slice(0,2))>=6&&Number(slot.from.slice(0,2))<18)?'Les deux':'Nuit'):'Jour';
-  const effectiveWatts=measurement==='voltage'?Math.max(0,voltage*current):watts;
+  const effectiveWatts=measurement==='voltage'?Math.max(0,Math.round(voltage*current)):watts;
   const DeviceIcon=deviceIcons[name]||I.Plug;
   const updateSlot=(index:number,key:'from'|'to',value:string)=>setSlots(slots.map((slot,current)=>current===index?{...slot,[key]:value}:slot));
   const iconChoices=[I.Monitor,I.Tv,I.Smartphone,I.Radio,I.MoreHorizontal];
