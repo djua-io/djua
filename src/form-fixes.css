@@ -54,3 +54,74 @@
   min-width: 0;
   margin: 0;
 }
+
+/* Second sizing step: location or company site. */
+.progress > div.complete b {
+  color: #fff;
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.progress > div.current b {
+  color: #fff;
+  background: #ff5a00;
+  border-color: #ff5a00;
+}
+
+.locationStep .progress { margin-top: 0; }
+.page:has(.locationStep) > h1 { display: none; }
+.locationCard { padding: 22px; border: 1px solid #e8e8e8; border-radius: 10px; background: #fff; }
+.locationCard h2 { margin: 1px 0 4px; font-size: 19px; }
+.locationCard .muted { margin-bottom: 20px; }
+.createdClient { display: grid; grid-template-columns: 38px 1fr 20px; gap: 11px; align-items: center; min-height: 71px; padding: 12px 17px; border: 1px solid #c8ecd4; border-radius: 7px; background: linear-gradient(105deg, #f1fcf4, #fbfffb); color: #138147; }
+.createdClient i { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #e9f8ef; font-style: normal; }
+.createdClient span b { display: block; color: #171717; font-size: 13px; }
+.createdClient span small { display: block; margin-top: 3px; font-size: 12px; }
+.locationSectionTitle { margin: 24px 0 12px; font-size: 13px; }
+.locationSectionTitle em, .locationFields em { color: #ff5a00; font-style: normal; }
+.locationTypes { display: grid; gap: 12px; }
+.locationTypes.homeTypes { grid-template-columns: repeat(3, 1fr); }
+.locationTypes.siteTypes { grid-template-columns: repeat(3, 1fr); }
+.locationTypes button { min-height: 63px; padding: 12px 15px; display: grid; grid-template-columns: 31px 1fr 18px; gap: 10px; align-items: center; text-align: left; color: #485267; background: #fff; border: 1px solid #dfe3ea; border-radius: 7px; }
+.locationTypes button b { color: #3d4659; font-size: 12px; }
+.locationTypes button > svg { color: #56617a; }
+.locationTypes button i { width: 16px; height: 16px; display: grid; place-items: center; border: 1px solid #c7ceda; border-radius: 50%; color: #ff5a00; font-style: normal; }
+.locationTypes button.selected { color: #ff5a00; border-color: #ff5a00; background: #fff8f4; }
+.locationTypes button.selected b, .locationTypes button.selected > svg { color: #ff5a00; }
+.locationTypes button.selected i { border-color: #ff5a00; }
+.locationFields { display: grid; gap: 12px; margin-top: 9px; }
+.locationFields label, .locationReference { display: block; min-width: 0; color: #161b25; font-size: 11px; font-weight: 650; }
+.locationFields label > svg { vertical-align: -3px; margin-left: 2px; color: #677288; }
+.locationFields label span, .locationReference span { color: #687083; font-weight: 400; }
+.locationFields input, .locationFields select, .locationReference input { display: block; width: 100%; height: 42px; margin-top: 6px; padding: 0 12px; color: #171717; background: #fff; border: 1px solid #dfe3ea; border-radius: 6px; outline-color: #ff5a00; }
+.locationFields small { display: block; margin-top: 5px; color: #727a89; font-size: 10px; font-weight: 400; }
+.homeNameFields { grid-template-columns: minmax(0, 1.75fr) minmax(220px, 1fr); }
+.companyLocationFields, .addressFields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.addressFields { margin-top: 17px; }
+.locationReference { display: block; margin-top: 15px; }
+.mapLocation { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(240px, .9fr); gap: 18px; margin-top: 20px; }
+.mapPreview { position: relative; min-height: 148px; overflow: hidden; display: grid; place-items: center; color: #ff5a00; border: 1px solid #dfe5e9; border-radius: 7px; background-color: #edf5f1; background-image: linear-gradient(25deg, transparent 46%, #d3e0df 47%, #d3e0df 51%, transparent 52%), linear-gradient(110deg, transparent 46%, #d9e6e4 47%, #d9e6e4 51%, transparent 52%), repeating-linear-gradient(0deg, transparent 0 18px, #dee9e8 19px 20px); }
+.mapPreview svg { z-index: 1; fill: #ff5a00; color: #ff5a00; filter: drop-shadow(0 1px 3px #85431b66); }
+.mapPreview span { position: absolute; left: 18px; top: 16px; color: #9aa5aa; font-size: 11px; }
+.mapLocation aside { padding: 16px; border: 1px solid #dfe3ea; border-radius: 7px; }
+.mapLocation aside > div { display: flex; gap: 10px; align-items: flex-start; }
+.mapLocation aside i, .sameAddress aside i { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; color: #ff5a00; background: #fff2e8; border-radius: 50%; font-style: normal; }
+.mapLocation aside b, .sameAddress aside b { display: block; font-size: 12px; }
+.mapLocation aside small, .sameAddress aside small { display: block; margin-top: 5px; color: #515b6f; font-size: 12px; line-height: 1.5; }
+.mapLocation aside .button { width: 100%; margin-top: 13px; }
+.sameAddress { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: end; margin-top: 15px; padding: 15px; border: 1px solid #dfe3ea; border-radius: 7px; }
+.sameAddress > b { grid-column: 1 / -1; font-size: 12px; }
+.sameAddress > div { display: grid; gap: 11px; }
+.sameAddress label { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 500; }
+.sameAddress input { accent-color: #ff5a00; }
+.sameAddress aside { min-height: 74px; padding: 11px; display: flex; gap: 10px; align-items: center; border: 1px solid #e4e7ed; border-radius: 6px; }
+.locationActions { display: flex; justify-content: space-between; gap: 12px; margin-top: 25px; }
+.locationSummary .summaryComplete i { color: #fff; background: #16a34a; }
+.locationSummary .summaryCurrent i { color: #fff; background: #ff5a00; }
+.locationSummary .summaryComplete small { color: #31405a; }
+.locationSummary .summaryCurrent small { color: #171717; }
+
+@media (max-width: 800px) {
+  .locationTypes.homeTypes, .locationTypes.siteTypes, .homeNameFields, .companyLocationFields, .addressFields, .mapLocation, .sameAddress { grid-template-columns: 1fr; }
+  .sameAddress > b { grid-column: auto; }
+}
