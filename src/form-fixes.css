@@ -166,6 +166,22 @@
 .applianceRow { min-height: 77px; display: grid; grid-template-columns: 57px minmax(180px, 1fr) 110px 135px 28px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #edf0f2; }
 .applianceRow:last-child { border-bottom: 0; }
 .applianceRow .deviceicon { width: 48px; height: 48px; }
+.applianceThumbnail { flex: 0 0 auto; display: block; background-repeat: no-repeat; background-size: 300% 400%; }
+.applianceThumbnail.row { width: 48px; height: 48px; border-radius: 7px; background-color: #f7f8fa; }
+.applianceThumbnail.compact { width: 25px; height: 25px; border-radius: 5px; background-color: transparent; }
+.applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border-radius: 8px; background-color: #fff; }
+.sprite-bulb { background-position: 0 0; }
+.sprite-fridge { background-position: 50% 0; }
+.sprite-blender { background-position: 100% 0; }
+.sprite-tv { background-position: 0 33.333%; }
+.sprite-decoder { background-position: 50% 33.333%; }
+.sprite-router { background-position: 100% 33.333%; }
+.sprite-fan { background-position: 0 66.667%; }
+.sprite-microwave { background-position: 50% 66.667%; }
+.sprite-washer { background-position: 100% 66.667%; }
+.sprite-rice { background-position: 0 100%; }
+.sprite-laptop { background-position: 50% 100%; }
+.sprite-iron { background-position: 100% 100%; }
 .applianceName b, .applianceUsage b { display: block; color: #171717; font-size: 13px; }
 .applianceName small, .applianceUsage small { display: block; margin-top: 4px; color: #70798a; font-size: 11px; }
 .applianceUsage b small { display: inline; margin-left: 2px; font-weight: 400; }
