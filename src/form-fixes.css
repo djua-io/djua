@@ -89,6 +89,9 @@
 .locationTypes button.selected { color: #ff5a00; border-color: #ff5a00; background: #fff8f4; }
 .locationTypes button.selected b, .locationTypes button.selected > svg { color: #ff5a00; }
 .locationTypes button.selected i { border-color: #ff5a00; }
+.otherTypeField { display: block; width: min(100%, 520px); margin-top: 13px; color: #161b25; font-size: 11px; font-weight: 650; }
+.otherTypeField em { color: #ff5a00; font-style: normal; }
+.otherTypeField input { display: block; width: 100%; height: 42px; margin-top: 6px; padding: 0 12px; border: 1px solid #ff5a00; border-radius: 6px; outline-color: #ff5a00; }
 .locationFields { display: grid; gap: 12px; margin-top: 9px; }
 .locationFields label, .locationReference { display: block; min-width: 0; color: #161b25; font-size: 11px; font-weight: 650; }
 .locationFields label > svg { vertical-align: -3px; margin-left: 2px; color: #677288; }
