@@ -218,6 +218,74 @@
 .timeSlotActions > span b { color: #171717; }
 .applianceModal .preview .deviceicon.big { color: #ff5a00; background: #fff; }
 
+/* Detailed appliance form follows the supplied multi-step reference. */
+.referenceModal { width: min(952px, calc(100% - 36px)); max-height: calc(100vh - 28px); padding: 0; overflow: auto; }
+.referenceModalHeader { min-height: 109px; display: flex; align-items: flex-start; justify-content: space-between; padding: 25px 30px 20px; border-bottom: 1px solid #edf0f2; }
+.referenceModalHeader h1 { margin: 0; font-size: 22px; }
+.referenceModalHeader p { margin: 8px 0 0; color: #687083; font-size: 12px; }
+.referenceModalHeader .close { position: static; width: 30px; height: 30px; margin: -1px -8px 0 0; color: #171717; font-size: 0; }
+.referenceModalBody { display: block; padding: 26px 30px 0; }
+.referenceModalTop { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 24px; }
+.applianceSteps { display: grid; align-content: start; gap: 18px; min-height: 195px; padding: 1px 20px 0 0; border-right: 1px solid #edf0f2; }
+.applianceSteps > div { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; color: #6d7584; }
+.applianceSteps b { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #c5cad3; font-size: 12px; }
+.applianceSteps strong, .applianceSteps small { display: block; }
+.applianceSteps strong { margin-top: 1px; font-size: 12px; }
+.applianceSteps small { margin-top: 4px; color: #7b8392; font-size: 11px; font-weight: 400; }
+.applianceSteps .current strong { color: #ff5a00; }
+.applianceSteps .current b { background: #ff5a00; }
+.referenceModalMain { min-width: 0; }
+.modalTopDetails { display: grid; grid-template-columns: minmax(0, 1fr) 209px; gap: 31px; padding-bottom: 22px; }
+.referenceModal label { display: grid; gap: 8px; color: #171717; font-size: 12px; font-weight: 650; }
+.deviceSelect { height: 52px; display: grid; grid-template-columns: 27px minmax(0, 1fr) 20px; gap: 9px; align-items: center; padding: 0 13px; border: 1px solid #dfe3ea; border-radius: 7px; color: #4d5668; background: #fff; }
+.deviceSelect select { width: 100%; height: 100%; border: 0; outline: 0; appearance: none; background: transparent; color: #3f4653; }
+.deviceSelect > svg:last-child { pointer-events: none; }
+.categoryIconRow { display: grid; grid-template-columns: 154px 1fr; gap: 22px; align-items: end; margin: 18px 0 20px; }
+.categoryIconRow label { align-content: start; }
+.categoryBadge { width: fit-content; margin-top: 8px; padding: 5px 13px; border-radius: 7px; color: #6658c6; background: #f1efff; font-size: 12px; font-weight: 700; }
+.categoryIconRow > div > b, .quantityLine b, .usageLayout > div > b, .periodSelection > b { display: block; margin-bottom: 8px; color: #171717; font-size: 12px; }
+.iconChoices { display: flex; gap: 7px; }
+.iconChoices button { width: 39px; height: 42px; display: grid; place-items: center; border: 1px solid #e1e5ec; border-radius: 6px; color: #4d5668; background: #fff; }
+.iconChoices button.selected { border: 2px solid #ff5a00; color: #171717; }
+.quantityLine { display: flex; align-items: end; gap: 12px; }
+.quantityLine > div { width: 158px; }
+.quantityLine .stepper { height: 45px; }
+.quantityLine > span { padding-bottom: 13px; color: #586172; font-size: 12px; }
+.referenceModal .appliancePreview { min-height: 299px; padding: 25px 16px 18px; border-color: #ffdfc9; background: #fffaf6; }
+.referenceModal .appliancePreview .deviceicon.big { width: 92px; height: 92px; margin-bottom: 17px; color: #1f2937; background: #fff; }
+.previewTitle { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; }
+.previewTitle h2 { margin: 0; font-size: 15px; }
+.previewTitle span { padding: 3px 7px; border-radius: 12px; color: #5e4a37; background: #fff0e5; font-size: 11px; }
+.referenceModal .preview > p { margin: 8px 0 0; text-align: left; color: #556071; font-size: 12px; }
+.referenceModal .preview hr { margin: 18px 0; border: 0; border-top: 1px solid #aeb1b5; }
+.referenceModal .preview > small { display: block; text-align: left; color: #697180; font-size: 11px; }
+.referenceModal .preview > strong { display: block; margin-top: 4px; text-align: left; font-size: 18px; }
+.electricalSection, .usageSection { position: relative; border-top: 1px solid #edf0f2; padding: 18px 0; }
+.electricalSection h3, .usageSection h3 { margin: 0; font-size: 15px; }
+.electricalSection > p, .usageSection > p { margin: 4px 0 13px; color: #687083; font-size: 12px; }
+.electricalSection .toggle { width: 513px; max-width: calc(100% - 224px); margin: 0 0 15px; }
+.electricalSection .toggle button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.electricalSection > label { width: 513px; max-width: calc(100% - 224px); }
+.powerInput { height: 44px; display: grid; grid-template-columns: 1fr 34px; align-items: center; border: 1px solid #dfe3ea; border-radius: 7px; overflow: hidden; }
+.powerInput input { height: 100%; min-width: 0; border: 0; outline: 0; padding: 0 13px; font-size: 16px; font-weight: 700; }
+.powerInput span { padding-right: 13px; color: #171717; font-size: 12px; }
+.suggestedValue { width: fit-content; max-width: calc(100% - 224px); display: flex; align-items: center; gap: 11px; margin-top: 9px; padding: 4px 11px; border-radius: 9px; color: #6f64ca; background: #f1efff; font-size: 10px; font-weight: 700; }
+.powerHelp { position: absolute; right: 0; bottom: 16px; width: 288px; min-height: 114px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
+.powerHelp > svg { flex: 0 0 auto; color: #ff9b0a; }
+.powerHelp b { display: block; color: #171717; font-size: 11px; }
+.powerHelp p { margin: 7px 0 0; color: #677083; font-size: 11px; }
+.usageSection { padding-bottom: 16px; }
+.usageLayout { display: grid; grid-template-columns: 312px minmax(0, 1fr); gap: 24px; }
+.referenceTimeSlot { grid-template-columns: minmax(0, 1fr) 17px minmax(0, 1fr) 28px; }
+.referenceTimeSlot input { height: 41px; }
+.slotSummary { display: flex; align-items: center; gap: 13px; margin-top: 8px; color: #667085; font-size: 11px; }
+.slotSummary > span b { color: #171717; }
+.periodSelection > div { display: flex; gap: 8px; }
+.periodSelection button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 10px; border: 1px solid #dfe3ea; border-radius: 6px; color: #596273; background: #fff; font-size: 10px; white-space: nowrap; }
+.periodSelection button.selected { border-color: #8677e9; color: #655aca; background: #faf9ff; }
+.notesToggle { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; padding: 0; border: 0; color: #171717; background: transparent; font-size: 12px; font-weight: 600; }
+.referenceModal footer { min-height: 78px; margin-top: 0; padding: 17px 30px 22px; }
+
 @media (max-width: 1350px) {
   .applianceToolbar { align-items: stretch; flex-direction: column; }
   .applianceToolbar > div { width: 100%; }
