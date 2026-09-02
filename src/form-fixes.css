@@ -1,0 +1,42 @@
+/* Sizing client form: keep labels inline and align every three-field row. */
+.clientFormCard .formSection label {
+  display: block;
+  min-width: 0;
+}
+
+.clientFormCard .formSection label > em {
+  display: inline;
+  margin-left: 2px;
+}
+
+.clientFormCard .formSection label > input,
+.clientFormCard .formSection label > select,
+.clientFormCard .formSection label > .phoneInput {
+  display: block;
+  margin-top: 6px;
+}
+
+.clientFormCard .contactGrid,
+.clientFormCard .addressGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.clientFormCard .contactGrid label:nth-child(4),
+.clientFormCard .contactGrid label:nth-child(5) {
+  grid-column: auto;
+}
+
+.clientFormCard .phoneInput {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+}
+
+.clientFormCard .formSection label > .phoneInput {
+  display: grid;
+}
+
+.clientFormCard .phoneInput input {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}

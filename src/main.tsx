@@ -6,6 +6,7 @@ import {Appliance, dailyWh, seedAppliances, sizing} from './domain/sizing'
 import {plans} from './domain/financing'
 import solarKit from './assets/solar-kit.png'
 import './styles.css'
+import './form-fixes.css'
 
 type Status='Brouillon'|'Finalisé'|'Partagé'|'Accepté'|'Refusé'
 type Quote={status:Status,payment:'cash'|'plan',plan:number,activities:string[]}
