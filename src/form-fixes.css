@@ -263,23 +263,23 @@
 .electricalSection, .usageSection { position: relative; border-top: 1px solid #edf0f2; padding: 18px 0; }
 .electricalSection h3, .usageSection h3 { margin: 0; font-size: 15px; }
 .electricalSection > p, .usageSection > p { margin: 4px 0 13px; color: #687083; font-size: 12px; }
-.electricalSection .toggle { width: 513px; max-width: calc(100% - 224px); margin: 0 0 15px; }
+.electricalSection .toggle { width: 513px; max-width: calc(100% - 312px); margin: 0 0 15px; }
 .electricalSection .toggle button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
-.electricalSection > label { width: 513px; max-width: calc(100% - 224px); }
+.electricalSection > label { width: 513px; max-width: calc(100% - 312px); }
 .powerInput { height: 44px; display: grid; grid-template-columns: 1fr 34px; align-items: center; border: 1px solid #dfe3ea; border-radius: 7px; overflow: hidden; }
 .powerInput input { height: 100%; min-width: 0; border: 0; outline: 0; padding: 0 13px; font-size: 16px; font-weight: 700; }
 .powerInput span { padding-right: 13px; color: #171717; font-size: 12px; }
-.suggestedValue { width: fit-content; max-width: calc(100% - 224px); display: flex; align-items: center; gap: 11px; margin-top: 9px; padding: 4px 11px; border-radius: 9px; color: #6f64ca; background: #f1efff; font-size: 10px; font-weight: 700; }
-.powerHelp { position: absolute; top: 73px; right: 0; width: 288px; min-height: 114px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
+.suggestedValue { width: fit-content; max-width: calc(100% - 312px); display: flex; align-items: center; gap: 11px; margin-top: 9px; padding: 4px 11px; border-radius: 9px; color: #6f64ca; background: #f1efff; font-size: 10px; font-weight: 700; }
+.powerHelp { position: absolute; top: 168px; right: 0; width: 288px; min-height: 74px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
 .powerHelp > svg { flex: 0 0 auto; color: #ff9b0a; }
 .powerHelp b { display: block; color: #171717; font-size: 11px; }
 .powerHelp p { margin: 7px 0 0; color: #677083; font-size: 11px; }
 .usageSection { padding-bottom: 16px; }
 .usageLayout { display: block; width: min(100%, 420px); }
-.referenceTimeSlot { max-width: 420px; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); gap: 9px; padding: 6px; border: 1px solid #dfe3ea; border-radius: 8px; background: #fafbfc; }
+.referenceTimeSlot { max-width: 420px; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); gap: 9px; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .referenceTimeSlot:has(.removeSlot) { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) 28px; }
-.referenceTimeSlot input { height: 40px; border-color: #dfe3ea; background: #fff; }
-.slotSummary { width: fit-content; display: flex; align-items: center; gap: 13px; margin-top: 9px; padding: 7px 10px; border-radius: 7px; background: #fff8f4; color: #667085; font-size: 11px; }
+.referenceTimeSlot input { height: 43px; border-color: #dfe3ea; background: #fff; }
+.slotSummary { width: fit-content; display: flex; align-items: center; gap: 13px; margin-top: 10px; padding: 0; color: #667085; font-size: 11px; }
 .slotSummary > span b { color: #171717; }
 .periodSelection > div { display: flex; gap: 8px; }
 .periodSelection button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 10px; border: 1px solid #dfe3ea; border-radius: 6px; color: #596273; background: #fff; font-size: 10px; white-space: nowrap; }
@@ -290,6 +290,18 @@
 .voltageCurrentFields label { min-width: 0; }
 .calculatedPower { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid #cfe9d8; border-radius: 7px; color: #187543; background: #f4fcf7; font-size: 12px; }
 .calculatedPower strong { font-size: 15px; }
+
+@media (max-width: 700px) {
+  .referenceModal { width: calc(100% - 20px); }
+  .referenceModalHeader, .referenceModalBody, .referenceModal footer { padding-inline: 20px; }
+  .modalTopDetails { grid-template-columns: 1fr; }
+  .referenceModal .appliancePreview { display: none; }
+  .electricalSection .toggle, .electricalSection > label, .voltageCurrentFields { width: 100%; max-width: none; }
+  .powerHelp { position: static; width: 100%; margin-top: 15px; }
+  .suggestedValue { max-width: 100%; }
+  .usageLayout, .referenceTimeSlot { width: 100%; max-width: none; }
+  .referenceTimeSlot { grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); }
+}
 
 @media (max-width: 1350px) {
   .applianceToolbar { align-items: stretch; flex-direction: column; }
