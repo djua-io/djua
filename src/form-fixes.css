@@ -225,7 +225,7 @@
 .referenceModalHeader p { margin: 8px 0 0; color: #687083; font-size: 12px; }
 .referenceModalHeader .close { position: static; width: 30px; height: 30px; margin: -1px -8px 0 0; color: #171717; font-size: 0; }
 .referenceModalBody { display: block; padding: 26px 30px 0; }
-.referenceModalTop { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 24px; }
+.referenceModalTop { display: block; }
 .applianceSteps { display: grid; align-content: start; gap: 18px; min-height: 195px; padding: 1px 20px 0 0; border-right: 1px solid #edf0f2; }
 .applianceSteps > div { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; color: #6d7584; }
 .applianceSteps b { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #c5cad3; font-size: 12px; }
@@ -270,21 +270,26 @@
 .powerInput input { height: 100%; min-width: 0; border: 0; outline: 0; padding: 0 13px; font-size: 16px; font-weight: 700; }
 .powerInput span { padding-right: 13px; color: #171717; font-size: 12px; }
 .suggestedValue { width: fit-content; max-width: calc(100% - 224px); display: flex; align-items: center; gap: 11px; margin-top: 9px; padding: 4px 11px; border-radius: 9px; color: #6f64ca; background: #f1efff; font-size: 10px; font-weight: 700; }
-.powerHelp { position: absolute; right: 0; bottom: 16px; width: 288px; min-height: 114px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
+.powerHelp { position: absolute; top: 73px; right: 0; width: 288px; min-height: 114px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
 .powerHelp > svg { flex: 0 0 auto; color: #ff9b0a; }
 .powerHelp b { display: block; color: #171717; font-size: 11px; }
 .powerHelp p { margin: 7px 0 0; color: #677083; font-size: 11px; }
 .usageSection { padding-bottom: 16px; }
-.usageLayout { display: grid; grid-template-columns: 312px minmax(0, 1fr); gap: 24px; }
-.referenceTimeSlot { grid-template-columns: minmax(0, 1fr) 17px minmax(0, 1fr) 28px; }
-.referenceTimeSlot input { height: 41px; }
-.slotSummary { display: flex; align-items: center; gap: 13px; margin-top: 8px; color: #667085; font-size: 11px; }
+.usageLayout { display: block; width: min(100%, 420px); }
+.referenceTimeSlot { max-width: 420px; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); gap: 9px; padding: 6px; border: 1px solid #dfe3ea; border-radius: 8px; background: #fafbfc; }
+.referenceTimeSlot:has(.removeSlot) { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) 28px; }
+.referenceTimeSlot input { height: 40px; border-color: #dfe3ea; background: #fff; }
+.slotSummary { width: fit-content; display: flex; align-items: center; gap: 13px; margin-top: 9px; padding: 7px 10px; border-radius: 7px; background: #fff8f4; color: #667085; font-size: 11px; }
 .slotSummary > span b { color: #171717; }
 .periodSelection > div { display: flex; gap: 8px; }
 .periodSelection button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 10px; border: 1px solid #dfe3ea; border-radius: 6px; color: #596273; background: #fff; font-size: 10px; white-space: nowrap; }
 .periodSelection button.selected { border-color: #8677e9; color: #655aca; background: #faf9ff; }
 .notesToggle { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; padding: 0; border: 0; color: #171717; background: transparent; font-size: 12px; font-weight: 600; }
 .referenceModal footer { min-height: 78px; margin-top: 0; padding: 17px 30px 22px; }
+.voltageCurrentFields { width: 513px; max-width: calc(100% - 312px); display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.voltageCurrentFields label { min-width: 0; }
+.calculatedPower { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid #cfe9d8; border-radius: 7px; color: #187543; background: #f4fcf7; font-size: 12px; }
+.calculatedPower strong { font-size: 15px; }
 
 @media (max-width: 1350px) {
   .applianceToolbar { align-items: stretch; flex-direction: column; }
