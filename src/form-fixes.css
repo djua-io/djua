@@ -146,17 +146,82 @@
 .quoteListRow small { display: block; margin-top: 3px; color: #737b8c; font-size: 11px; }
 .quoteListRow strong { color: #ff5a00; font-size: 14px; }
 
+/* Appliance selection: one continuous device list, without category groups. */
+.applianceHeading { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin: 1px 0 19px; }
+.applianceHeading h1 { display: flex; align-items: center; gap: 7px; margin: 0; font-size: 21px; }
+.applianceHeading h1 .plain { color: #4d5668; }
+.applianceHeading p { margin: 4px 0 0; color: #667085; font-size: 13px; }
+.applianceStats { display: flex; align-items: center; gap: 28px; }
+.applianceStats span { display: grid; grid-template-columns: 20px 1fr; column-gap: 8px; align-items: center; color: #5f6879; font-size: 12px; }
+.applianceStats svg { grid-row: 1 / span 2; }
+.applianceStats small { display: block; grid-column: 2; color: #596174; font-size: 10px; }
+.applianceWork { align-items: start; }
+.page:has(.applianceWork) .fixedaction { display: none; }
+.applianceCard { overflow: hidden; border: 1px solid #e7eaee; border-radius: 10px; background: #fff; }
+.applianceToolbar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 22px; border-bottom: 1px solid #edf0f2; }
+.applianceToolbar h2 { margin: 0; font-size: 17px; }
+.applianceToolbar > div { display: flex; align-items: center; gap: 11px; }
+.applianceToolbar .search { min-width: 290px; }
+.applianceRows { padding: 4px 22px 13px; }
+.applianceRow { min-height: 77px; display: grid; grid-template-columns: 57px minmax(180px, 1fr) 110px 135px 28px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #edf0f2; }
+.applianceRow:last-child { border-bottom: 0; }
+.applianceRow .deviceicon { width: 48px; height: 48px; }
+.applianceName b, .applianceUsage b { display: block; color: #171717; font-size: 13px; }
+.applianceName small, .applianceUsage small { display: block; margin-top: 4px; color: #70798a; font-size: 11px; }
+.applianceUsage b small { display: inline; margin-left: 2px; font-weight: 400; }
+.applianceRow .plain { justify-self: end; }
+.emptyAppliances { padding: 25px 0; color: #71798a; text-align: center; }
+.applianceTotal { min-height: 77px; display: flex; align-items: center; justify-content: space-between; padding: 13px 20px; border: 1px solid #e7eaee; border-top: 0; border-radius: 0 0 10px 10px; background: #fffdfb; }
+.applianceTotal > div > b { display: block; font-size: 17px; }
+.applianceTotal small { display: block; margin-top: 3px; color: #667085; font-size: 12px; }
+.applianceTotal > div:last-child { text-align: right; }
+.applianceTotal strong { display: block; color: #ff5a00; font-size: 20px; }
+.applianceEnergy .card { margin: 0; padding: 18px; }
+.energyChart, .usageDistribution, .energyDevices { margin: 12px 0; padding: 14px; border: 1px solid #edf0f2; border-radius: 8px; }
+.energyChart > small, .energyMetric > small, .usageDistribution > small, .energyDevices small { color: #556071; font-size: 12px; }
+.energyChart strong, .energyMetric strong, .energyDevices strong { display: block; margin-top: 7px; color: #172033; font-size: 23px; letter-spacing: -.7px; }
+.energyChart em, .energyMetric em { font-size: 12px; font-style: normal; font-weight: 500; letter-spacing: 0; }
+.energyChart svg { display: block; width: 100%; height: 73px; margin-top: 4px; }
+.applianceEnergy .energyMetric { margin: 12px 0; padding: 14px; }
+.energyMetric small { display: flex; align-items: center; gap: 4px; }
+.usageDistribution > div { display: flex; align-items: center; gap: 17px; margin-top: 12px; }
+.usageDistribution > div > i { flex: 0 0 auto; width: 76px; height: 76px; border-radius: 50%; background: conic-gradient(#ff5a00 0 38%, #7d67c7 38% 100%); position: relative; }
+.usageDistribution > div > i::after { content: ''; position: absolute; inset: 15px; border-radius: 50%; background: #fff; }
+.usageDistribution span { flex: 1; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; font-size: 11px; }
+.usageDistribution b { font-weight: 500; color: #5e6675; }
+.usageDistribution em { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: #ff5a00; }
+.usageDistribution b:nth-of-type(2) em { background: #7d67c7; }
+.usageDistribution strong { margin: 0; font-size: 12px; letter-spacing: 0; }
+.energyDevices { display: flex; align-items: end; justify-content: space-between; }
+.energyDevices button { display: inline-flex; align-items: center; gap: 6px; border: 0; color: #ff5a00; background: transparent; font-size: 11px; font-weight: 700; }
+.applianceEnergy .advice { display: flex; gap: 10px; align-items: flex-start; }
+.applianceEnergy .advice > svg { flex: 0 0 auto; color: #ff9b0a; }
+
+@media (max-width: 1350px) {
+  .applianceToolbar { align-items: stretch; flex-direction: column; }
+  .applianceToolbar > div { width: 100%; }
+  .applianceToolbar .search { flex: 1; min-width: 0; }
+}
+
 @media (max-width: 1000px) {
   .newQuote { width: 40px; height: 40px; margin: 0 auto 18px; padding: 0; font-size: 0; border-radius: 7px; }
   .newQuote svg { width: 18px; height: 18px; }
   .quoteListToolbar { align-items: stretch; flex-direction: column; }
   .quoteListFilters { justify-content: space-between; }
   .quoteListSearch { flex: 1; width: auto; }
+  .applianceHeading { align-items: flex-start; flex-direction: column; }
+  .applianceStats { width: 100%; }
 }
 
 @media (max-width: 800px) {
   .locationTypes.homeTypes, .locationTypes.siteTypes, .homeNameFields, .companyLocationFields, .addressFields, .mapLocation, .sameAddress { grid-template-columns: 1fr; }
   .sameAddress > b { grid-column: auto; }
+  .applianceToolbar { align-items: stretch; flex-direction: column; }
+  .applianceToolbar > div { width: 100%; flex-wrap: wrap; }
+  .applianceToolbar .search { min-width: 0; flex: 1; }
+  .applianceRow { grid-template-columns: 50px minmax(0, 1fr) 84px; }
+  .applianceRow .applianceUsage, .applianceRow > .plain { display: none; }
+  .applianceRows { padding-inline: 14px; }
 }
 
 /* Shop Victoire navigation replaces the former sizing sidebar. */
