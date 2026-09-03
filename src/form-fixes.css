@@ -35,6 +35,28 @@
   display: grid;
 }
 
+/* Client onboarding: identity and company-registration details. */
+.clientFormCard .personalDetails,
+.clientFormCard .companyDetails,
+.clientFormCard .representativeGrid,
+.clientFormCard .contactDetails,
+.clientFormCard .identityGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.clientFormCard .personalDetails label:last-child,
+.clientFormCard .contactDetails label:last-child {
+  grid-column: auto;
+}
+
+.clientFormCard .formSection + .formSection {
+  padding-top: 3px;
+}
+
+.clientFormCard .formSection h3 {
+  margin-bottom: 13px;
+}
+
 .clientFormCard .phoneInput .countryCode {
   display: flex;
   align-items: center;
@@ -363,6 +385,13 @@
 }
 
 @media (max-width: 800px) {
+  .clientFormCard .personalDetails,
+  .clientFormCard .companyDetails,
+  .clientFormCard .representativeGrid,
+  .clientFormCard .contactDetails,
+  .clientFormCard .identityGrid,
+  .clientFormCard .contactGrid,
+  .clientFormCard .addressGrid { grid-template-columns: 1fr; }
   .locationTypes.homeTypes, .locationTypes.siteTypes, .homeNameFields, .companyLocationFields, .addressFields, .mapLocation, .sameAddress { grid-template-columns: 1fr; }
   .sameAddress > b { grid-column: auto; }
   .applianceToolbar { align-items: stretch; flex-direction: column; }
