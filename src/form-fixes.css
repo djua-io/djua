@@ -636,3 +636,16 @@
 .customerToggle .customerOption { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .customerToggle .customerCheck { display: none; }
 .clientFormCard .backLink { display: none; }
+
+@media (max-width: 1000px) {
+  .shell > aside .newQuote {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    margin: 0 auto 18px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .shell > aside .newQuote svg { width: 18px; height: 18px; }
+}
