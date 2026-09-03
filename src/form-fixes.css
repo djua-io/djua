@@ -633,5 +633,5 @@
 }
 
 /* Keep the client-type selection treatment consistent with recommendation cards. */
-.customerToggle button { position: relative; }
-.customerToggle .customerCheck { position: absolute; top: 7px; right: 8px; fill: #ff5a00; color: #fff; }
+.customerToggle .customerOption { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.customerToggle .customerCheck { flex: 0 0 auto; color: #ff5a00; fill: #ff5a00; stroke: #fff; }
