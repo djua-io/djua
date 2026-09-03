@@ -468,10 +468,8 @@
 .configurationOption > em { display: block; margin-top: 16px; color: #657084; font-size: 11px; font-style: normal; }
 .compositionCard { padding-bottom: 15px; }
 .compositionGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 16px; }
-.equipmentCard { position: relative; min-height: 150px; padding: 15px; border: 1px solid #e3e7ed; border-radius: 9px; background: #fff; color: #18202d; text-align: left; cursor: pointer; }
-.equipmentCard:hover { border-color: #ffb78d; }
+.equipmentCard { position: relative; min-height: 150px; padding: 15px; border: 1px solid #e3e7ed; border-radius: 9px; background: #fff; color: #18202d; text-align: left; }
 .equipmentCard > b { position: absolute; top: 18px; left: 49px; font-size: 14px; }
-.equipmentCard > svg { position: absolute; top: 19px; right: 13px; color: #263243; }
 .equipmentIcon { display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 6px; }
 .equipmentIcon.sun { color: #ff9b00; background: #fff5df; }
 .equipmentIcon.battery { color: #15a260; background: #e8f8ef; }
@@ -513,7 +511,6 @@
 .knowMore { display: flex; gap: 11px; padding: 15px; border: 1px solid #ffe2d2; border-radius: 9px; color: #5a473d; background: linear-gradient(135deg,#fffaf5,#fff); }
 .knowMore > svg { flex: 0 0 auto; color: #ff9800; }
 .knowMore p { margin: 0; color: #596477; font-size: 11px; line-height: 1.55; }
-.knowMore button { display: inline-flex; align-items: center; gap: 6px; margin-top: 13px; padding: 0; border: 0; color: #ff5a00; background: transparent; font-size: 10px; font-weight: 700; cursor: pointer; }
 .technicalDetails { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; padding-top: 17px; }
 .technicalDetails div { display: grid; gap: 7px; padding: 10px; border-radius: 8px; background: #fafbfc; color: #536174; }
 .technicalDetails svg { color: #ff8000; }
@@ -561,20 +558,20 @@
 .paymentTabs button:first-child { border-radius: 7px 0 0 7px; }
 .paymentTabs button:last-child { border-radius: 0 7px 7px 0; }
 .paymentTabs button.active { position: relative; z-index: 1; border-color: #ff5a00; color: #ff5a00; background: #fffaf7; }
-.cashPayment { margin-top: 18px; padding: 17px; border-radius: 9px; background: linear-gradient(135deg,#f5fcf8,#fff); }
+.cashPayment { margin-top: 18px; padding: 17px; border: 1px solid #ffe1d0; border-radius: 9px; background: linear-gradient(135deg,#fff8f3,#fff); }
 .paymentHeading { display: flex; align-items: center; gap: 11px; }
-.paymentHeading i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #0ba85a; background: #ddf6e7; font-style: normal; }
+.paymentHeading i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #ff5a00; background: #fff0e7; font-style: normal; }
 .paymentHeading h3, .paymentPlanDetail h3 { margin: 0; color: #171d29; font-size: 14px; }
 .paymentPrice, .paymentTotal, .planCost { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-top: 22px; color: #586579; font-size: 12px; }
 .cashPayment hr, .paymentPlanDetail hr { margin: 20px 0; border: 0; border-top: 1px dashed #cdd5dc; }
 .paymentTotal { margin-top: 0; }
 .paymentTotal span { display: grid; gap: 7px; color: #151b27; font-size: 13px; font-weight: 750; }
 .paymentTotal small { color: #657185; font-size: 11px; font-weight: 500; }
-.paymentTotal strong { color: #0aab5a; font-size: 21px; line-height: 1; white-space: nowrap; }
+.paymentTotal strong { color: #ff5a00; font-size: 21px; line-height: 1; white-space: nowrap; }
 .cashPayment > p { max-width: 285px; margin: 23px 0 15px; color: #5f6a7a; font-size: 12px; line-height: 1.6; }
 .cashPayment ul { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; color: #4d596a; font-size: 11px; }
 .cashPayment li { display: flex; align-items: center; gap: 8px; }
-.cashPayment li svg { color: #0bab5b; }
+.cashPayment li svg { color: #ff5a00; }
 .installmentPayment > p { margin: 18px 0 10px; color: #354052; font-size: 11px; font-weight: 650; }
 .durationOptions { display: grid; gap: 8px; }
 .durationOptions button { display: grid; grid-template-columns: minmax(0,1fr) auto; grid-template-areas: 'title monthly' 'total downpayment'; gap: 7px 10px; padding: 13px 14px; border: 1px solid #e3e7ed; border-radius: 7px; color: #59657a; background: #fff; text-align: left; cursor: pointer; }
@@ -634,3 +631,7 @@
   .recommendationShell nav a { height: 38px; padding: 0 12px; border-radius: 8px; color: #566174; font-size: 13px; }
   .recommendationShell nav a.active { color: #ff5a00; background: #fff1e9; font-weight: 700; }
 }
+
+/* Keep the client-type selection treatment consistent with recommendation cards. */
+.customerToggle button { position: relative; }
+.customerToggle .customerCheck { position: absolute; top: 7px; right: 8px; fill: #ff5a00; color: #fff; }
