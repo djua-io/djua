@@ -104,18 +104,18 @@
 .locationTypes { display: grid; gap: 12px; }
 .locationTypes.homeTypes { grid-template-columns: repeat(3, 1fr); }
 .locationTypes.siteTypes { grid-template-columns: repeat(3, 1fr); }
-.locationTypes button { min-height: 63px; padding: 12px 15px; display: grid; grid-template-columns: 31px 1fr 18px; gap: 10px; align-items: center; text-align: left; color: #485267; background: #fff; border: 1px solid #dfe3ea; border-radius: 7px; }
+.locationTypes button { min-height: 63px; padding: 12px 15px; display: grid; grid-template-columns: 31px 1fr; gap: 10px; align-items: center; text-align: left; color: #485267; background: #fff; border: 1px solid #dfe3ea; border-radius: 7px; }
 .locationTypes button b { color: #3d4659; font-size: 12px; }
 .locationTypes button > svg { color: #56617a; }
-.locationTypes button i { width: 16px; height: 16px; display: grid; place-items: center; border: 1px solid #c7ceda; border-radius: 50%; color: #ff5a00; font-style: normal; }
+.locationTypes button i { display: none; }
 .locationTypes button.selected { color: #ff5a00; border-color: #ff5a00; background: #fff8f4; }
 .locationTypes button.selected b, .locationTypes button.selected > svg { color: #ff5a00; }
 .locationTypes button.selected i { border-color: #ff5a00; }
-.locationTypes .otherTypeButton { min-height: 63px; padding: 12px 15px; display: grid; grid-template-columns: 31px minmax(0, 1fr) 18px; gap: 10px; align-items: center; border: 1px solid #ff5a00; border-radius: 7px; background: #fff8f4; color: #ff5a00; }
+.locationTypes .otherTypeButton { min-height: 63px; padding: 12px 15px; display: grid; grid-template-columns: 31px minmax(0, 1fr); gap: 10px; align-items: center; border: 1px solid #ff5a00; border-radius: 7px; background: #fff8f4; color: #ff5a00; }
 .locationTypes .otherTypeButton > svg { color: #ff5a00; }
 .locationTypes .otherTypeButton input { width: 100%; min-width: 0; height: 34px; padding: 0; color: #171717; border: 0; outline: 0; background: transparent; font-size: 12px; font-weight: 600; }
 .locationTypes .otherTypeButton input::placeholder { color: #8d95a4; font-weight: 500; }
-.locationTypes .otherTypeButton i { width: 16px; height: 16px; display: grid; place-items: center; border: 1px solid #ff5a00; border-radius: 50%; color: #ff5a00; font-style: normal; }
+.locationTypes .otherTypeButton i { display: none; }
 .otherTypeField { display: block; width: min(100%, 520px); margin-top: 13px; color: #161b25; font-size: 11px; font-weight: 650; }
 .otherTypeField em { color: #ff5a00; font-style: normal; }
 .otherTypeField input { display: block; width: 100%; height: 42px; margin-top: 6px; padding: 0 12px; border: 1px solid #ff5a00; border-radius: 6px; outline-color: #ff5a00; }
