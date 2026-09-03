@@ -274,6 +274,7 @@
 .quantityLine > span { padding-bottom: 13px; color: #586172; font-size: 12px; }
 .referenceModal .appliancePreview { min-height: 299px; padding: 25px 16px 18px; border-color: #ffdfc9; background: #fffaf6; }
 .referenceModal .appliancePreview.emptyPreview { min-height: 299px; }
+.emptyPreviewSpace { height: 109px; }
 .referenceModal .appliancePreview .deviceicon.big { width: 92px; height: 92px; margin-bottom: 17px; color: #1f2937; background: #fff; }
 .previewTitle { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; }
 .previewTitle h2 { margin: 0; font-size: 15px; }
