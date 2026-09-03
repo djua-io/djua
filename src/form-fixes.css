@@ -169,7 +169,7 @@
 .applianceThumbnail { flex: 0 0 auto; display: block; background-repeat: no-repeat; background-size: 300% 400%; }
 .applianceThumbnail.row { width: 48px; height: 48px; border-radius: 7px; background-color: #f7f8fa; }
 .applianceThumbnail.compact { width: 25px; height: 25px; border-radius: 5px; background-color: transparent; }
-.applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border-radius: 8px; background-color: #fff; }
+.applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border-radius: 0; background-color: transparent; }
 .sprite-bulb { background-position: 0 0; }
 .sprite-fridge { background-position: 50% 0; }
 .sprite-blender { background-position: 100% 0; }
@@ -256,13 +256,10 @@
 .deviceSelect { height: 52px; display: grid; grid-template-columns: 27px minmax(0, 1fr) 20px; gap: 9px; align-items: center; padding: 0 13px; border: 1px solid #dfe3ea; border-radius: 7px; color: #4d5668; background: #fff; }
 .deviceSelect select { width: 100%; height: 100%; border: 0; outline: 0; appearance: none; background: transparent; color: #3f4653; }
 .deviceSelect > svg:last-child { pointer-events: none; }
-.categoryIconRow { display: grid; grid-template-columns: 154px 1fr; gap: 22px; align-items: end; margin: 18px 0 20px; }
-.categoryIconRow label { align-content: start; }
-.categoryBadge { width: fit-content; margin-top: 8px; padding: 5px 13px; border-radius: 7px; color: #6658c6; background: #f1efff; font-size: 12px; font-weight: 700; }
-.categoryIconRow > div > b, .quantityLine b, .usageLayout > div > b, .periodSelection > b { display: block; margin-bottom: 8px; color: #171717; font-size: 12px; }
-.iconChoices { display: flex; gap: 7px; }
-.iconChoices button { width: 39px; height: 42px; display: grid; place-items: center; border: 1px solid #e1e5ec; border-radius: 6px; color: #4d5668; background: #fff; }
-.iconChoices button.selected { border: 2px solid #ff5a00; color: #171717; }
+.applianceMetadata { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 20px; }
+.applianceMetadata input, .applianceMetadata select { width: 100%; height: 44px; padding: 0 12px; border: 1px solid #dfe3ea; border-radius: 7px; outline-color: #ff5a00; color: #171717; background: #fff; font: inherit; font-size: 12px; }
+.applianceMetadata select:disabled { color: #98a0ad; background: #f7f8fa; cursor: not-allowed; }
+.quantityLine b, .usageLayout > div > b, .periodSelection > b { display: block; margin-bottom: 8px; color: #171717; font-size: 12px; }
 .quantityLine { display: flex; align-items: end; gap: 12px; }
 .quantityLine > div { width: 158px; }
 .quantityLine .stepper { height: 45px; }
@@ -302,6 +299,8 @@
 .periodSelection button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 10px; border: 1px solid #dfe3ea; border-radius: 6px; color: #596273; background: #fff; font-size: 10px; white-space: nowrap; }
 .periodSelection button.selected { border-color: #8677e9; color: #655aca; background: #faf9ff; }
 .notesToggle { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; padding: 0; border: 0; color: #171717; background: transparent; font-size: 12px; font-weight: 600; }
+.applianceNotes { width: min(100%, 520px); margin-top: 12px; }
+.applianceNotes textarea { min-height: 84px; resize: vertical; padding: 11px 12px; border: 1px solid #dfe3ea; border-radius: 7px; outline-color: #ff5a00; color: #171717; background: #fff; font: inherit; font-size: 12px; }
 .referenceModal footer { min-height: 78px; margin-top: 0; padding: 17px 30px 22px; }
 .voltageCurrentFields { width: 513px; max-width: calc(100% - 312px); display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
 .voltageCurrentFields label { min-width: 0; }
@@ -313,6 +312,7 @@
   .referenceModalHeader, .referenceModalBody, .referenceModal footer { padding-inline: 20px; }
   .modalTopDetails { grid-template-columns: 1fr; }
   .referenceModal .appliancePreview { display: none; }
+  .applianceMetadata { grid-template-columns: 1fr; }
   .electricalSection .toggle, .electricalSection > label, .voltageCurrentFields { width: 100%; max-width: none; }
   .powerHelp { position: static; width: 100%; margin-top: 15px; }
   .suggestedValue { max-width: 100%; }
