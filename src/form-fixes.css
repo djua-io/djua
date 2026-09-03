@@ -286,7 +286,7 @@
 .powerInput input { height: 100%; min-width: 0; border: 0; outline: 0; padding: 0 13px; font-size: 16px; font-weight: 700; }
 .powerInput span { padding-right: 13px; color: #171717; font-size: 12px; }
 .suggestedValue { width: fit-content; max-width: calc(100% - 312px); display: flex; align-items: center; gap: 11px; margin-top: 9px; padding: 4px 11px; border-radius: 9px; color: #6f64ca; background: #f1efff; font-size: 10px; font-weight: 700; }
-.powerHelp { position: absolute; top: 168px; right: 0; width: 288px; min-height: 74px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
+.powerHelp { position: absolute; top: 156px; right: 0; width: 288px; min-height: 74px; display: flex; gap: 10px; padding: 16px; border: 1px solid #ffdfc9; border-radius: 9px; background: #fffaf6; }
 .powerHelp > svg { flex: 0 0 auto; color: #ff9b0a; }
 .powerHelp b { display: block; color: #171717; font-size: 11px; }
 .powerHelp p { margin: 7px 0 0; color: #677083; font-size: 11px; }
