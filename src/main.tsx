@@ -56,9 +56,10 @@ function AddAppliance({close,add}:{close:()=>void,add:(a:Appliance)=>void}){
   };
   const selectedDevice=options.find(option=>option.name===name);
   const metadata=applianceDetails[name]||{label:'Détail de l’appareil',options:[]};
-  const matchingOptions=options.filter(option=>option.name.toLocaleLowerCase().includes(deviceQuery.toLocaleLowerCase()));
+  const normaliseSearch=(value:string)=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+  const matchingOptions=options.filter(option=>normaliseSearch(option.name).includes(normaliseSearch(deviceQuery)));
   const selectDevice=(next:{name:string;watts:number})=>{setName(next.name);setDeviceQuery(next.name);setWatts(next.watts);setDetail('');setDeviceMenuOpen(false)};
-  const updateDeviceQuery=(value:string)=>{setDeviceQuery(value);setName(value);setDetail('');setDeviceMenuOpen(true);const exact=options.find(option=>option.name.toLocaleLowerCase()===value.toLocaleLowerCase());if(exact)setWatts(exact.watts)};
+  const updateDeviceQuery=(value:string)=>{setDeviceQuery(value);setName(value);setDetail('');setDeviceMenuOpen(true);const exact=options.find(option=>normaliseSearch(option.name)===normaliseSearch(value));if(exact)setWatts(exact.watts)};
   const timeToMinutes=(value:string)=>{const match=value.trim().match(/^(\d{1,2})(?:[:h](\d{1,2}))?$/i);return match?Number(match[1])*60+Number(match[2]||0):0};
   const normaliseTime=(value:string)=>{const compact=value.trim().replace(/^([0-2]?\d)(\d{2})$/,'$1:$2').replace('h',':');const match=compact.match(/^(\d{1,2})(?::(\d{1,2}))?$/);if(!match)return value;const hour=Math.min(23,Math.max(0,Number(match[1]))),minute=Math.min(59,Math.max(0,Number(match[2]||0)));return `${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`};
   const hours=slots.reduce((total,slot)=>Math.max(0,total+(timeToMinutes(slot.to)-timeToMinutes(slot.from))/60),0);
