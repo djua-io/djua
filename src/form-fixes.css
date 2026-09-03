@@ -267,6 +267,19 @@
 .applianceMetadata { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 20px; }
 .applianceMetadata input, .applianceMetadata select { width: 100%; height: 44px; padding: 0 12px; border: 1px solid #dfe3ea; border-radius: 7px; outline-color: #ff5a00; color: #171717; background: #fff; font: inherit; font-size: 12px; }
 .applianceMetadata select:disabled { color: #98a0ad; background: #f7f8fa; cursor: not-allowed; }
+.appliancePhotos { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: -4px 0 20px; }
+.appliancePhotos > div:first-child { flex: 1 1 220px; }
+.appliancePhotos b, .appliancePhotos small { display: block; }
+.appliancePhotos b { color: #171717; font-size: 12px; }
+.appliancePhotos b span { color: #737b89; font-weight: 400; }
+.appliancePhotos small { margin-top: 3px; color: #737b89; font-size: 11px; }
+.deviceImageInput { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.addAppliancePhotos { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 8px 11px; border: 1px solid #ff5a00; border-radius: 7px; color: #e95000; background: #fff; font-size: 12px; font-weight: 650; white-space: nowrap; }
+.addAppliancePhotos:disabled { opacity: .5; cursor: not-allowed; }
+.devicePhotoPreviews { width: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
+.devicePhotoPreviews > div { width: 48px; height: 48px; position: relative; overflow: visible; border: 1px solid #dfe3ea; border-radius: 7px; background: #f7f8fa; }
+.devicePhotoPreviews img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: cover; }
+.devicePhotoPreviews button { width: 18px; height: 18px; position: absolute; top: -6px; right: -6px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #fff; background: #485263; }
 .quantityLine b, .usageLayout > div > b, .periodSelection > b { display: block; margin-bottom: 8px; color: #171717; font-size: 12px; }
 .quantityLine { display: flex; align-items: end; gap: 12px; }
 .quantityLine > div { width: 158px; }
@@ -275,6 +288,7 @@
 .referenceModal .appliancePreview { min-height: 299px; padding: 25px 16px 18px; border-color: #ffdfc9; background: #fffaf6; }
 .referenceModal .appliancePreview.emptyPreview { min-height: 299px; }
 .emptyPreviewSpace { height: 109px; }
+.uploadedAppliancePreview { width: 92px; height: 92px; display: block; margin: 0 auto 17px; object-fit: cover; }
 .referenceModal .appliancePreview .deviceicon.big { width: 92px; height: 92px; margin-bottom: 17px; color: #1f2937; background: #fff; }
 .previewTitle { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; }
 .previewTitle h2 { margin: 0; font-size: 15px; }
