@@ -459,7 +459,7 @@
 .configurationTop { display: flex; align-items: center; gap: 9px; }
 .configurationTop i { display: inline-flex; color: #13a05c; }
 .configurationOption.selected .configurationTop i, .configurationOption.selected .configurationTop > svg { color: #ff5a00; }
-.configurationTop > svg { margin-left: auto; fill: #ff5a00; color: #ff5a00; }
+.configurationCheck { position: absolute; top: 9px; right: 9px; fill: #ff5a00; color: #fff; }
 .configurationTop b { font-size: 14px; }
 .configurationOption > small { display: block; margin: 6px 0 20px 27px; color: #687386; font-size: 11px; }
 .configurationOption > strong { display: flex; align-items: center; gap: 12px; color: #131923; font-size: 18px; letter-spacing: -.4px; white-space: nowrap; }
@@ -477,10 +477,14 @@
 .equipmentIcon.battery { color: #15a260; background: #e8f8ef; }
 .equipmentIcon.inverter { color: #358fe4; background: #ecf6ff; }
 .equipmentProduct { display: flex; align-items: center; gap: 11px; margin-top: 18px; }
-.equipmentSketch { display: grid; place-items: center; flex: 0 0 75px; height: 73px; border-radius: 7px; color: #607086; background: linear-gradient(135deg,#eff3f8,#fff); }
-.equipmentSketch.sun { color: #24598a; background: linear-gradient(135deg,#dce6f0,#f8fafc); }
-.equipmentSketch.battery { color: #3b4a5f; }
-.equipmentSketch.inverter { color: #374151; }
+.equipmentSketch { display: grid; place-items: center; flex: 0 0 75px; height: 73px; overflow: hidden; border-radius: 7px; color: #607086; background: linear-gradient(135deg,#eff3f8,#fff); }
+.equipmentSketch.sun { background: #fff; }
+.equipmentSketch.battery { background: linear-gradient(135deg,#f1f5f8,#fff); }
+.equipmentSketch.inverter { background: linear-gradient(135deg,#eef2f6,#fff); }
+.equipmentSketch img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 3px rgba(19,27,38,.14)); }
+.equipmentSketch.sun img { transform: scale(1.22); }
+.equipmentSketch.battery img { transform: scale(1.12); }
+.equipmentSketch.inverter img { transform: scale(1.03); }
 .equipmentProduct span:last-child { display: grid; gap: 5px; min-width: 0; }
 .equipmentProduct strong { font-size: 14px; }
 .equipmentProduct small { color: #627085; font-size: 10px; line-height: 1.35; }

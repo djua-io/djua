@@ -6,6 +6,9 @@ import {Appliance, dailyWh, sizing} from './domain/sizing'
 import {plans} from './domain/financing'
 import solarKit from './assets/solar-kit.png'
 import applianceSprite from './assets/appliance-sprite.png'
+import solarPanelsProduct from './assets/solar-panels-product.png'
+import batteryProduct from './assets/battery-product.png'
+import inverterProduct from './assets/inverter-product.png'
 import './styles.css'
 import './form-fixes.css'
 
@@ -140,20 +143,21 @@ function Recommendation(){
   const dailyKwh=(s.daily/1000).toFixed(2);
   const peakKw=(s.peak/1000).toFixed(2);
   const configurations=[
-    {id:'economic', icon:I.Leaf, title:'Économique', subtitle:'Coût optimisé', solar:'1.8 kWc', battery:'3.5 kWh', inverter:'2 kVA', autonomy:'Autonomie ≈ 0.7 jour'},
-    {id:'recommended', icon:I.Star, title:'Recommandée', subtitle:'Meilleur équilibre', solar:'2.4 kWc', battery:'5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1 jour'},
-    {id:'autonomy', icon:I.ShieldCheck, title:'Autonomie +', subtitle:'Autonomie maximale', solar:'3.0 kWc', battery:'7.5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1.5 jour'}
+    {id:'economic', icon:I.Leaf, title:'Économique', subtitle:'Coût optimisé', solar:'1.8 kWc', battery:'3.5 kWh', inverter:'2 kVA', autonomy:'Autonomie ≈ 0.7 jour', target:'0.7 jour', price:'2 150 $', production:'≈ 7.2 kWh / jour', productCount:'5 références disponibles', impact:'≈ 1.4 tonnes / an', trees:'64', chartFactor:.8, energy:'≈ 4.24 kWh / jour', panels:{value:'3 × 600 W',details:'Total : 1.8 kWc',tag:'Monocristallin'},storage:{value:'3.5 kWh LiFePO₄',details:'Énergie utile : 2.8 kWh (80% DoD)',tag:'48 V'},converter:{value:'2 kVA / 48 V',details:'Puissance continue : 1.6 kW',tag:'Marge de puissance : +18 %'}},
+    {id:'recommended', icon:I.Star, title:'Recommandée', subtitle:'Meilleur équilibre', solar:'2.4 kWc', battery:'5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1 jour', target:'1 jour', price:'2 850 $', production:'≈ 9.5 kWh / jour', productCount:'6 références disponibles', impact:'≈ 1.9 tonnes / an', trees:'87', chartFactor:1, energy:'≈ 5.30 kWh / jour', panels:{value:'4 × 600 W',details:'Total : 2.4 kWc',tag:'Monocristallin'},storage:{value:'5 kWh LiFePO₄',details:'Énergie utile : 4 kWh (80% DoD)',tag:'48 V'},converter:{value:'3 kVA / 48 V',details:'Puissance continue : 2.4 kW',tag:'Marge de puissance : +34 %'}},
+    {id:'autonomy', icon:I.ShieldCheck, title:'Autonomie +', subtitle:'Autonomie maximale', solar:'3.0 kWc', battery:'7.5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1.5 jour', target:'1.5 jour', price:'3 650 $', production:'≈ 11.8 kWh / jour', productCount:'7 références disponibles', impact:'≈ 2.4 tonnes / an', trees:'110', chartFactor:1.23, energy:'≈ 6.52 kWh / jour', panels:{value:'5 × 600 W',details:'Total : 3.0 kWc',tag:'Monocristallin'},storage:{value:'7.5 kWh LiFePO₄',details:'Énergie utile : 6 kWh (80% DoD)',tag:'48 V'},converter:{value:'3 kVA / 48 V',details:'Puissance continue : 2.4 kW',tag:'Marge de puissance : +42 %'}}
   ];
+  const selectedConfiguration=configurations.find(option=>option.id===configuration)??configurations[1];
   const equipment=[
-    {icon:I.SunMedium, title:'Panneaux solaires', value:'4 × 600 W', details:'Total : 2.4 kWc', tag:'Monocristallin', tone:'sun'},
-    {icon:I.BatteryCharging, title:'Batterie', value:'5 kWh LiFePO₄', details:'Énergie utile : 4 kWh (80% DoD)', tag:'48 V', tone:'battery'},
-    {icon:I.Activity, title:'Onduleur', value:'3 kVA / 48 V', details:'Puissance continue : 2.4 kW', tag:'Marge de puissance : +34 %', tone:'inverter'}
+    {icon:I.SunMedium, title:'Panneaux solaires', image:solarPanelsProduct, alt:'Panneaux solaires', tone:'sun', ...selectedConfiguration.panels},
+    {icon:I.BatteryCharging, title:'Batterie', image:batteryProduct, alt:'Batterie solaire', tone:'battery', ...selectedConfiguration.storage},
+    {icon:I.Activity, title:'Onduleur', image:inverterProduct, alt:'Onduleur solaire', tone:'inverter', ...selectedConfiguration.converter}
   ];
   const months=['Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
-  const production=[10,11,10,9.5,10,10.8,10.1,9.4,8.9,9.1,10.4];
+  const production=[10,11,10,9.5,10,10.8,10.1,9.4,8.9,9.1,10.4].map(value=>value*selectedConfiguration.chartFactor);
   const metrics=[
-    {icon:I.Zap, title:'Production estimée', value:'≈ 9.5 kWh / jour', copy:'En moyenne annuelle', tone:'orange'},
-    {icon:I.BatteryCharging, title:'Autonomie estimée', value:'≈ 1 jour', copy:'Sans apport solaire', tone:'green'},
+    {icon:I.Zap, title:'Production estimée', value:selectedConfiguration.production, copy:'En moyenne annuelle', tone:'orange'},
+    {icon:I.BatteryCharging, title:'Autonomie estimée', value:selectedConfiguration.target, copy:'Sans apport solaire', tone:'green'},
     {icon:I.ShieldCheck, title:'Niveau de confiance', value:'Élevé', copy:'Selon les données locales', tone:'green'},
     {icon:I.Award, title:'Garantie produits', value:'Jusqu’à 10 ans', copy:'Selon les équipements', tone:'slate'}
   ];
@@ -167,26 +171,26 @@ function Recommendation(){
         <section className="recommendationCard configurationCard">
           <h2>Choisir une configuration</h2>
           <div className="configurationOptions">{configurations.map(({id:optionId,icon:Icon,title:optionTitle,subtitle,solar,battery,inverter,autonomy})=><button type="button" key={optionId} onClick={()=>setConfiguration(optionId)} className={'configurationOption '+(configuration===optionId?'selected':'')}>
-            <span className="configurationTop"><i><Icon size={18}/></i><b>{optionTitle}</b>{configuration===optionId&&<I.CheckCircle2 size={20}/>}</span><small>{subtitle}</small><strong><span>{solar}</span><span>{battery}</span><span>{inverter}</span></strong><em>{autonomy}</em>
+            <span className="configurationTop"><i><Icon size={18}/></i><b>{optionTitle}</b></span>{configuration===optionId&&<I.CheckCircle2 className="configurationCheck" size={20}/>}<small>{subtitle}</small><strong><span>{solar}</span><span>{battery}</span><span>{inverter}</span></strong><em>{autonomy}</em>
           </button>)}</div>
         </section>
         <section className="recommendationCard compositionCard">
           <h2>Composition du système recommandé</h2>
-          <div className="compositionGrid">{equipment.map(({icon:Icon,title:equipmentTitle,value,details,tag,tone})=><button type="button" key={equipmentTitle} className="equipmentCard">
-            <span className={'equipmentIcon '+tone}><Icon size={22}/></span><b>{equipmentTitle}</b><I.ChevronRight size={18}/><div className="equipmentProduct"><span className={'equipmentSketch '+tone}><Icon size={47}/></span><span><strong>{value}</strong><small>{details}</small><em>{tag}</em></span></div>
+          <div className="compositionGrid">{equipment.map(({icon:Icon,title:equipmentTitle,image,alt,value,details,tag,tone})=><button type="button" key={equipmentTitle} className="equipmentCard">
+            <span className={'equipmentIcon '+tone}><Icon size={22}/></span><b>{equipmentTitle}</b><I.ChevronRight size={18}/><div className="equipmentProduct"><span className={'equipmentSketch '+tone}><img src={image} alt={alt}/></span><span><strong>{value}</strong><small>{details}</small><em>{tag}</em></span></div>
           </button>)}</div>
         </section>
         <section className="systemMetrics">{metrics.map(({icon:Icon,title:metricTitle,value,copy,tone})=><div key={metricTitle}><i className={tone}><Icon size={27}/></i><span><small>{metricTitle}</small><strong>{value}</strong><em>{copy}</em></span></div>)}</section>
         <section className="recommendationCard detailsCard">
           <div className="detailsTabs"><button className={tab==='why'?'active':''} onClick={()=>setTab('why')}>Pourquoi cette configuration ?</button><button className={tab==='technical'?'active':''} onClick={()=>setTab('technical')}>Détails techniques</button></div>
-          {tab==='why'?<div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Pertes système</dt><dd>+ 15%</dd></div><div><dt>Marge de sécurité</dt><dd>+ 20%</dd></div><div><dt>Énergie à produire</dt><dd>≈ 5.30 kWh / jour</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire minimale</dt><dd>≈ 1.04 kWc</dd></div></dl></div><div className="knowMore"><I.Lightbulb size={22}/><div><h3>Bon à savoir</h3><p>La configuration recommandée couvre vos besoins avec une bonne autonomie et une marge de sécurité confortable.</p><button>Comprendre le calcul <I.ArrowRight size={15}/></button></div></div></div>:<div className="technicalDetails"><div><I.SolarPanel/><b>2.4 kWc de panneaux solaires</b><small>Production adaptée à l'ensoleillement de {project.city}.</small></div><div><I.BatteryFull/><b>5 kWh de stockage LiFePO₄</b><small>Réserve d'énergie utilisable pour la soirée et la nuit.</small></div><div><I.Power/><b>Onduleur hybride 3 kVA</b><small>Compatible avec l'évolution de vos usages.</small></div></div>}
+          {tab==='why'?<div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Pertes système</dt><dd>+ 15%</dd></div><div><dt>Marge de sécurité</dt><dd>+ 20%</dd></div><div><dt>Énergie à produire</dt><dd>{selectedConfiguration.energy}</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire minimale</dt><dd>{selectedConfiguration.solar}</dd></div></dl></div><div className="knowMore"><I.Lightbulb size={22}/><div><h3>Bon à savoir</h3><p>La configuration {selectedConfiguration.title.toLowerCase()} couvre vos besoins avec une autonomie de {selectedConfiguration.target} et une marge de sécurité confortable.</p><button>Comprendre le calcul <I.ArrowRight size={15}/></button></div></div></div>:<div className="technicalDetails"><div><I.SolarPanel/><b>{selectedConfiguration.solar} de panneaux solaires</b><small>Production adaptée à l'ensoleillement de {project.city}.</small></div><div><I.BatteryFull/><b>{selectedConfiguration.battery} de stockage LiFePO₄</b><small>Réserve d'énergie utilisable pour la soirée et la nuit.</small></div><div><I.Power/><b>Onduleur hybride {selectedConfiguration.inverter}</b><small>Compatible avec l'évolution de vos usages.</small></div></div>}
         </section>
       </div>
       <aside className="recommendationRail">
-        <section className="railCard energySummary"><div className="railTitle"><h2>Résumé énergétique</h2><button><span>Modifier</span><I.Pencil size={14}/></button></div><dl><div><dt>Consommation quotidienne</dt><dd>{dailyKwh} kWh / jour</dd></div><div><dt>Puissance simultanée</dt><dd>{peakKw} kW</dd></div><div><dt>Répartition d’utilisation</dt><dd>Jour 38%　•　Nuit 62%</dd></div><div><dt>Autonomie cible</dt><dd>1 jour</dd></div></dl></section>
+        <section className="railCard energySummary"><div className="railTitle"><h2>Résumé énergétique</h2><button><span>Modifier</span><I.Pencil size={14}/></button></div><dl><div><dt>Consommation quotidienne</dt><dd>{dailyKwh} kWh / jour</dd></div><div><dt>Puissance simultanée</dt><dd>{peakKw} kW</dd></div><div><dt>Répartition d’utilisation</dt><dd>Jour 38%　•　Nuit 62%</dd></div><div><dt>Autonomie cible</dt><dd>{selectedConfiguration.target}</dd></div></dl></section>
         <section className="railCard productionChart"><h2>Aperçu de la production <small>(moyenne annuelle)</small></h2><div className="chartLegend"><span><i/> Production (kWh)</span><span><i/> Consommation (kWh)</span></div><div className="chartArea"><div className="chartScale"><span>15</span><span>10</span><span>5</span><span>0</span></div><div className="chartBars"><div className="consumptionLine"/>{production.map((height,index)=><span key={months[index]}><i style={{height:`${height*6}px`}}/><small>{months[index]}</small></span>)}</div></div></section>
-        <section className="environmentImpact"><I.Leaf size={24}/><div><h2>Impact environnemental</h2><p>Réduction de CO₂ estimée <b>≈ 1.9 tonnes / an</b></p><small><I.TreePine size={14}/> Équivalent à 87 arbres plantés</small></div></section>
-        <section className="railCard commercialEstimate"><h2>Estimation commerciale <small>(configuration recommandée)</small></h2><div className="compatibleProducts"><span>Produits compatibles</span><b>6 références disponibles</b></div><div className="price"><span>Coût matériel (estimation) <I.Info size={13}/><small>Hors installation et accessoires</small></span><strong>2 850 $</strong></div><Button secondary><span>Voir le détail des équipements</span><I.ListFilter size={17}/></Button><Button onClick={()=>nav('/devis/oe-2026-00847/edit')}>Créer le devis <I.ArrowRight size={18}/></Button><Button secondary><I.Bookmark size={16}/> Enregistrer le dimensionnement</Button><p className="priceNote">Les prix sont indicatifs et peuvent changer.</p></section>
+        <section className="environmentImpact"><I.Leaf size={24}/><div><h2>Impact environnemental</h2><p>Réduction de CO₂ estimée <b>{selectedConfiguration.impact}</b></p><small><I.TreePine size={14}/> Équivalent à {selectedConfiguration.trees} arbres plantés</small></div></section>
+        <section className="railCard commercialEstimate"><h2>Estimation commerciale <small>(configuration {selectedConfiguration.title.toLowerCase()})</small></h2><div className="compatibleProducts"><span>Produits compatibles</span><b>{selectedConfiguration.productCount}</b></div><div className="price"><span>Coût matériel (estimation) <I.Info size={13}/><small>Hors installation et accessoires</small></span><strong>{selectedConfiguration.price}</strong></div><Button secondary><span>Voir le détail des équipements</span><I.ListFilter size={17}/></Button><Button onClick={()=>nav('/devis/oe-2026-00847/edit')}>Créer le devis <I.ArrowRight size={18}/></Button><Button secondary><I.Bookmark size={16}/> Enregistrer le dimensionnement</Button><p className="priceNote">Les prix sont indicatifs et peuvent changer.</p></section>
       </aside>
     </div>
   </section>
