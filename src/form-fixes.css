@@ -555,6 +555,52 @@
 .commercialEstimate .button:not(.secondary) { display: flex; align-items: center; justify-content: space-between; }
 .commercialEstimate .button.secondary { color: #242b37; background: #fff; }
 .priceNote { margin: 3px 0 -10px; color: #9aa2af; font-size: 10px; }
+.paymentMethod { padding: 17px; }
+.paymentTabs { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0; margin-top: 14px; }
+.paymentTabs button { min-height: 36px; border: 1px solid #e2e6ed; color: #566174; background: #fff; font-size: 11px; font-weight: 650; cursor: pointer; }
+.paymentTabs button:first-child { border-radius: 7px 0 0 7px; }
+.paymentTabs button:last-child { border-radius: 0 7px 7px 0; }
+.paymentTabs button.active { position: relative; z-index: 1; border-color: #ff5a00; color: #ff5a00; background: #fffaf7; }
+.cashPayment { margin-top: 18px; padding: 17px; border-radius: 9px; background: linear-gradient(135deg,#f5fcf8,#fff); }
+.paymentHeading { display: flex; align-items: center; gap: 11px; }
+.paymentHeading i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #0ba85a; background: #ddf6e7; font-style: normal; }
+.paymentHeading h3, .paymentPlanDetail h3 { margin: 0; color: #171d29; font-size: 14px; }
+.paymentPrice, .paymentTotal, .planCost { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-top: 22px; color: #586579; font-size: 12px; }
+.cashPayment hr, .paymentPlanDetail hr { margin: 20px 0; border: 0; border-top: 1px dashed #cdd5dc; }
+.paymentTotal { margin-top: 0; }
+.paymentTotal span { display: grid; gap: 7px; color: #151b27; font-size: 13px; font-weight: 750; }
+.paymentTotal small { color: #657185; font-size: 11px; font-weight: 500; }
+.paymentTotal strong { color: #0aab5a; font-size: 21px; line-height: 1; white-space: nowrap; }
+.cashPayment > p { max-width: 285px; margin: 23px 0 15px; color: #5f6a7a; font-size: 12px; line-height: 1.6; }
+.cashPayment ul { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; color: #4d596a; font-size: 11px; }
+.cashPayment li { display: flex; align-items: center; gap: 8px; }
+.cashPayment li svg { color: #0bab5b; }
+.installmentPayment > p { margin: 18px 0 10px; color: #354052; font-size: 11px; font-weight: 650; }
+.durationOptions { display: grid; gap: 8px; }
+.durationOptions button { display: grid; grid-template-columns: minmax(0,1fr) auto; grid-template-areas: 'title monthly' 'total downpayment'; gap: 7px 10px; padding: 13px 14px; border: 1px solid #e3e7ed; border-radius: 7px; color: #59657a; background: #fff; text-align: left; cursor: pointer; }
+.durationOptions button.selected { border-color: #ff5a00; background: #fffaf7; box-shadow: 0 1px 4px rgba(255,90,0,.08); }
+.durationTitle { grid-area: title; display: inline-flex; align-items: center; gap: 8px; color: #1e2734; font-size: 12px; font-weight: 700; }
+.durationTitle i { display: inline-flex; color: #95a0ae; font-style: normal; }
+.durationOptions button.selected .durationTitle i { color: #ff5a00; fill: #ff5a00; }
+.durationTitle em { padding: 3px 6px; border-radius: 4px; color: #ff5a00; background: #fff0e7; font-size: 9px; font-style: normal; }
+.durationOptions strong { grid-area: monthly; color: #17202d; font-size: 13px; white-space: nowrap; }
+.durationOptions small { color: #667285; font-size: 10px; }
+.durationOptions small:nth-of-type(1) { grid-area: total; }
+.durationOptions small:nth-of-type(2) { grid-area: downpayment; text-align: right; }
+.paymentPlanDetail { margin-top: 15px; padding: 15px; border: 1px solid #e5e9ee; border-radius: 7px; background: #f8fafc; }
+.paymentPlanDetail h3 { margin-bottom: 14px; font-size: 11px; }
+.paymentPlanDetail dl { display: grid; gap: 9px; margin: 0; }
+.paymentPlanDetail dl div, .planCost { display: flex; justify-content: space-between; gap: 9px; color: #566174; font-size: 10px; }
+.paymentPlanDetail dd { margin: 0; color: #2f3a4c; white-space: nowrap; }
+.paymentPlanDetail hr { margin: 15px 0; }
+.planCost { margin: 0; }
+.planCost b { color: #2c3748; }
+.paymentPlanDetail .paymentTotal { margin-top: 15px; }
+.paymentPlanDetail .paymentTotal span { font-size: 11px; }
+.paymentPlanDetail .paymentTotal strong { color: #ff5a00; font-size: 17px; }
+.recommendationQuoteActions { display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px; }
+.recommendationQuoteActions .button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; padding: 0 12px; font-size: 11px; }
+.recommendationQuoteActions .button:last-child { justify-content: space-between; }
 
 @media (max-width: 1200px) {
   .recommendationLayout { grid-template-columns: minmax(0,1fr) 325px; }
@@ -566,7 +612,8 @@
 @media (max-width: 1050px) {
   .recommendationLayout { grid-template-columns: 1fr; }
   .recommendationRail { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .commercialEstimate { grid-column: span 2; }
+  .paymentMethod { grid-column: span 2; }
+  .recommendationQuoteActions { grid-column: span 2; }
 }
 
 @media (max-width: 760px) {
@@ -576,7 +623,7 @@
   .configurationOption { min-height: 130px; }
   .systemMetrics > div + div { border-top: 1px solid #e7e9ee; border-left: 0; }
   .detailsContent { grid-template-columns: 1fr; }
-  .commercialEstimate { grid-column: auto; }
+  .paymentMethod, .recommendationQuoteActions { grid-column: auto; }
   .recommendationHeader .lastCalculation, .recommendationHeader .recalculate { display: none; }
 }
 
