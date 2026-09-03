@@ -185,7 +185,7 @@
 .applianceToolbar > div { display: flex; align-items: center; gap: 11px; }
 .applianceToolbar .search { min-width: 290px; }
 .applianceRows { padding: 4px 22px 13px; }
-.applianceRow { min-height: 77px; display: grid; grid-template-columns: 57px minmax(180px, 1fr) 110px 135px 28px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #edf0f2; }
+.applianceRow { min-height: 77px; display: grid; grid-template-columns: 57px minmax(180px, 1fr) 110px 135px 28px 28px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #edf0f2; }
 .applianceRow:last-child { border-bottom: 0; }
 .applianceRow .deviceicon { width: 48px; height: 48px; }
 .applianceThumbnail { flex: 0 0 auto; display: block; background-repeat: no-repeat; background-size: 300% 400%; }
@@ -210,6 +210,8 @@
 .applianceRow .plain { justify-self: end; }
 .applianceRow .removeAppliance { color: #7c8594; }
 .applianceRow .removeAppliance:hover { color: #e14400; }
+.applianceRow .editAppliance { color: #596579; }
+.applianceRow .editAppliance:hover { color: #e95000; }
 .emptyAppliances { padding: 25px 0; color: #71798a; text-align: center; }
 .applianceTotal { min-height: 77px; display: flex; align-items: center; justify-content: space-between; padding: 13px 20px; border: 1px solid #e7eaee; border-top: 0; border-radius: 0 0 10px 10px; background: #fffdfb; }
 .applianceTotal > div > b { display: block; font-size: 17px; }
@@ -397,8 +399,9 @@
   .applianceToolbar { align-items: stretch; flex-direction: column; }
   .applianceToolbar > div { width: 100%; flex-wrap: wrap; }
   .applianceToolbar .search { min-width: 0; flex: 1; }
-  .applianceRow { grid-template-columns: 50px minmax(0, 1fr) 84px; }
+  .applianceRow { grid-template-columns: 50px minmax(0, 1fr) 84px 28px; }
   .applianceRow .applianceUsage, .applianceRow > .plain { display: none; }
+  .applianceRow .editAppliance { display: grid; }
   .applianceRows { padding-inline: 14px; }
   .applianceModal .modalgrid { grid-template-columns: 1fr; }
   .applianceModal .preview { display: none; }

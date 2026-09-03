@@ -1,4 +1,4 @@
-export type Appliance = { id: string; name: string; category: string; watts: number; hours: number; quantity: number; period: 'Jour'|'Nuit'|'Les deux'; brand?: string; detailLabel?: string; detail?: string; notes?: string; images?: string[] }
+export type Appliance = { id: string; name: string; category: string; watts: number; hours: number; quantity: number; period: 'Jour'|'Nuit'|'Les deux'; slots?: {from:string;to:string}[]; brand?: string; detailLabel?: string; detail?: string; notes?: string; images?: string[] }
 export const seedAppliances: Appliance[] = [
   {id:'1',name:'Ampoule LED',category:'Éclairage',watts:10,hours:5,quantity:6,period:'Jour'},
   {id:'2',name:'Réfrigérateur',category:'Cuisine',watts:120,hours:12,quantity:1,period:'Les deux'},
