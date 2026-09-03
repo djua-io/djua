@@ -654,3 +654,99 @@
 
   .shell > aside .newQuote svg { width: 18px; height: 18px; }
 }
+
+/* Quote editor: recommendation recap, editable bill of materials, and quote rail. */
+.quoteEditPage { max-width: 1360px; padding-bottom: 40px; }
+.quoteEditHeading h1 { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 23px; }
+.quoteEditHeading h1 .badge { padding: 5px 10px; font-size: 10px; }
+.quoteEditHeading p { margin: 5px 0 17px; color: #566174; font-size: 12px; }
+.quoteRecallCard, .quoteEditCard, .quoteRailCard { border: 1px solid #e4e8ed; border-radius: 10px; background: #fff; }
+.quoteRecallCard { padding: 18px 20px; }
+.quoteRecallCard h2, .quoteEditCard h2, .quoteRailCard h2 { margin: 0; color: #18202c; font-size: 14px; }
+.quoteRecallContent { display: grid; grid-template-columns: 210px minmax(0,1fr); align-items: center; gap: 26px; margin-top: 12px; }
+.quoteRecallVisual { height: 124px; display: grid; place-items: center; overflow: hidden; }
+.quoteRecallVisual img { max-width: 190px; max-height: 120px; object-fit: contain; }
+.quoteRecallBenefits { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+.quoteRecallBenefits > div { display: grid; justify-items: center; gap: 7px; text-align: center; }
+.quoteRecallBenefits i { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: #159a50; background: #effbf3; font-style: normal; }
+.quoteRecallBenefits > div:nth-child(2) i { color: #f59b12; background: #fff7e7; }
+.quoteRecallBenefits > div:nth-child(3) i { color: #278bed; background: #edf6ff; }
+.quoteRecallBenefits > div:nth-child(4) i { color: #6e4ed0; background: #f3efff; }
+.quoteRecallBenefits b { color: #1a202b; font-size: 12px; }
+.quoteRecallBenefits small { color: #687386; font-size: 11px; line-height: 1.45; }
+.quoteEditWorkspace { display: grid; grid-template-columns: minmax(0,1fr) 340px; align-items: start; gap: 24px; margin-top: 20px; }
+.quoteEditMain { display: grid; gap: 18px; }
+.quoteEditCard { padding: 18px 20px; }
+.quoteSectionTitle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.quoteSectionTitle button { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; color: #ff5a00; background: transparent; font-size: 11px; font-weight: 700; }
+.quoteEquipmentRows { border: 1px solid #e7ebef; border-radius: 8px; overflow: hidden; }
+.quoteEquipmentRow { min-height: 78px; display: grid; grid-template-columns: 58px minmax(160px,1fr) 112px 114px 94px 22px; align-items: center; gap: 12px; padding: 9px 12px; border-bottom: 1px solid #e7ebef; }
+.quoteEquipmentRow:last-child { border-bottom: 0; }
+.quoteEquipmentRow > img { width: 54px; height: 54px; object-fit: contain; }
+.quoteEquipmentRow > span { min-width: 0; }
+.quoteEquipmentRow b, .quoteServiceRow b { display: block; color: #1b2430; font-size: 12px; }
+.quoteEquipmentRow small { display: block; margin-top: 4px; color: #707b8d; font-size: 10px; }
+.quoteEquipmentRow .stepper, .quoteServiceRow .stepper { height: 38px; }
+.quoteItemPrice { color: #596477; font-size: 10px; }
+.quoteItemPrice strong { display: block; margin-top: 3px; color: #17202d; font-size: 13px; }
+.quoteEditItem { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; border: 1px solid #dfe4eb; border-radius: 7px; color: #1c2530; background: #fff; font-size: 11px; font-weight: 700; }
+.quoteRemoveItem { padding: 0; border: 0; color: #69768a; background: transparent; }
+.quoteServices h2 { margin-bottom: 12px; }
+.quoteServiceRow { min-height: 55px; display: grid; grid-template-columns: 26px minmax(0,1fr) 112px 80px; align-items: center; gap: 12px; border-top: 1px solid #e8ecf0; }
+.quoteServiceRow i { color: #71809a; font-style: normal; }
+.quoteServiceRow strong { justify-self: end; color: #1b2430; font-size: 12px; }
+.quoteAdvisor { display: flex; gap: 11px; padding: 16px 18px; border: 1px solid #ffdfc9; border-radius: 9px; color: #697386; background: linear-gradient(95deg,#fff8f1,#fffdfb); }
+.quoteAdvisor > svg { flex: 0 0 auto; color: #ff9500; }
+.quoteAdvisor b { display: block; color: #283241; font-size: 12px; }
+.quoteAdvisor p { margin: 4px 0 0; font-size: 11px; line-height: 1.55; }
+.quoteEditRail { display: grid; gap: 16px; position: sticky; top: 84px; }
+.quoteRailCard { padding: 18px; }
+.quoteClient { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+.quoteClient i { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; color: #ff5a00; background: #fff1e7; font-style: normal; }
+.quoteClient b, .quoteClient small { display: block; }
+.quoteClient b { color: #1b2430; font-size: 12px; }
+.quoteClient small { margin-top: 3px; color: #697386; font-size: 10px; }
+.quoteCostRows { display: grid; gap: 9px; margin-top: 18px; padding-top: 15px; border-top: 1px solid #e8ecf0; }
+.quoteCostRows div, .quoteSystemTotal { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #687386; font-size: 11px; }
+.quoteCostRows b { color: #253040; }
+.quoteSystemTotal { margin-top: 17px; padding-top: 15px; border-top: 1px dashed #cdd5dd; color: #202a37; font-size: 13px; font-weight: 700; }
+.quoteSystemTotal strong { color: #ff5a00; font-size: 20px; }
+.quotePaymentTabs { display: grid; grid-template-columns: 1fr 1fr; margin-top: 14px; }
+.quotePaymentTabs button { min-height: 37px; border: 1px solid #dfe4eb; color: #596578; background: #fff; font-size: 10px; font-weight: 700; }
+.quotePaymentTabs button:first-child { border-radius: 7px 0 0 7px; }
+.quotePaymentTabs button:last-child { border-left: 0; border-radius: 0 7px 7px 0; }
+.quotePaymentTabs button.selected { border-color: #ff5a00; color: #ff5a00; background: #fff8f4; }
+.quoteCash { display: grid; gap: 13px; margin-top: 14px; padding: 14px; border: 1px solid #cdeed9; border-radius: 8px; background: linear-gradient(135deg,#f4fdf7,#fff); }
+.quoteCash > div { display: flex; align-items: center; gap: 8px; color: #1e2733; }
+.quoteCash i { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; color: #16a34a; background: #ddf8e6; font-style: normal; }
+.quoteCash b { font-size: 12px; }
+.quoteCash p { margin: 0; color: #657183; font-size: 11px; line-height: 1.55; }
+.quoteCash > strong { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px dashed #bfdaca; color: #26313d; font-size: 12px; }
+.quoteCash > strong span { color: #159a50; font-size: 18px; }
+.quoteInstallments { display: grid; gap: 7px; margin-top: 14px; }
+.quoteInstallments button { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px; border: 1px solid #e0e5eb; border-radius: 7px; color: #27313f; background: #fff; text-align: left; }
+.quoteInstallments button.selected { border-color: #ff5a00; background: #fff9f5; }
+.quoteInstallments span, .quoteInstallments b { font-size: 11px; }
+.quoteInstallments em { margin-left: 4px; padding: 2px 5px; border-radius: 5px; color: #ff5a00; background: #fff0e7; font-size: 8px; font-style: normal; }
+.quoteInstallments small { grid-column: 1 / -1; color: #6c7788; font-size: 9px; }
+.quoteEditActions { display: grid; grid-template-columns: 1fr 1.1fr; gap: 9px; }
+.quoteEditActions .button { min-height: 42px; padding: 8px 10px; font-size: 11px; }
+.quotePriceNote { display: block; color: #8490a1; font-size: 10px; line-height: 1.45; }
+
+@media (max-width: 1100px) {
+  .quoteEditWorkspace { grid-template-columns: 1fr; }
+  .quoteEditRail { position: static; grid-template-columns: 1fr 1fr; }
+  .quoteEditRail .quoteEditActions, .quoteEditRail .quotePriceNote { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  .quoteEditPage { padding: 18px 14px 32px; }
+  .quoteRecallContent { grid-template-columns: 1fr; gap: 8px; }
+  .quoteRecallVisual { height: 95px; }
+  .quoteRecallBenefits { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .quoteEquipmentRow { grid-template-columns: 50px minmax(0,1fr) 82px; }
+  .quoteEquipmentRow .quoteItemPrice, .quoteEquipmentRow .quoteEditItem, .quoteEquipmentRow .quoteRemoveItem { display: none; }
+  .quoteServiceRow { grid-template-columns: 24px minmax(0,1fr) 76px; }
+  .quoteServiceRow strong { display: none; }
+  .quoteEditRail { grid-template-columns: 1fr; }
+}
