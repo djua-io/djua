@@ -169,7 +169,7 @@
 .applianceThumbnail { flex: 0 0 auto; display: block; background-repeat: no-repeat; background-size: 300% 400%; }
 .applianceThumbnail.row { width: 48px; height: 48px; border-radius: 7px; background-color: #f7f8fa; }
 .applianceThumbnail.compact { width: 25px; height: 25px; border-radius: 5px; background-color: transparent; }
-.applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border-radius: 0; background-color: transparent; }
+.applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border: 0; border-radius: 0; outline: 0; box-shadow: none; background-color: transparent; }
 .sprite-bulb { background-position: 0 0; }
 .sprite-fridge { background-position: 50% 0; }
 .sprite-blender { background-position: 100% 0; }
