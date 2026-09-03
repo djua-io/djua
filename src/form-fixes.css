@@ -226,6 +226,8 @@
 .applianceTotal small { display: block; margin-top: 3px; color: #667085; font-size: 12px; }
 .applianceTotal > div:last-child { text-align: right; }
 .applianceTotal strong { display: block; color: #ff5a00; font-size: 20px; }
+.applianceStepActions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+.applianceStepActions .button { min-width: 142px; }
 .applianceEnergy .card { margin: 0; padding: 18px; }
 .energyChart, .usageDistribution, .energyDevices { margin: 12px 0; padding: 14px; border: 1px solid #edf0f2; border-radius: 8px; }
 .energyChart > small, .energyMetric > small, .usageDistribution > small, .energyDevices small { color: #556071; font-size: 12px; }
@@ -411,6 +413,8 @@
   .applianceRow .applianceUsage, .applianceRow > .plain { display: none; }
   .applianceRow .editAppliance { display: grid; }
   .applianceRows { padding-inline: 14px; }
+  .applianceStepActions { align-items: stretch; flex-direction: column-reverse; }
+  .applianceStepActions .button { width: 100%; }
   .applianceModal .modalgrid { grid-template-columns: 1fr; }
   .applianceModal .preview { display: none; }
 }
