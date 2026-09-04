@@ -210,14 +210,14 @@ function QuoteEdit(){
   const applianceCount=items.reduce((total,item)=>total+item.quantity,0)||12;
   const dailyConsumption=items.length?fmt(sizing(items).daily):'3.84 kWh';
   const quoteItems=[
-    {name:'Panneaux solaires', detail:'Jinko Solar · Monocristallin · 600 W', image:solarPanelsProduct, quantity:4, unit:320, total:1280},
-    {name:'Batterie', detail:'Pylontech · LiFePO₄ · 5 kWh', image:batteryProduct, quantity:1, unit:950, total:950},
-    {name:'Onduleur', detail:'Deye · Hybride · 3 kVA', image:inverterProduct, quantity:1, unit:420, total:420}
+    {name:'Panneaux solaires', detail:'Jinko Solar · Monocristallin · 600 W', reason:'Produisent l’électricité pour vos usages quotidiens.', badge:'Performance élevée', image:solarPanelsProduct, quantity:4, unit:320, total:1280},
+    {name:'Batterie', detail:'Pylontech · LiFePO₄ · 5 kWh', reason:'Stocke l’énergie pour alimenter la maison le soir et la nuit.', badge:'Longue durée de vie', image:batteryProduct, quantity:1, unit:950, total:950},
+    {name:'Onduleur', detail:'Deye · Hybride · 3 kVA', reason:'Alimente vos appareils avec une énergie stable et adaptée.', badge:'Haute fiabilité', image:inverterProduct, quantity:1, unit:420, total:420}
   ];
   const services=[
-    {name:'Installation et mise en service', image:installationServiceKit, price:150},
-    {name:'Câbles et connectique', image:solarCableKit, price:30},
-    {name:'Structure de fixation', image:solarMountingKit, price:20}
+    {name:'Installation et mise en service', reason:'Installation, raccordement et vérification par un technicien.', image:installationServiceKit, price:150},
+    {name:'Câbles et connectique', reason:'Relient les équipements de façon sûre et durable.', image:solarCableKit, price:30},
+    {name:'Structure de fixation', reason:'Maintient les panneaux solidement fixés sur le toit.', image:solarMountingKit, price:20}
   ];
   const displayTotal=quote.payment==='cash'?2850:plan.total;
   const initialPayment=Math.round(plan.total*.1);
@@ -229,7 +229,7 @@ function QuoteEdit(){
         <div className="quoteEditDocumentHeader docHeader"><div className="orangeLogo">Orange <b>Énergie</b></div><b>DEVIS N° OE-2026-00847<br/><Badge text="Brouillon"/></b></div>
         <div className="quoteEditClientLine clientline"><span className="quoteEditClient"><I.UserRound size={20}/><b>Jean Kabeya<small>Maison individuelle<br/>Kinshasa, RDC</small></b></span><span><I.CalendarDays size={18}/> Date du devis<br/><b>28 août 2026</b></span><span><I.Clock3 size={18}/> Validité du devis<br/><b>28 sept. 2026 (30 jours)</b></span></div>
         <section className="quoteRecallCard"><h2>Rappel du système recommandé</h2><div className="quoteRecallContent"><div className="quoteRecallVisual"><img src={solarKit} alt="Système solaire recommandé"/></div><div className="quoteRecallBenefits"><div><i><I.ShieldCheck size={22}/></i><b>Énergie fiable</b><small>Pour tous vos appareils essentiels</small></div><div><i><I.BatteryCharging size={22}/></i><b>Autonomie</b><small>≈ 1 jour<br/>Même sans soleil</small></div><div><i><I.ChartNoAxesCombined size={22}/></i><b>Évolutif</b><small>Vous pourrez ajouter plus tard</small></div><div><i><I.BadgeCheck size={22}/></i><b>Garantie</b><small>Jusqu’à 10 ans<br/>sur les équipements</small></div></div></div></section>
-        <section className="quoteEditCard quoteDetailTable"><div className="quoteDetailTableHead"><span>Élément</span><span>Détails</span><span>Qté</span><span>Prix unitaire</span><span>Total</span></div>{quoteItems.map(item=><div className="quoteDetailProductRow" key={item.name}><span className="quoteDetailProduct"><img src={item.image} alt=""/><span><b>{item.name}</b><small>{item.detail}</small></span></span><span><Badge text={item.name==='Panneaux solaires'?'Performance élevée':item.name==='Batterie'?'Longue durée de vie':'Haute fiabilité'}/></span><span>{item.quantity}</span><span>{item.unit} $</span><strong>{item.total.toLocaleString('fr-FR')} $</strong></div>)}{services.map(({name,image,price})=><div className="quoteDetailServiceRow" key={name}><span><img src={image} alt=""/>{name}</span><span></span><span></span><span>forfait</span><strong>{price} $</strong></div>)}<div className="quoteDetailTotal"><span>TOTAL DU SYSTÈME</span><strong>2 850 $</strong></div></section>
+        <section className="quoteEditCard quoteDetailTable"><div className="quoteDetailTableHead"><span>Élément</span><span>Détails</span><span>Qté</span><span>Prix unitaire</span><span>Total</span></div>{quoteItems.map(item=><div className="quoteDetailProductRow" key={item.name}><span className="quoteDetailProduct"><img src={item.image} alt=""/><span><b>{item.name}</b><small>{item.detail}</small></span></span><span className="quoteItemReason"><Badge text={item.badge}/><small>{item.reason}</small></span><span>{item.quantity}</span><span>{item.unit} $</span><strong>{item.total.toLocaleString('fr-FR')} $</strong></div>)}{services.map(({name,reason,image,price})=><div className="quoteDetailServiceRow" key={name}><span><img src={image} alt=""/>{name}</span><span className="quoteItemReason"><small>{reason}</small></span><span></span><span>forfait</span><strong>{price} $</strong></div>)}<div className="quoteDetailTotal"><span>TOTAL DU SYSTÈME</span><strong>2 850 $</strong></div></section>
         <div className="quoteAdvisor"><I.Lightbulb size={22}/><span><b>Conseil Djúa</b><p>Ce système couvre confortablement vos besoins actuels. Vous pourrez toujours ajouter des équipements plus tard si nécessaire.</p></span></div>
       </div>
       <aside className="quoteEditRail">
