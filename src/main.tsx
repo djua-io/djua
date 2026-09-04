@@ -202,8 +202,10 @@ function Product({icon,title,text}:{icon:string,title:string,text:string}){const
 const equipment=[['☀️','Panneau solaire 600 W','Monocristallin',4,320],['🔋','Batterie LiFePO₄ 5 kWh','48 V · Énergie utile 4 kWh',1,950],['▣','Onduleur hybride 3 kVA','48 V · Puissance continue 2.4 kW',1,420]]
 function QuoteEdit(){
   const nav=useNavigate();
-  const {quote}=useData();
+  const {quote,items}=useData();
   const plan=plans.find(item=>item.months===quote.plan)!;
+  const applianceCount=items.reduce((total,item)=>total+item.quantity,0)||12;
+  const dailyConsumption=items.length?fmt(sizing(items).daily):'3.84 kWh';
   const quoteItems=[
     {name:'Panneaux solaires', detail:'Jinko Solar · Monocristallin · 600 W', image:solarPanelsProduct, quantity:4, unit:320, total:1280},
     {name:'Batterie', detail:'Pylontech · LiFePO₄ · 5 kWh', image:batteryProduct, quantity:1, unit:950, total:950},
@@ -229,7 +231,7 @@ function QuoteEdit(){
         <div className="quoteAdvisor"><I.Lightbulb size={22}/><span><b>Conseil Djúa</b><p>Ce système couvre confortablement vos besoins actuels. Vous pourrez toujours ajouter des équipements plus tard si nécessaire.</p></span></div>
       </div>
       <aside className="quoteEditRail">
-        <section className="quoteRailCard"><h2>Résumé du devis</h2><div className="quoteClient"><i><I.UserRound size={20}/></i><span><b>Jean Kabeya</b><small>Maison individuelle · Kinshasa, RDC</small></span></div><div className="quoteCostRows"><div><span>Matériel</span><b>2 650 $</b></div><div><span>Installation</span><b>150 $</b></div><div><span>Accessoires</span><b>50 $</b></div></div><div className="quoteSystemTotal"><span>Prix du système</span><strong>2 850 $</strong></div></section>
+        <section className="quoteRailCard"><h2>Résumé du dimensionnement</h2><div className="quoteClient"><i><I.UserRound size={20}/></i><span><b>Jean Kabeya</b><small>Maison individuelle · Kinshasa, RDC</small></span></div><dl className="quoteSizingRows"><div><dt><I.ListChecks size={16}/> Appareils</dt><dd>{applianceCount} appareils</dd></div><div><dt><I.Zap size={16}/> Consommation estimée</dt><dd>{dailyConsumption} / jour</dd></div><div><dt><I.SolarPanel size={16}/> Système recommandé</dt><dd>2.4 kWc · 5 kWh</dd></div></dl></section>
         <section className="quoteRailCard"><h2>Mode de paiement</h2>{quote.payment==='cash'?<div className="quoteCash"><div><i><I.CreditCard size={18}/></i><b>Paiement comptant</b></div><p>Le client règle la totalité du montant en un seul paiement.</p><strong>Total à payer <span>2 850 $</span></strong></div>:<div className="quoteChosenPlan"><div className="quoteChosenPlanHeading"><i><I.CalendarClock size={19}/></i><span><b>Paiement échelonné</b><small>Choix effectué lors de la recommandation</small></span></div><dl><div><dt>Durée choisie</dt><dd>{plan.months} mois</dd></div><div><dt>Paiement initial (10 %)</dt><dd>{paymentMoney(initialPayment)}</dd></div><div><dt>Mensualité</dt><dd>{paymentMoney(monthlyPayment)} / mois</dd></div><div><dt>Coût du financement</dt><dd>{(plan.total-2850).toLocaleString('fr-FR')} $</dd></div></dl><strong>Total à payer <span>{plan.total.toLocaleString('fr-FR')} $</span></strong></div>}</section>
         <div className="quoteEditActions"><Button secondary><I.Bookmark size={16}/> Enregistrer comme brouillon</Button><Button onClick={()=>nav('/devis/oe-2026-00847/preview')}>Générer le devis <I.ArrowRight size={17}/></Button></div>
         <small className="quotePriceNote">Les prix sont indicatifs et peuvent changer. Total sélectionné : {displayTotal.toLocaleString('fr-FR')} $.</small>
