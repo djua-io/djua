@@ -708,8 +708,8 @@
 .quoteDetailProduct small { margin-top: 3px; color: #718095; font-size: 9px; }
 .quoteDetailProductRow .badge { padding: 3px 6px; font-size: 8px; white-space: nowrap; }
 .quoteDetailProductRow > strong, .quoteDetailServiceRow > strong { color: #1c2530; font-size: 11px; }
-.quoteDetailServiceRow > span:first-child { display: flex; align-items: center; gap: 9px; color: #253040; font-size: 10px; }
-.quoteDetailServiceRow i { display: inline-grid; color: #71809a; font-style: normal; }
+.quoteDetailServiceRow > span:first-child { display: flex; align-items: center; gap: 10px; color: #253040; font-size: 10px; }
+.quoteDetailServiceRow > span:first-child img { width: 42px; height: 42px; flex: 0 0 auto; object-fit: contain; }
 .quoteDetailTotal { display: flex; align-items: center; justify-content: flex-end; gap: 28px; min-height: 54px; padding: 0 16px; border-top: 1px solid #e7ebef; color: #202a37; font-size: 13px; font-weight: 800; }
 .quoteDetailTotal strong { color: #ff5a00; font-size: 20px; }
 .quoteServices h2 { margin-bottom: 12px; }
