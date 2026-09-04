@@ -724,6 +724,17 @@
 .quoteCash p { margin: 0; color: #657183; font-size: 11px; line-height: 1.55; }
 .quoteCash > strong { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px dashed #bfdaca; color: #26313d; font-size: 12px; }
 .quoteCash > strong span { color: #159a50; font-size: 18px; }
+.quoteChosenPlan { display: grid; gap: 14px; margin-top: 14px; padding: 14px; border: 1px solid #ffe0cc; border-radius: 8px; background: linear-gradient(135deg,#fff9f5,#fff); }
+.quoteChosenPlanHeading { display: flex; align-items: center; gap: 9px; }
+.quoteChosenPlanHeading i { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; color: #ff5a00; background: #fff0e7; font-style: normal; }
+.quoteChosenPlanHeading b, .quoteChosenPlanHeading small { display: block; }
+.quoteChosenPlanHeading b { color: #26303d; font-size: 12px; }
+.quoteChosenPlanHeading small { margin-top: 2px; color: #748092; font-size: 10px; }
+.quoteChosenPlan dl { display: grid; gap: 9px; margin: 0; padding: 12px 0; border-top: 1px solid #f2dfd3; border-bottom: 1px dashed #d8c8bc; }
+.quoteChosenPlan dl div { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #667386; font-size: 11px; }
+.quoteChosenPlan dd { margin: 0; color: #25303c; font-weight: 700; }
+.quoteChosenPlan > strong { display: flex; align-items: center; justify-content: space-between; color: #26313d; font-size: 12px; }
+.quoteChosenPlan > strong span { color: #ff5a00; font-size: 19px; }
 .quoteInstallments { display: grid; gap: 7px; margin-top: 14px; }
 .quoteInstallments button { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px; border: 1px solid #e0e5eb; border-radius: 7px; color: #27313f; background: #fff; text-align: left; }
 .quoteInstallments button.selected { border-color: #ff5a00; background: #fff9f5; }
