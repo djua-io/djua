@@ -135,11 +135,16 @@
 .mapPreview { position: relative; min-height: 148px; overflow: hidden; display: grid; place-items: center; color: #ff5a00; border: 1px solid #dfe5e9; border-radius: 7px; background-color: #edf5f1; background-image: linear-gradient(25deg, transparent 46%, #d3e0df 47%, #d3e0df 51%, transparent 52%), linear-gradient(110deg, transparent 46%, #d9e6e4 47%, #d9e6e4 51%, transparent 52%), repeating-linear-gradient(0deg, transparent 0 18px, #dee9e8 19px 20px); }
 .mapPreview svg { z-index: 1; fill: #ff5a00; color: #ff5a00; filter: drop-shadow(0 1px 3px #85431b66); }
 .mapPreview span { position: absolute; left: 18px; top: 16px; color: #9aa5aa; font-size: 11px; }
+.mapInteractive { min-width: 0; }
+.openStreetMap { height: 218px; overflow: hidden; border: 1px solid #dfe5e9; border-radius: 7px; background: #edf5f1; outline: 0; }
+.openStreetMap:focus-visible { box-shadow: 0 0 0 3px #ff5a0033; }
+.mapInteractive > small { display: block; margin-top: 7px; color: #687083; font-size: 11px; line-height: 1.35; }
 .mapLocation aside { padding: 16px; border: 1px solid #dfe3ea; border-radius: 7px; }
 .mapLocation aside > div { display: flex; gap: 10px; align-items: flex-start; }
 .mapLocation aside i, .sameAddress aside i { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; color: #ff5a00; background: #fff2e8; border-radius: 50%; font-style: normal; }
 .mapLocation aside b, .sameAddress aside b { display: block; font-size: 12px; }
 .mapLocation aside small, .sameAddress aside small { display: block; margin-top: 5px; color: #515b6f; font-size: 12px; line-height: 1.5; }
+.mapLocation aside small em { color: #7a8494; font-size: 11px; font-style: normal; }
 .mapLocation aside .button { width: 100%; margin-top: 13px; }
 .sameAddress { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: end; margin-top: 15px; padding: 15px; border: 1px solid #dfe3ea; border-radius: 7px; }
 .sameAddress > b { grid-column: 1 / -1; font-size: 12px; }

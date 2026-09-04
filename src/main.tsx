@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate, useParams} from 'react-router-dom'
 import * as I from 'lucide-react'
@@ -44,6 +44,54 @@ function useData(){const [items,setItems]=useState<Appliance[]>(()=>store.get<Ap
 function Dashboard(){const metrics:{label:string;value:string|number;icon:React.ElementType}[]=[{label:'Dimensionnements',value:12,icon:I.Calculator},{label:'Devis partagés',value:8,icon:I.FileText},{label:'À relancer',value:3,icon:I.MessageCircle},{label:'Revenu potentiel',value:'13 920 $',icon:I.TrendingUp}];return <Page title="Bonjour Chris 👋" sub="Voici ce qui se passe aujourd'hui."><div className="metrics">{metrics.map(({label,value,icon:Icon})=><div className="metric" key={label}><Icon/><small>{label}</small><strong>{value}</strong><em>+12% ce mois</em></div>)}</div><div className="grid two"><Card title="À relancer aujourd'hui"><p>Jean Kabeya · Devis OE-2026-00847</p><Button>Relancer sur WhatsApp</Button></Card><Card title="Activité récente"><p>Devis envoyé à Jean Kabeya</p><p>Dimensionnement Kivu Market calculé</p></Card></div></Page>}
 function Page({title,sub,children,hideTitle=false}:{title:string,sub?:string,children:React.ReactNode,hideTitle?:boolean}){return <section className="page">{!hideTitle&&<h1>{title}</h1>}{sub&&<p className="muted">{sub}</p>}{children}</section>}
 function Card({title,children,className='' }:{title?:string,children:React.ReactNode,className?:string}){return <section className={'card '+className}>{title&&<h3>{title}</h3>}{children}</section>}
+
+type MapCoordinates={lat:number;lng:number}
+let leafletPromise:Promise<any>|undefined
+function loadLeaflet(){
+  const existing=(window as Window & {L?:any}).L
+  if(existing)return Promise.resolve(existing)
+  if(leafletPromise)return leafletPromise
+  if(!document.getElementById('leaflet-style')){
+    const stylesheet=document.createElement('link')
+    stylesheet.id='leaflet-style'
+    stylesheet.rel='stylesheet'
+    stylesheet.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+    document.head.appendChild(stylesheet)
+  }
+  leafletPromise=new Promise((resolve,reject)=>{
+    const script=document.createElement('script')
+    script.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    script.async=true
+    script.onload=()=>resolve((window as Window & {L?:any}).L)
+    script.onerror=()=>reject(new Error('La carte n’a pas pu être chargée.'))
+    document.head.appendChild(script)
+  })
+  return leafletPromise
+}
+function OpenStreetMapSelector({value,onChange}:{value:MapCoordinates,onChange:(coordinates:MapCoordinates)=>void}){
+  const elementRef=useRef<HTMLDivElement>(null)
+  const mapRef=useRef<any>(null)
+  const markerRef=useRef<any>(null)
+  const [status,setStatus]=useState('Chargement de la carte…')
+  useEffect(()=>{
+    let active=true
+    loadLeaflet().then(L=>{
+      if(!active||!elementRef.current)return
+      const map=L.map(elementRef.current,{zoomControl:true}).setView([value.lat,value.lng],15)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map)
+      const marker=L.marker([value.lat,value.lng],{draggable:true,keyboard:true}).addTo(map)
+      const select=(point:{lat:number;lng:number})=>onChange({lat:point.lat,lng:point.lng})
+      map.on('click',(event:any)=>select(event.latlng))
+      marker.on('dragend',()=>select(marker.getLatLng()))
+      mapRef.current=map
+      markerRef.current=marker
+      setStatus('Cliquez sur la carte ou faites glisser le repère pour choisir l’emplacement exact.')
+    }).catch(error=>active&&setStatus(error.message))
+    return ()=>{active=false;mapRef.current?.remove();mapRef.current=null;markerRef.current=null}
+  },[])
+  useEffect(()=>{markerRef.current?.setLatLng([value.lat,value.lng])},[value.lat,value.lng])
+  return <div className="mapInteractive"><div className="openStreetMap" id="location-map" ref={elementRef} tabIndex={0}/><small>{status}</small></div>
+}
 function Dimensionnements(){const nav=useNavigate();return <Page title="Dimensionnements" sub="Gérez les besoins énergétiques et les systèmes recommandés."><div className="toolbar"><div className="search">⌕ Rechercher un client ou un projet…</div><Button onClick={()=>nav('/dimensionnements/nouveau')}>＋ Nouveau devis</Button></div><Card><table><thead><tr><th>Projet</th><th>Client</th><th>Consommation</th><th>Statut</th><th></th></tr></thead><tbody><tr><td><b>Maison de Jean Kabeya</b><small>DIM-2026-00124</small></td><td>Jean Kabeya</td><td>3.84 kWh / jour</td><td><Badge text="Calculé"/></td><td><Button secondary onClick={()=>nav('/dimensionnements/jean/appareils')}>Ouvrir</Button></td></tr><tr><td><b>Kivu Market — Gombe</b><small>Brouillon</small></td><td>Kivu Market SARL</td><td>—</td><td><Badge text="Brouillon"/></td><td>…</td></tr></tbody></table></Card></Page>}
 function Badge({text}:{text:string}){return <span className={'badge '+text.toLowerCase()}>{text}</span>}
 function Progress({step,labels=['Client','Logement','Appareils']}:{step:number,labels?:string[]}){return <div className="progress">{labels.map((x,i)=><div className={i+1<step?'complete':i+1===step?'current':''} key={x}><b>{i+1<step?<I.Check size={16}/>:i+1}</b><span>{x}<small>{i+1===step?'En cours':i+1<step?'Terminé':'À faire'}</small></span></div>)}</div>}
@@ -266,6 +314,9 @@ function DynamicHousing(){
   const [locationName,setLocationName]=useState(project.locationName);
   const [address,setAddress]=useState(project.address);
   const [city,setCity]=useState(project.city);
+  const [coordinates,setCoordinates]=useState<MapCoordinates>({lat:-4.3276,lng:15.3136});
+  const [locationNote,setLocationNote]=useState('');
+  const lookupRef=useRef(0);
   const locationLabel=company?'Site':'Logement';
   const customOption=company?'Autre type de site':'Autre logement';
   const personTypes:[string,React.ElementType,string?][]=[['Maison individuelle',I.House],['Appartement',I.Building2],['Autre logement',I.House]];
@@ -273,7 +324,65 @@ function DynamicHousing(){
   const options=company?companyTypes:personTypes;
   const detailLabel=locationType==='Appartement'?'Niveau':locationType==='Maison individuelle'?'Nombre de pièces':'Nombre de niveaux';
   const detailValues=locationType==='Appartement'?['1er niveau','2e niveau','3e niveau','4e niveau']:locationType==='Maison individuelle'?['1 pièce','2 pièces','3 pièces','4 pièces','5 pièces et plus']:['1 niveau','2 niveaux','3 niveaux et plus'];
+  const chooseMapPoint=useCallback(async(point:MapCoordinates)=>{
+    setCoordinates(point);
+    const request=++lookupRef.current;
+    setLocationNote('Recherche de l’adresse…');
+    try{
+      const response=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&lat=${point.lat}&lon=${point.lng}`);
+      if(!response.ok)throw new Error('Adresse indisponible');
+      const result=await response.json();
+      if(request!==lookupRef.current)return;
+      const details=result.address||{};
+      const selectedAddress=[details.house_number,details.road||details.pedestrian||details.neighbourhood].filter(Boolean).join(' ');
+      const selectedCity=details.city||details.town||details.village||details.county||details.state;
+      if(selectedAddress)setAddress(selectedAddress);
+      if(selectedCity)setCity(selectedCity);
+      setLocationNote(result.display_name||'Emplacement sélectionné');
+    }catch{
+      if(request===lookupRef.current)setLocationNote(`Coordonnées : ${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}`);
+    }
+  },[]);
   const continueToAppliances=()=>{const resolvedType=locationType===customOption&&customType.trim()?customType.trim():locationType;store.set(projectKey(id),{...project,locationName:locationName.trim()||project.locationName,locationType:resolvedType,address:address.trim()||project.address,city:city.trim()||project.city});nav(`/dimensionnements/${id||'jean'}/appareils`)};
-  return <Page title="Nouveau devis"><div className="split locationStep"><div><Progress step={2} labels={company?['Entreprise','Site','Appareils']:['Client','Logement','Appareils']}/><section className="locationCard"><h2>{locationLabel} à dimensionner</h2><p className="muted">Où le système solaire sera-t-il installé ?</p><div className="createdClient"><i>{company?<I.Building2 size={21}/>:<I.UserRound size={21}/>}</i><span><b>{project.customerName}</b><small>Client créé avec succès</small></span><I.Check size={19}/></div><h3 className="locationSectionTitle">Type de {company?'site':'logement'} <em>*</em></h3><div className={'locationTypes '+(company?'siteTypes':'homeTypes')}>{options.map(([label,Icon,image])=>{const visual=image?<img className="siteTypeThumbnail" src={image} alt=""/>:<Icon size={27}/>;return label===customOption&&locationType===label?<label className="otherTypeButton selected" key={label}>{visual}<input aria-label={'Précisez le type de '+locationLabel.toLowerCase()} autoFocus value={customType} onChange={event=>setCustomType(event.target.value)} placeholder={company?'Ex. : Église, hôtel, restaurant…':'Ex. : Villa, résidence, immeuble…'}/><i><I.CircleDot size={17}/></i></label>:<button className={locationType===label?'selected':''} key={label} onClick={()=>setLocationType(label)}>{visual}<b>{label}</b><i>{locationType===label&&<I.CircleDot size={17}/>}</i></button>})}</div><h3 className="locationSectionTitle">Informations du {company?'site':'logement'}</h3><div className={'locationFields '+(company?'companyLocationFields':'homeNameFields')}><label>Nom du {company?'site':'logement'} <em>*</em><input value={locationName} onChange={event=>setLocationName(event.target.value)}/><small>{company?'Ex. : Boutique Gombe, Entrepôt Limete, Agence Matete…':'Ce nom permet d’identifier facilement ce logement.'}</small></label>{!company&&<label>{detailLabel} <span>(optionnel)</span><select defaultValue={detailValues[0]}>{detailValues.map(value=><option key={value}>{value}</option>)}</select></label>}<label>Ville / commune <em>*</em><input value={city} onChange={event=>setCity(event.target.value)}/></label></div><div className="locationFields addressFields"><label>Adresse / quartier <em>*</em><input value={address} onChange={event=>setAddress(event.target.value)}/></label><label>Repère <span>(optionnel)</span><input placeholder={company?'Ex. : En face de la station Total':'Ex. : Près de l’école, à côté de…'}/></label></div><div className="mapLocation"><div className="mapPreview"><I.MapPin size={36}/><span>{city}</span></div><aside><div><i><I.MapPin size={19}/></i><span><b>Localisation sélectionnée</b><small>{address}<br/>{city}</small></span></div><Button secondary><I.Pencil size={16}/> Modifier sur la carte</Button></aside></div><div className="locationActions"><Button secondary onClick={()=>nav('/dimensionnements/nouveau/client')}><I.ArrowLeft size={16}/> Retour</Button><Button onClick={continueToAppliances}>Continuer vers les appareils <I.ArrowRight size={16}/></Button></div></section></div><LocationSummary company={company} customerName={project.customerName}/></div></Page>
+  return <Page title="Nouveau devis">
+    <div className="split locationStep">
+      <div>
+        <Progress step={2} labels={company?['Entreprise','Site','Appareils']:['Client','Logement','Appareils']}/>
+        <section className="locationCard">
+          <h2>{locationLabel} à dimensionner</h2>
+          <p className="muted">Où le système solaire sera-t-il installé ?</p>
+          <div className="createdClient"><i>{company?<I.Building2 size={21}/>:<I.UserRound size={21}/>}</i><span><b>{project.customerName}</b><small>Client créé avec succès</small></span><I.Check size={19}/></div>
+          <h3 className="locationSectionTitle">Type de {company?'site':'logement'} <em>*</em></h3>
+          <div className={'locationTypes '+(company?'siteTypes':'homeTypes')}>
+            {options.map(([label,Icon,image])=>{
+              const visual=image?<img className="siteTypeThumbnail" src={image} alt=""/>:<Icon size={27}/>
+              return label===customOption&&locationType===label
+                ?<label className="otherTypeButton selected" key={label}>{visual}<input aria-label={'Précisez le type de '+locationLabel.toLowerCase()} autoFocus value={customType} onChange={event=>setCustomType(event.target.value)} placeholder={company?'Ex. : Église, hôtel, restaurant…':'Ex. : Villa, résidence, immeuble…'}/><i><I.CircleDot size={17}/></i></label>
+                :<button className={locationType===label?'selected':''} key={label} onClick={()=>setLocationType(label)}>{visual}<b>{label}</b><i>{locationType===label&&<I.CircleDot size={17}/>}</i></button>
+            })}
+          </div>
+          <h3 className="locationSectionTitle">Informations du {company?'site':'logement'}</h3>
+          <div className={'locationFields '+(company?'companyLocationFields':'homeNameFields')}>
+            <label>Nom du {company?'site':'logement'} <em>*</em><input value={locationName} onChange={event=>setLocationName(event.target.value)}/><small>{company?'Ex. : Boutique Gombe, Entrepôt Limete, Agence Matete…':'Ce nom permet d’identifier facilement ce logement.'}</small></label>
+            {!company&&<label>{detailLabel} <span>(optionnel)</span><select defaultValue={detailValues[0]}>{detailValues.map(value=><option key={value}>{value}</option>)}</select></label>}
+            <label>Ville / commune <em>*</em><input value={city} onChange={event=>setCity(event.target.value)}/></label>
+          </div>
+          <div className="locationFields addressFields">
+            <label>Adresse / quartier <em>*</em><input value={address} onChange={event=>setAddress(event.target.value)}/></label>
+            <label>Repère <span>(optionnel)</span><input placeholder={company?'Ex. : En face de la station Total':'Ex. : Près de l’école, à côté de…'}/></label>
+          </div>
+          <div className="mapLocation">
+            <OpenStreetMapSelector value={coordinates} onChange={chooseMapPoint}/>
+            <aside>
+              <div><i><I.MapPin size={19}/></i><span><b>Localisation sélectionnée</b><small>{address}<br/>{city}<br/><em>{coordinates.lat.toFixed(5)}, {coordinates.lng.toFixed(5)}</em></small></span></div>
+              <Button secondary onClick={()=>document.getElementById('location-map')?.focus()}><I.Pencil size={16}/> Ajuster sur la carte</Button>
+            </aside>
+          </div>
+          <div className="locationActions"><Button secondary onClick={()=>nav('/dimensionnements/nouveau/client')}><I.ArrowLeft size={16}/> Retour</Button><Button onClick={continueToAppliances}>Continuer vers les appareils <I.ArrowRight size={16}/></Button></div>
+        </section>
+      </div>
+      <LocationSummary company={company} customerName={project.customerName}/>
+    </div>
+  </Page>
 }
 createRoot(document.getElementById('root')!).render(<BrowserRouter><App/></BrowserRouter>)
