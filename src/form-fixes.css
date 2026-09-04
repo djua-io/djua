@@ -187,7 +187,7 @@
 .locationSummary .summaryCurrent i { color: #fff; background: #ff5a00; }
 .locationSummary .summaryComplete small { color: #31405a; }
 .locationSummary .summaryCurrent small { color: #171717; }
-.locationSummary .card { margin: 0 0 14px; padding: 18px; box-shadow: none; }
+.locationSummary .card, .clientCreationSidebar .card { margin: 0 0 14px; padding: 18px; box-shadow: none; }
 .clientContextCard h3 { display: flex; gap: 9px; align-items: center; margin: 0 0 15px; color: #182131; font-size: 13px; }
 .clientContextCard h3 svg { color: #56657d; }
 .contextClient { display: flex; gap: 11px; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #edf0f2; }
