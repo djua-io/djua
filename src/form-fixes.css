@@ -187,6 +187,37 @@
 .locationSummary .summaryCurrent i { color: #fff; background: #ff5a00; }
 .locationSummary .summaryComplete small { color: #31405a; }
 .locationSummary .summaryCurrent small { color: #171717; }
+.locationSummary .card { margin: 0 0 14px; padding: 18px; box-shadow: none; }
+.clientContextCard h3 { display: flex; gap: 9px; align-items: center; margin: 0 0 15px; color: #182131; font-size: 13px; }
+.clientContextCard h3 svg { color: #56657d; }
+.contextClient { display: flex; gap: 11px; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #edf0f2; }
+.contextClient > i { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: #4e68c6; background: #f0f4ff; font-style: normal; }
+.contextClient b { color: #171717; font-size: 13px; }
+.contextDetails { display: grid; gap: 15px; padding: 15px 0; }
+.contextDetails > div { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; }
+.contextDetails > div > svg { margin-top: 2px; color: #56657d; }
+.contextDetails b { color: #171717; font-size: 12px; }
+.contextDetails small { margin-top: 3px; color: #586276; font-size: 11px; line-height: 1.52; }
+.contextLink { width: 100%; min-height: 33px; display: flex; align-items: center; justify-content: center; gap: 7px; color: #303848; border: 1px solid #dfe3ea; border-radius: 6px; background: #fff; font-size: 11px; font-weight: 700; }
+.contextLink svg:first-child { color: #68758a; }
+.contextLink svg:last-child { color: #ff5a00; }
+.profileCompleteness { padding-bottom: 15px !important; }
+.profileHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.profileHeading h3 { margin: 0; color: #182131; font-size: 13px; }
+.profileHeading b { color: #475166; font-size: 11px; }
+.profileProgress { height: 7px; margin: 12px 0 14px; overflow: hidden; border-radius: 8px; background: #e9edf1; }
+.profileProgress i { display: block; width: 80%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #16a34a, #28c66d); }
+.profileCompleteness ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; color: #566174; font-size: 11px; }
+.profileCompleteness li { display: flex; gap: 8px; align-items: center; }
+.profileCompleteness li svg { color: #aeb7c5; }
+.profileCompleteness li.complete svg { color: #16a34a; }
+.profileCompleteness p { display: block !important; margin: 12px 0 0; color: #737d8d; font-size: 10px; line-height: 1.45; }
+.nextStepCard { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; background: #fffdfb; border-color: #ffdfc9; }
+.nextStepCard > i { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; color: #ff7c23; background: #fff1e7; font-style: normal; }
+.nextStepCard b, .nextStepCard strong, .nextStepCard small { display: block; }
+.nextStepCard b { color: #4d5668; font-size: 11px; }
+.nextStepCard strong { margin-top: 5px; color: #171717; font-size: 13px; }
+.nextStepCard small { margin-top: 5px; color: #657083; font-size: 11px; line-height: 1.45; }
 .clientFormCard .formActions { justify-content: space-between; }
 
 .quoteListToolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0; }
