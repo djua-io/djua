@@ -224,7 +224,7 @@ function QuoteEdit(){
     <div className="quoteEditWorkspace">
       <div className="quoteEditMain">
         <section className="quoteEditCard"><div className="quoteSectionTitle"><h2>Équipements sélectionnés</h2></div><div className="quoteEquipmentRows">{quoteItems.map(item=><div className="quoteEquipmentRow" key={item.name}><img src={item.image} alt=""/><span><b>{item.name}</b><small>{item.detail}</small></span><span className="quoteItemQuantity">Qté : {item.quantity}</span><span className="quoteItemPrice">{item.unit} $ / unité<strong>{item.total.toLocaleString('fr-FR')} $</strong></span></div>)}</div></section>
-        <section className="quoteEditCard quoteServices"><h2>Services & accessoires</h2>{services.map(({name,icon:Icon,price})=><div className="quoteServiceRow" key={name}><i><Icon size={18}/></i><b>{name}</b><span className="quoteItemQuantity">Qté : 1</span><strong>{price} $</strong></div>)}</section>
+        <section className="quoteEditCard quoteServices"><h2>Services & accessoires</h2>{services.map(({name,icon:Icon,price})=><div className="quoteServiceRow" key={name}><i><Icon size={18}/></i><b>{name}</b><strong>{price} $</strong></div>)}</section>
         <div className="quoteAdvisor"><I.Lightbulb size={22}/><span><b>Conseil Djúa</b><p>Ce système couvre confortablement vos besoins actuels. Vous pourrez toujours ajouter des équipements plus tard si nécessaire.</p></span></div>
       </div>
       <aside className="quoteEditRail">
