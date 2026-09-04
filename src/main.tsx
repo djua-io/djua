@@ -219,7 +219,7 @@ function QuoteEdit(){
   const monthlyPayment=(plan.total-initialPayment)/plan.months;
   const paymentMoney=(value:number)=>`${value.toLocaleString('fr-FR',{minimumFractionDigits:Number.isInteger(value)?0:2,maximumFractionDigits:2}).replace(/\u202f/g,' ')} $`;
   return <section className="page quoteEditPage">
-    <div className="quoteEditHeading"><h1>Nouveau devis <Badge text="Brouillon"/></h1><p>Basé sur le système recommandé　•　12 appareils　•　3.84 kWh/jour</p></div>
+    <div className="quoteEditDocumentHeader docHeader"><div className="orangeLogo">Orange <b>Énergie</b></div><b>DEVIS N° OE-2026-00847<br/><Badge text="Brouillon"/></b></div>
     <section className="quoteRecallCard"><h2>Rappel du système recommandé</h2><div className="quoteRecallContent"><div className="quoteRecallVisual"><img src={solarKit} alt="Système solaire recommandé"/></div><div className="quoteRecallBenefits"><div><i><I.ShieldCheck size={22}/></i><b>Énergie fiable</b><small>Pour tous vos appareils essentiels</small></div><div><i><I.BatteryCharging size={22}/></i><b>Autonomie</b><small>≈ 1 jour<br/>Même sans soleil</small></div><div><i><I.ChartNoAxesCombined size={22}/></i><b>Évolutif</b><small>Vous pourrez ajouter plus tard</small></div><div><i><I.BadgeCheck size={22}/></i><b>Garantie</b><small>Jusqu’à 10 ans<br/>sur les équipements</small></div></div></div></section>
     <div className="quoteEditWorkspace">
       <div className="quoteEditMain">

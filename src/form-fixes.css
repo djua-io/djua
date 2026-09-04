@@ -661,6 +661,8 @@
 .quoteEditHeading h1 { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 23px; }
 .quoteEditHeading h1 .badge { padding: 5px 10px; font-size: 10px; }
 .quoteEditHeading p { margin: 5px 0 17px; color: #566174; font-size: 12px; }
+.quoteEditDocumentHeader { margin-bottom: 18px; padding-top: 2px; }
+.quoteEditDocumentHeader > b { color: #1b2430; font-size: 13px; line-height: 1.65; text-align: right; }
 .quoteRecallCard, .quoteEditCard, .quoteRailCard { border: 1px solid #e4e8ed; border-radius: 10px; background: #fff; }
 .quoteRecallCard { padding: 18px 20px; }
 .quoteRecallCard h2, .quoteEditCard h2, .quoteRailCard h2 { margin: 0; color: #18202c; font-size: 14px; }
