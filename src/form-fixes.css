@@ -681,7 +681,7 @@
 .quoteSectionTitle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .quoteSectionTitle button { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; color: #ff5a00; background: transparent; font-size: 11px; font-weight: 700; }
 .quoteEquipmentRows { border: 1px solid #e7ebef; border-radius: 8px; overflow: hidden; }
-.quoteEquipmentRow { min-height: 78px; display: grid; grid-template-columns: 58px minmax(160px,1fr) 56px 114px 94px 22px; align-items: center; gap: 12px; padding: 9px 12px; border-bottom: 1px solid #e7ebef; }
+.quoteEquipmentRow { min-height: 78px; display: grid; grid-template-columns: 58px minmax(160px,1fr) 56px 114px; align-items: center; gap: 12px; padding: 9px 12px; border-bottom: 1px solid #e7ebef; }
 .quoteEquipmentRow:last-child { border-bottom: 0; }
 .quoteEquipmentRow > img { width: 54px; height: 54px; object-fit: contain; }
 .quoteEquipmentRow > span { min-width: 0; }
@@ -690,8 +690,6 @@
 .quoteItemQuantity { color: #6f7a8a; font-size: 10px; white-space: nowrap; }
 .quoteItemPrice { color: #596477; font-size: 10px; }
 .quoteItemPrice strong { display: block; margin-top: 3px; color: #17202d; font-size: 13px; }
-.quoteEditItem { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; border: 1px solid #dfe4eb; border-radius: 7px; color: #1c2530; background: #fff; font-size: 11px; font-weight: 700; }
-.quoteRemoveItem { padding: 0; border: 0; color: #69768a; background: transparent; }
 .quoteServices h2 { margin-bottom: 12px; }
 .quoteServiceRow { min-height: 55px; display: grid; grid-template-columns: 26px minmax(0,1fr) 56px 80px; align-items: center; gap: 12px; border-top: 1px solid #e8ecf0; }
 .quoteServiceRow i { color: #71809a; font-style: normal; }
@@ -756,9 +754,9 @@
   .quoteRecallContent { grid-template-columns: 1fr; gap: 8px; }
   .quoteRecallVisual { height: 95px; }
   .quoteRecallBenefits { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .quoteEquipmentRow { grid-template-columns: 50px minmax(0,1fr) 82px; }
+  .quoteEquipmentRow { grid-template-columns: 50px minmax(0,1fr); }
   .quoteEquipmentRow .quoteItemQuantity { display: none; }
-  .quoteEquipmentRow .quoteItemPrice, .quoteEquipmentRow .quoteEditItem, .quoteEquipmentRow .quoteRemoveItem { display: none; }
+  .quoteEquipmentRow .quoteItemPrice { display: none; }
   .quoteServiceRow { grid-template-columns: 24px minmax(0,1fr) 76px; }
   .quoteServiceRow .quoteItemQuantity { display: none; }
   .quoteServiceRow strong { display: none; }
