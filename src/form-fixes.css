@@ -744,6 +744,8 @@
 .quoteChosenPlan dd { margin: 0; color: #25303c; font-weight: 700; }
 .quoteChosenPlan > strong { display: flex; align-items: center; justify-content: space-between; color: #26313d; font-size: 12px; }
 .quoteChosenPlan > strong span { color: #ff5a00; font-size: 19px; }
+.quoteActionButtons { display: grid; gap: 8px; margin-top: 14px; }
+.quoteActionButtons .button { width: 100%; min-height: 38px; font-size: 11px; }
 .quoteInstallments { display: grid; gap: 7px; margin-top: 14px; }
 .quoteInstallments button { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px; border: 1px solid #e0e5eb; border-radius: 7px; color: #27313f; background: #fff; text-align: left; }
 .quoteInstallments button.selected { border-color: #ff5a00; background: #fff9f5; }
