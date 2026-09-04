@@ -431,8 +431,9 @@
   .newQuote { width: 100%; }
   .shell nav { gap: 7px; }
   .shell nav a { height: 35px; padding: 0; gap: 12px; color: #505050; font-size: 14px; font-weight: 500; }
-  .shell nav a:hover, .shell nav a.active { color: #303030; background: transparent; }
-  .shell nav a.active::before { display: none; }
+  .shell nav a:hover { color: #303030; background: #fafafa; }
+  .shell nav a.active { position: relative; color: #ff5a00; background: #fff1e9; font-weight: 700; }
+  .shell nav a.active::before { display: block; left: -30px; }
 }
 
 /* Recommendation workspace */

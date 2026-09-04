@@ -205,9 +205,9 @@ function QuoteEdit(){
   const {quote,setQuote}=useData();
   const plan=plans.find(item=>item.months===quote.plan)!;
   const quoteItems=[
-    {name:'Panneaux solaires', detail:'4 × 600 W · Monocristallin', image:solarPanelsProduct, quantity:4, unit:320, total:1280},
-    {name:'Batterie', detail:'5 kWh LiFePO₄ · 48 V', image:batteryProduct, quantity:1, unit:950, total:950},
-    {name:'Onduleur', detail:'3 kVA / 48 V · Hybride', image:inverterProduct, quantity:1, unit:420, total:420}
+    {name:'Panneaux solaires', detail:'Jinko Solar · Monocristallin · 600 W', image:solarPanelsProduct, quantity:4, unit:320, total:1280},
+    {name:'Batterie', detail:'Pylontech · LiFePO₄ · 5 kWh', image:batteryProduct, quantity:1, unit:950, total:950},
+    {name:'Onduleur', detail:'Deye · Hybride · 3 kVA', image:inverterProduct, quantity:1, unit:420, total:420}
   ];
   const services=[
     {name:'Installation et mise en service', icon:I.Wrench, price:150},
