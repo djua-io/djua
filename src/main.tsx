@@ -68,7 +68,7 @@ function loadLeaflet(){
   })
   return leafletPromise
 }
-function OpenStreetMapSelector({value,onChange}:{value:MapCoordinates,onChange:(coordinates:MapCoordinates)=>void}){
+function OpenStreetMapSelector({value,onChange,id='location-map',large=false}:{value:MapCoordinates,onChange:(coordinates:MapCoordinates)=>void;id?:string;large?:boolean}){
   const elementRef=useRef<HTMLDivElement>(null)
   const mapRef=useRef<any>(null)
   const markerRef=useRef<any>(null)
@@ -89,8 +89,41 @@ function OpenStreetMapSelector({value,onChange}:{value:MapCoordinates,onChange:(
     }).catch(error=>active&&setStatus(error.message))
     return ()=>{active=false;mapRef.current?.remove();mapRef.current=null;markerRef.current=null}
   },[])
-  useEffect(()=>{markerRef.current?.setLatLng([value.lat,value.lng])},[value.lat,value.lng])
-  return <div className="mapInteractive"><div className="openStreetMap" id="location-map" ref={elementRef} tabIndex={0}/><small>{status}</small></div>
+  useEffect(()=>{
+    markerRef.current?.setLatLng([value.lat,value.lng])
+    mapRef.current?.panTo([value.lat,value.lng],{animate:true})
+  },[value.lat,value.lng])
+  return <div className={'mapInteractive '+(large?'largeMap':'')}><div className="openStreetMap" id={id} ref={elementRef} tabIndex={0}/><small>{status}</small></div>
+}
+type NominatimResult={place_id:number;display_name:string;lat:string;lon:string}
+function MapPickerDialog({value,onClose,onConfirm}:{value:MapCoordinates;onClose:()=>void;onConfirm:(coordinates:MapCoordinates)=>void}){
+  const [draft,setDraft]=useState(value)
+  const [query,setQuery]=useState('')
+  const [results,setResults]=useState<NominatimResult[]>([])
+  const [searchStatus,setSearchStatus]=useState('')
+  const searchAddresses=async()=>{
+    if(!query.trim())return
+    setSearchStatus('Recherche…')
+    try{
+      const response=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=5&q=${encodeURIComponent(query.trim())}`)
+      if(!response.ok)throw new Error('Recherche indisponible')
+      const matches=await response.json() as NominatimResult[]
+      setResults(matches)
+      setSearchStatus(matches.length?`${matches.length} résultat${matches.length>1?'s':''} trouvé${matches.length>1?'s':''}`:'Aucun résultat pour cette adresse.')
+    }catch{setSearchStatus('La recherche d’adresse est momentanément indisponible.')}
+  }
+  return <div className="mapDialogBackdrop" role="presentation" onMouseDown={event=>event.currentTarget===event.target&&onClose()}>
+    <section className="mapDialog" role="dialog" aria-modal="true" aria-labelledby="map-dialog-title">
+      <header><div><h2 id="map-dialog-title">Choisir un emplacement</h2><p>Recherchez une adresse ou cliquez directement sur la carte.</p></div><button className="icon" aria-label="Fermer la carte" onClick={onClose}><I.X size={20}/></button></header>
+      <div className="mapSearch">
+        <I.Search size={18}/><input value={query} onChange={event=>setQuery(event.target.value)} onKeyDown={event=>event.key==='Enter'&&searchAddresses()} placeholder="Ex. : Avenue des Huileries, Kinshasa"/>
+        <button className="button" type="button" onClick={searchAddresses}>Rechercher</button>
+      </div>
+      {(searchStatus||results.length>0)&&<div className="mapSearchResults"><small>{searchStatus}</small>{results.map(result=><button key={result.place_id} type="button" onClick={()=>{setDraft({lat:Number(result.lat),lng:Number(result.lon)});setQuery(result.display_name);setResults([]);setSearchStatus('Emplacement positionné sur la carte.')}}><I.MapPin size={16}/><span>{result.display_name}</span></button>)}</div>}
+      <OpenStreetMapSelector id="location-map-dialog" value={draft} onChange={setDraft} large/>
+      <footer><span><I.MapPin size={16}/> {draft.lat.toFixed(5)}, {draft.lng.toFixed(5)}</span><div><Button secondary onClick={onClose}>Annuler</Button><Button onClick={()=>onConfirm(draft)}>Valider l’emplacement</Button></div></footer>
+    </section>
+  </div>
 }
 function Dimensionnements(){const nav=useNavigate();return <Page title="Dimensionnements" sub="Gérez les besoins énergétiques et les systèmes recommandés."><div className="toolbar"><div className="search">⌕ Rechercher un client ou un projet…</div><Button onClick={()=>nav('/dimensionnements/nouveau')}>＋ Nouveau devis</Button></div><Card><table><thead><tr><th>Projet</th><th>Client</th><th>Consommation</th><th>Statut</th><th></th></tr></thead><tbody><tr><td><b>Maison de Jean Kabeya</b><small>DIM-2026-00124</small></td><td>Jean Kabeya</td><td>3.84 kWh / jour</td><td><Badge text="Calculé"/></td><td><Button secondary onClick={()=>nav('/dimensionnements/jean/appareils')}>Ouvrir</Button></td></tr><tr><td><b>Kivu Market — Gombe</b><small>Brouillon</small></td><td>Kivu Market SARL</td><td>—</td><td><Badge text="Brouillon"/></td><td>…</td></tr></tbody></table></Card></Page>}
 function Badge({text}:{text:string}){return <span className={'badge '+text.toLowerCase()}>{text}</span>}
@@ -316,6 +349,7 @@ function DynamicHousing(){
   const [city,setCity]=useState(project.city);
   const [coordinates,setCoordinates]=useState<MapCoordinates>({lat:-4.3276,lng:15.3136});
   const [locationNote,setLocationNote]=useState('');
+  const [mapDialogOpen,setMapDialogOpen]=useState(false);
   const lookupRef=useRef(0);
   const locationLabel=company?'Site':'Logement';
   const customOption=company?'Autre type de site':'Autre logement';
@@ -375,9 +409,10 @@ function DynamicHousing(){
             <OpenStreetMapSelector value={coordinates} onChange={chooseMapPoint}/>
             <aside>
               <div><i><I.MapPin size={19}/></i><span><b>Localisation sélectionnée</b><small>{address}<br/>{city}<br/><em>{coordinates.lat.toFixed(5)}, {coordinates.lng.toFixed(5)}</em></small></span></div>
-              <Button secondary onClick={()=>document.getElementById('location-map')?.focus()}><I.Pencil size={16}/> Ajuster sur la carte</Button>
+              <Button secondary onClick={()=>setMapDialogOpen(true)}><I.Pencil size={16}/> Ajuster sur la carte</Button>
             </aside>
           </div>
+          {mapDialogOpen&&<MapPickerDialog value={coordinates} onClose={()=>setMapDialogOpen(false)} onConfirm={point=>{chooseMapPoint(point);setMapDialogOpen(false)}}/>}
           <div className="locationActions"><Button secondary onClick={()=>nav('/dimensionnements/nouveau/client')}><I.ArrowLeft size={16}/> Retour</Button><Button onClick={continueToAppliances}>Continuer vers les appareils <I.ArrowRight size={16}/></Button></div>
         </section>
       </div>
