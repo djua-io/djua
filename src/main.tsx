@@ -176,32 +176,64 @@ function LocationSummary({company,customerName}:{company:boolean,customerName:st
   </aside>
 }
 function ClientCreationSidebar({company,customerName}:{company:boolean;customerName:string}){
+  const initialDetails=company?{organization:'Entreprise / Commerce',firstName:'Patrick',lastName:'Ilunga',role:'Gérant',phone:'97 123 4567',email:'patrick@kivumarket.cd',city:'Kinshasa',neighborhood:'Gombe',street:'Avenue de la Révolution'}:{organization:'Particulier',firstName:'Jean',lastName:'Kabeya',role:'',phone:'81 234 5678',email:'jean.kabeya@email.com',city:'Kinshasa',neighborhood:'Gombe',street:'Avenue de la Révolution'}
+  const [details,setDetails]=useState(initialDetails)
+  useEffect(()=>{
+    const card=document.querySelector<HTMLElement>('.clientFormCard')
+    if(!card)return
+    const valueFor=(prefix:string)=>{
+      const label=[...card.querySelectorAll('label')].find(item=>item.textContent?.trim().startsWith(prefix))
+      const control=label?.querySelector<HTMLInputElement|HTMLSelectElement>('input, select')
+      return control?.value.trim()||''
+    }
+    const sync=()=>setDetails({
+      organization:company?valueFor('Type d’organisation'):'Particulier',
+      firstName:company?valueFor('Prénom'):customerName.trim().split(' ')[0]||'',
+      lastName:company?valueFor('Nom '):customerName.trim().split(' ').slice(1).join(' '),
+      role:company?valueFor('Qualité / fonction'):'',
+      phone:valueFor('Numéro de téléphone'),
+      email:valueFor('Adresse e-mail'),
+      city:valueFor('Ville'),
+      neighborhood:valueFor('Quartier'),
+      street:valueFor('Avenue / adresse')
+    })
+    sync()
+    card.addEventListener('input',sync)
+    card.addEventListener('change',sync)
+    return ()=>{card.removeEventListener('input',sync);card.removeEventListener('change',sync)}
+  },[company,customerName])
+  const hasIdentity=Boolean(customerName.trim())
   const name=customerName.trim()||(company?'Nouvelle entreprise':'Nouveau client')
-  const type=company?'Entreprise / Commerce':'Particulier'
-  const contact=company?'Patrick Ilunga':'Jean Kabeya'
-  const email=company?'patrick@kivumarket.cd':'jean.kabeya@email.com'
+  const type=details.organization||(company?'Type d’organisation à renseigner':'Particulier')
+  const contact=[details.firstName,details.lastName].filter(Boolean).join(' ')
+  const address=[details.street,details.neighborhood,details.city].filter(Boolean).join(', ')
+  const checks=[
+    {label:company?'Nom de l’entreprise':'Nom du client',complete:hasIdentity},
+    {label:company?'Type d’organisation':'Type de client',complete:Boolean(details.organization)},
+    {label:'Contact principal',complete:Boolean(contact)},
+    {label:'Téléphone',complete:Boolean(details.phone)},
+    {label:'Adresse complète',complete:Boolean(details.city&&details.neighborhood&&details.street)}
+  ]
+  const completion=Math.round(checks.filter(check=>check.complete).length/checks.length*100)
+  const remaining=checks.length-checks.filter(check=>check.complete).length
   const nextTitle=company?'Configurer le site':'Configurer le logement'
   return <aside className="summary clientCreationSidebar">
     <section className="card clientContextCard">
       <h3><I.Building2 size={18}/> Client en cours</h3>
       <div className="contextClient"><i>{company?<I.Building2 size={21}/>:<I.UserRound size={21}/>}</i><span><b>{name}</b><small>{type}</small></span></div>
       <div className="contextDetails">
-        <div><I.UserRound size={18}/><span><b>Contact principal</b><small>{contact}{company?' · Gérant':''}<br/>+243 {company?'97 123 4567':'81 234 5678'}<br/>{email}</small></span></div>
-        <div><I.MapPin size={18}/><span><b>Adresse</b><small>{company?'À renseigner pour le site':'À renseigner pour le logement'}</small></span></div>
+        <div><I.UserRound size={18}/><span><b>Contact principal</b><small>{contact||'—'}{company&&details.role&&' · '+details.role}<br/>{details.phone?'+243 '+details.phone:'—'}<br/>{details.email||'—'}</small></span></div>
+        <div><I.MapPin size={18}/><span><b>Adresse</b><small>{address||'À renseigner'}</small></span></div>
       </div>
       <button className="contextLink"><I.UserRound size={15}/> Voir la fiche client <I.ArrowRight size={15}/></button>
     </section>
     <section className="card profileCompleteness">
-      <div className="profileHeading"><h3>Complétude du profil</h3><b>80%</b></div>
-      <div className="profileProgress"><i/></div>
+      <div className="profileHeading"><h3>Complétude du profil</h3><b>{completion}%</b></div>
+      <div className="profileProgress"><i style={{width:completion+'%'}}/></div>
       <ul>
-        <li className="complete"><I.CheckCircle2 size={16}/> {company?'Nom de l’entreprise':'Nom du client'}</li>
-        <li className="complete"><I.CheckCircle2 size={16}/> {company?'Type d’organisation':'Type de client'}</li>
-        <li className="complete"><I.CheckCircle2 size={16}/> Contact principal</li>
-        <li className="complete"><I.CheckCircle2 size={16}/> Téléphone</li>
-        <li><I.Circle size={16}/> Adresse complète</li>
+        {checks.map(check=><li className={check.complete?'complete':''} key={check.label}>{check.complete?<I.CheckCircle2 size={16}/>:<I.Circle size={16}/>} {check.label}</li>)}
       </ul>
-      <p>Il reste 1 information utile pour un dossier plus complet.</p>
+      <p>{remaining?'Il reste '+remaining+' information'+(remaining>1?'s':'')+' utile'+(remaining>1?'s':'')+' pour un dossier plus complet.':'Le profil est complet.'}</p>
     </section>
     <section className="card nextStepCard"><i><I.MapPinned size={19}/></i><span><b>Prochaine étape</b><strong>{nextTitle}</strong><small>Vous indiquerez où sera installé le système solaire pour poursuivre le dimensionnement.</small></span></section>
     <div className="advice"><I.Lightbulb size={22}/><span><b>Conseil Djúa</b><p>{company?'Le téléphone du contact principal permettra de le joindre facilement au sujet du projet.':'Des informations complètes permettront une recommandation plus précise.'}</p></span></div>
