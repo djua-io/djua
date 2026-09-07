@@ -688,6 +688,29 @@
 .quoteDecisionActions .accept:hover, .quoteDecisionActions .accept.selected { border-color: #0e9d52; background: #f4fcf7; }
 .quoteDecisionActions .refuse { border-color: #ffc3c4; color: #de151d; }
 .quoteDecisionActions .refuse:hover, .quoteDecisionActions .refuse.selected { border-color: #ef3b42; background: #fff7f7; }
+.acceptedQuoteFollowup { margin-top: 16px; padding: 18px; border: 1px solid #d8e0ea; border-radius: 8px; background: #fff; }
+.acceptedQuoteFollowup > header h2, .acceptedConfirmation h2 { margin: 0; color: #162034; font-size: 16px; }
+.acceptedQuoteFollowup > header p { margin: 5px 0 16px; color: #4c5b73; font-size: 12.57px; }
+.acceptedMilestones { overflow: hidden; border: 1px solid #dce4ee; border-radius: 8px; }
+.acceptedMilestone { position: relative; min-height: 66px; display: grid; grid-template-columns: 42px minmax(0,1fr) 130px; align-items: center; gap: 10px; padding: 10px 16px; border-top: 1px solid #e8edf2; }
+.acceptedMilestone:first-child { border-top: 0; }
+.acceptedMilestone > i { z-index: 1; width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #07a653; box-shadow: 0 0 0 7px #edfbf3; font-style: normal; }
+.acceptedMilestone > span { display: grid; gap: 3px; }
+.acceptedMilestone b { color: #172237; font-size: 13.71px; }
+.acceptedMilestone small { color: #52617a; font-size: 11.43px; }
+.acceptedMilestone time { color: #3b4b64; font-size: 10.29px; text-align: right; }
+.acceptedMilestone hr { position: absolute; top: 40px; bottom: -10px; left: 31px; width: 2px; margin: 0; border: 0; background: #0eaf62; }
+.acceptedConfirmation { display: flex; align-items: flex-start; gap: 15px; margin-top: 16px; padding: 20px; border: 1px solid #a7dfbf; border-radius: 8px; background: linear-gradient(100deg,#f0fff5,#f9fffb); }
+.acceptedConfirmation > i { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: #fff; background: #09a451; box-shadow: 0 0 0 7px #d8f8e5; font-style: normal; }
+.acceptedConfirmation h2 { color: #087b3f; font-size: 18px; }
+.acceptedConfirmation p { margin: 6px 0 14px; color: #3a5870; font-size: 12.57px; line-height: 1.45; }
+.acceptedConfirmation > div > div { display: flex; flex-wrap: wrap; gap: 10px; }
+.acceptedConfirmation .button { min-height: 40px; padding: 8px 16px; font-size: 12.57px; }
+.acceptedNote { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; padding: 13px 15px; border: 1px solid #cddffb; border-radius: 7px; color: #31507c; background: #f5f9ff; }
+.acceptedNote svg { flex: 0 0 auto; color: #4c7fce; }
+.acceptedNote span { display: grid; gap: 3px; }
+.acceptedNote b { color: #253a59; font-size: 12.57px; }
+.acceptedNote small { font-size: 11.43px; }
 .detailAlternate { margin-top: 16px; padding: 23px; border: 1px solid #d8e0ea; border-radius: 7px; background: #fff; }
 .detailAlternate h2 { margin: 0; font-size:17.14px; }
 .detailAlternate p { color: #58667e; }
@@ -1154,6 +1177,9 @@
   .quoteEditRail { grid-template-columns: 1fr; }
   .quoteDecisionActions { grid-template-columns: 1fr; gap: 8px; }
   .quoteDecisionActions button { min-height: 56px; }
+  .acceptedMilestone { grid-template-columns: 38px minmax(0,1fr); padding: 10px 12px; }
+  .acceptedMilestone time { grid-column: 2; text-align: left; }
+  .acceptedConfirmation { padding: 16px; }
   .detailQuoteTable { overflow-x: auto; }
   .detailQuoteTableHeader, .detailQuoteTableRow { min-width: 720px; }
 }
