@@ -530,12 +530,7 @@
 .quoteListIntro p { margin: 0; color: #5b6a87; font-size:16px; }
 .quoteMetricGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 13px; margin-top: 16px; }
 .quoteMetricCard { position: relative; min-height: 130px; display: grid; align-content: space-between; gap: 13px; overflow: hidden; padding: 17px; border: 1px solid #e1e7f0; border-radius: 11px; background: linear-gradient(135deg,#fff,#fbfcff); box-shadow: 0 7px 18px rgba(33,47,69,.035); }
-.quoteMetricCard::before { position: absolute; top: 0; left: 0; width: 100%; height: 3px; content: ''; background: #9aa8bc; opacity: .8; }
-.quoteMetricCard.pipelineMetric::before { background: #ff8b47; }
 .quoteMetricCard.followMetric { border-color: #ffead9; background: linear-gradient(135deg,#fffaf5,#fffdfb); }
-.quoteMetricCard.followMetric::before { background: #ff6c24; }
-.quoteMetricCard.acceptedMetric::before { background: #16af67; }
-.quoteMetricCard.valueMetric::before { background: #397ee3; }
 .metricHeading { display: grid; grid-template-columns: 41px minmax(0,1fr) auto; gap: 11px; align-items: start; }
 .metricHeading > i { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; font-style: normal; }
 .metricHeading > i.orange { color: #ff5a00; background: #fff0e5; }
