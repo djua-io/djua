@@ -26,7 +26,7 @@ const store={get:<T,>(k:string,d:T):T=>{try{return JSON.parse(localStorage.getIt
 const projectKey=(id?:string)=>`djua-project-${id||'jean'}`
 const defaultProject=(id?:string):SizingProject=>id==='kivu'?{customerName:'Kivu Market SARL',locationName:'Kivu Market — Gombe',locationType:'Commerce',city:'Kinshasa, RDC',address:'Avenue des Huileries, Gombe',company:true}:{customerName:'Jean Kabeya',locationName:'Maison de Jean Kabeya',locationType:'Maison individuelle',city:'Kinshasa, RDC',address:'Avenue de la Révolution, Gombe',company:false}
 const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Clients":I.UsersRound,"Devis":I.Calculator,"Installations":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
-const nav=[['Tableau de bord','/dashboard'],['Clients','/clients'],['Devis','/devis'],['Installations','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
+const nav=[['Tableau de bord','/dashboard'],['Devis','/devis'],['Installations','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
 function Layout({children}:{children:React.ReactNode}){
   const {pathname}=useLocation();
   const navigate=useNavigate();
