@@ -575,7 +575,7 @@
 .quoteTabs button { min-width: 99px; height: 33px; padding: 0 10px; border: 1px solid #e0e6ef; border-left: 0; color: #53627e; background: #fff; font-size:11.43px; white-space: nowrap; }
 .quoteTabs button:first-child { border-left: 1px solid #e0e6ef; border-radius: 6px 0 0 6px; }
 .quoteTabs button:last-child { border-radius: 0 6px 6px 0; }
-.quoteTabs button.active { z-index: 1; border-color: #ff5a00; color: #ff5a00; background: #fff9f5; }
+.quoteTabs button.active { position: relative; z-index: 1; border: 1px solid #ff5a00; color: #ff5a00; background: #fff9f5; }
 .quoteDataTable { margin: 0 8px; border: 1px solid #e4e9f0; border-radius: 7px 7px 0 0; overflow: hidden; }
 .quoteDataHeader, .quoteDataRow { display: grid; grid-template-columns: 38px 150px minmax(160px,1fr) 120px 140px 145px minmax(185px,1.3fr) 132px 38px; align-items: center; column-gap: 0; }
 .quoteDataHeader { min-height: 39px; color: #53617a; background: #f8fafc; font-size:11.43px; font-weight: 650; }
