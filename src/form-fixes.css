@@ -529,16 +529,32 @@
 .quoteListIntro h1 { margin: 0 0 1px; color: #121827; font-size:29.71px; line-height: 1.25; letter-spacing: -.65px; }
 .quoteListIntro p { margin: 0; color: #5b6a87; font-size:16px; }
 .quoteMetricGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 13px; margin-top: 16px; }
-.quoteMetricGrid > div { min-height: 114px; display: flex; align-items: flex-start; gap: 14px; padding: 17px; border: 1px solid #e1e7f0; border-radius: 8px; background: #fff; }
-.quoteMetricGrid .followMetric { border-color: #ffead9; background: linear-gradient(105deg,#fffaf5,#fffdfb); }
-.quoteMetricGrid i { width: 40px; height: 40px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; font-style: normal; }
-.quoteMetricGrid i.orange { color: #ff5a00; background: #fff1e6; }
-.quoteMetricGrid i.green { color: #00a353; background: #e7f8ef; }
-.quoteMetricGrid i.blue { color: #1670e7; background: #eaf2ff; }
-.quoteMetricGrid span { display: grid; gap: 1px; }
-.quoteMetricGrid small { color: #40506c; font-size:13.71px; font-weight: 600; }
-.quoteMetricGrid b { color: #111827; font-size:29.71px; line-height: 1.2; letter-spacing: -.6px; }
-.quoteMetricGrid em { color: #64728b; font-size:12.57px; font-style: normal; }
+.quoteMetricCard { position: relative; min-height: 130px; display: grid; align-content: space-between; gap: 13px; overflow: hidden; padding: 17px; border: 1px solid #e1e7f0; border-radius: 11px; background: linear-gradient(135deg,#fff,#fbfcff); box-shadow: 0 7px 18px rgba(33,47,69,.035); }
+.quoteMetricCard::before { position: absolute; top: 0; left: 0; width: 100%; height: 3px; content: ''; background: #9aa8bc; opacity: .8; }
+.quoteMetricCard.pipelineMetric::before { background: #ff8b47; }
+.quoteMetricCard.followMetric { border-color: #ffead9; background: linear-gradient(135deg,#fffaf5,#fffdfb); }
+.quoteMetricCard.followMetric::before { background: #ff6c24; }
+.quoteMetricCard.acceptedMetric::before { background: #16af67; }
+.quoteMetricCard.valueMetric::before { background: #397ee3; }
+.metricHeading { display: grid; grid-template-columns: 41px minmax(0,1fr) auto; gap: 11px; align-items: start; }
+.metricHeading > i { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; font-style: normal; }
+.metricHeading > i.orange { color: #ff5a00; background: #fff0e5; }
+.metricHeading > i.green { color: #00a353; background: #e7f8ef; }
+.metricHeading > i.blue { color: #1670e7; background: #eaf2ff; }
+.metricHeading span { display: grid; gap: 2px; }
+.metricHeading small { color: #40506c; font-size: 12.57px; font-weight: 700; }
+.metricHeading span b { color: #111827; font-size: 27.43px; line-height: 1; letter-spacing: -.7px; white-space: nowrap; }
+.valueMetric .metricHeading span b { font-size: 25.14px; }
+.metricHeading > em { display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; padding: 4px 6px; border-radius: 7px; color: #4f627f; background: #f2f5f9; font-size: 9.71px; font-style: normal; font-weight: 700; white-space: nowrap; }
+.followMetric .metricHeading > em { color: #d95c14; background: #fff0e5; }
+.acceptedMetric .metricHeading > em { color: #0a8e4c; background: #e5f8ed; }
+.valueMetric .metricHeading > em { color: #2471cf; background: #e9f2ff; }
+.metricFoot { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #69778e; font-size: 10.29px; }
+.metricFoot b { color: #384863; font-size: 10.29px; font-weight: 700; text-align: right; }
+.metricTrack { height: 5px; overflow: hidden; border-radius: 999px; background: #edf1f5; }
+.metricTrack i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#ff9a60,#ff5a00); }
+.acceptedMetric .metricTrack i { background: linear-gradient(90deg,#73d99d,#09a454); }
+.valueMetric .metricTrack i { background: linear-gradient(90deg,#8dbbff,#2875db); }
 .followUpPanel { margin-top: 16px; padding: 15px 16px 14px; border: 1px solid #ffe5d2; border-radius: 8px; background: linear-gradient(110deg,#fffaf5 0%,#fffdfb 100%); }
 .followUpPanel > header { height: auto; min-height: 38px; display: flex; justify-content: space-between; padding: 0; border: 0; background: transparent; position: static; }
 .followUpToggle { min-width: 0; display: flex; flex: 1; align-items: flex-start; gap: 14px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
