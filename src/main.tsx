@@ -317,19 +317,37 @@ function Recommendation(){
   const {items,quote,setQuote}=useData();
   const s=sizing(items);
   const project={...defaultProject(id),...store.get<SizingProject>(projectKey(id),{} as SizingProject)};
-  const [configuration,setConfiguration]=useState('recommended');
+  const [configuration,setConfiguration]=useState('solar-first');
   const [tab,setTab]=useState<'why'|'technical'>('why');
   const [paymentMode,setPaymentMode]=useState<'cash'|'installments'>(quote.payment==='cash'?'cash':'installments');
   const [selectedPlanMonths,setSelectedPlanMonths]=useState(quote.plan);
   const applianceCount=items.reduce((count,item)=>count+item.quantity,0);
   const dailyKwh=(s.daily/1000).toFixed(2);
   const peakKw=(s.peak/1000).toFixed(2);
-  const configurations=[
-    {id:'economic', icon:I.Leaf, title:'Économique', subtitle:'Coût optimisé', solar:'1.8 kWc', battery:'3.5 kWh', inverter:'2 kVA', autonomy:'Autonomie ≈ 0.7 jour', target:'0.7 jour', price:'2 150 $', priceNumber:2150, production:'≈ 7.2 kWh / jour', productCount:'5 références disponibles', impact:'≈ 1.4 tonnes / an', trees:'64', chartFactor:.8, energy:'≈ 4.24 kWh / jour', panels:{value:'3 × 600 W',details:'Total : 1.8 kWc',tag:'Monocristallin'},storage:{value:'3.5 kWh LiFePO₄',details:'Énergie utile : 2.8 kWh (80% DoD)',tag:'48 V'},converter:{value:'2 kVA / 48 V',details:'Puissance continue : 1.6 kW',tag:'Marge de puissance : +18 %'}},
-    {id:'recommended', icon:I.Star, title:'Recommandée', subtitle:'Meilleur équilibre', solar:'2.4 kWc', battery:'5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1 jour', target:'1 jour', price:'2 850 $', priceNumber:2850, production:'≈ 9.5 kWh / jour', productCount:'6 références disponibles', impact:'≈ 1.9 tonnes / an', trees:'87', chartFactor:1, energy:'≈ 5.30 kWh / jour', panels:{value:'4 × 600 W',details:'Total : 2.4 kWc',tag:'Monocristallin'},storage:{value:'5 kWh LiFePO₄',details:'Énergie utile : 4 kWh (80% DoD)',tag:'48 V'},converter:{value:'3 kVA / 48 V',details:'Puissance continue : 2.4 kW',tag:'Marge de puissance : +34 %'}},
-    {id:'autonomy', icon:I.ShieldCheck, title:'Autonomie +', subtitle:'Autonomie maximale', solar:'3.0 kWc', battery:'7.5 kWh', inverter:'3 kVA', autonomy:'Autonomie ≈ 1.5 jour', target:'1.5 jour', price:'3 650 $', priceNumber:3650, production:'≈ 11.8 kWh / jour', productCount:'7 références disponibles', impact:'≈ 2.4 tonnes / an', trees:'110', chartFactor:1.23, energy:'≈ 6.52 kWh / jour', panels:{value:'5 × 600 W',details:'Total : 3.0 kWc',tag:'Monocristallin'},storage:{value:'7.5 kWh LiFePO₄',details:'Énergie utile : 6 kWh (80% DoD)',tag:'48 V'},converter:{value:'3 kVA / 48 V',details:'Puissance continue : 2.4 kW',tag:'Marge de puissance : +42 %'}}
+  const demandDaily=Math.max(s.daily/1000,.8);
+  const demandPeak=Math.max(s.peak/1000,.6);
+  const roundTo=(value:number,step:number)=>Math.ceil(value/step)*step;
+  const number=(value:number)=>value.toLocaleString('fr-FR',{maximumFractionDigits:1}).replace(/\u202f/g,' ');
+  const sourceModes=[
+    {id:'grid-first',icon:I.Plug,title:'Solaire complémentaire',subtitle:'Le réseau est la source principale.',solarShare:35,backupDays:.25,gridRole:'Source principale',gridCopy:'Le solaire réduit la facture en journée.',inverterFactor:.8},
+    {id:'solar-only',icon:I.SunMedium,title:'Solaire autonome',subtitle:'Le solaire est votre seule source d’énergie.',solarShare:100,backupDays:1,gridRole:'Hors réseau',gridCopy:'Toute l’énergie est produite et stockée sur place.',inverterFactor:1.2},
+    {id:'solar-first',icon:I.SolarPanel,title:'Solaire prioritaire',subtitle:'Le solaire alimente d’abord, le réseau prend le relais.',solarShare:80,backupDays:.6,gridRole:'Réseau de secours',gridCopy:'Le réseau couvre les pointes et les jours moins ensoleillés.',inverterFactor:1}
   ];
-  const selectedConfiguration=configurations.find(option=>option.id===configuration)??configurations[1];
+  const configurations=sourceModes.map(mode=>{
+    const solarEnergy=demandDaily*1.35*(mode.solarShare/100);
+    const panelQuantity=Math.max(1,Math.ceil(solarEnergy/(.6*5.1*.78)));
+    const solarKw=panelQuantity*.6;
+    const batteryCapacity=roundTo(Math.max(1,demandDaily*mode.backupDays/.8),.5);
+    const inverterKva=roundTo(Math.max(1.5,demandPeak*1.25*mode.inverterFactor),.5);
+    const dailyProduction=solarKw*5.1*.78;
+    const panelCost=panelQuantity*320;
+    const batteryCost=Math.ceil(batteryCapacity/5)*950;
+    const inverterCost=inverterKva<=2?420:inverterKva<=3?600:780;
+    const priceNumber=panelCost+batteryCost+inverterCost+250;
+    const autonomyLabel=mode.backupDays<1?`≈ ${Math.round(mode.backupDays*24)} h`:`≈ ${number(mode.backupDays)} jour${mode.backupDays>1?'s':''}`;
+    return {...mode,solar:`${number(solarKw)} kWc`,battery:`${number(batteryCapacity)} kWh`,inverter:`${number(inverterKva)} kVA`,autonomy:`Réserve ${autonomyLabel}`,target:autonomyLabel,priceNumber,price:`${number(priceNumber)} $`,production:`≈ ${number(dailyProduction)} kWh / jour`,energy:`${number(solarEnergy)} kWh / jour`,panels:{value:`${panelQuantity} × 600 W`,details:`Couvre environ ${mode.solarShare} % de vos besoins`,tag:'Monocristallin'},storage:{value:`${number(batteryCapacity)} kWh LiFePO₄`,details:`Réserve utile pour ${autonomyLabel.replace('≈ ','')}`,tag:'48 V'},converter:{value:`${number(inverterKva)} kVA / 48 V`,details:'Protège vos appareils et gère les sources',tag:mode.gridRole}};
+  });
+  const selectedConfiguration=configurations.find(option=>option.id===configuration)??configurations[2];
   const equipment=[
     {icon:I.SunMedium, title:'Panneaux solaires', image:solarPanelsProduct, alt:'Panneaux solaires', tone:'sun', ...selectedConfiguration.panels},
     {icon:I.BatteryCharging, title:'Batterie', image:batteryProduct, alt:'Batterie solaire', tone:'battery', ...selectedConfiguration.storage},
@@ -339,10 +357,10 @@ function Recommendation(){
   const selectedPlan=financedPlans.find(plan=>plan.months===selectedPlanMonths)??financedPlans[1];
   const money=(value:number)=>`${value.toLocaleString('fr-FR',{minimumFractionDigits:Number.isInteger(value)?0:2,maximumFractionDigits:2}).replace(/\u202f/g,' ')} $`;
   const metrics=[
-    {icon:I.Zap, title:'Production estimée', value:selectedConfiguration.production, copy:'En moyenne annuelle', tone:'orange'},
-    {icon:I.BatteryCharging, title:'Autonomie estimée', value:selectedConfiguration.target, copy:'Sans apport solaire', tone:'green'},
-    {icon:I.ShieldCheck, title:'Niveau de confiance', value:'Élevé', copy:'Selon les données locales', tone:'green'},
-    {icon:I.Award, title:'Garantie produits', value:'Jusqu’à 10 ans', copy:'Selon les équipements', tone:'slate'}
+    {icon:I.Zap, title:'Production solaire estimée', value:selectedConfiguration.production, copy:'En moyenne annuelle', tone:'orange'},
+    {icon:I.SunMedium, title:'Part solaire', value:`${selectedConfiguration.solarShare} %`, copy:'De vos besoins quotidiens', tone:'green'},
+    {icon:I.BatteryCharging, title:'Réserve batterie', value:selectedConfiguration.target, copy:'En cas de coupure ou de faible soleil', tone:'green'},
+    {icon:I.Plug, title:'Rôle du réseau', value:selectedConfiguration.gridRole, copy:selectedConfiguration.gridCopy, tone:'slate'}
   ];
   const title=project.company?project.customerName:project.locationName;
   return <section className="page recommendationPage">
@@ -352,7 +370,7 @@ function Recommendation(){
     <div className="recommendationLayout">
       <div className="recommendationMain">
         <section className="recommendationCard configurationCard">
-          <h2>Choisir une configuration</h2>
+          <h2>Choisir le rôle de chaque source d’énergie</h2>
           <div className="configurationOptions">{configurations.map(({id:optionId,icon:Icon,title:optionTitle,subtitle,solar,battery,inverter,autonomy})=><button type="button" key={optionId} onClick={()=>setConfiguration(optionId)} className={'configurationOption '+(configuration===optionId?'selected':'')}>
             <span className="configurationTop"><i><Icon size={18}/></i><b>{optionTitle}</b></span>{configuration===optionId&&<I.CheckCircle2 className="configurationCheck" size={20}/>}<small>{subtitle}</small><strong><span>{solar}</span><span>{battery}</span><span>{inverter}</span></strong><em>{autonomy}</em>
           </button>)}</div>
@@ -366,11 +384,11 @@ function Recommendation(){
         <section className="systemMetrics">{metrics.map(({icon:Icon,title:metricTitle,value,copy,tone})=><div key={metricTitle}><i className={tone}><Icon size={27}/></i><span><small>{metricTitle}</small><strong>{value}</strong><em>{copy}</em></span></div>)}</section>
         <section className="recommendationCard detailsCard">
           <div className="detailsTabs"><button className={tab==='why'?'active':''} onClick={()=>setTab('why')}>Pourquoi cette configuration ?</button><button className={tab==='technical'?'active':''} onClick={()=>setTab('technical')}>Détails techniques</button></div>
-          {tab==='why'?<div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Pertes système</dt><dd>+ 15%</dd></div><div><dt>Marge de sécurité</dt><dd>+ 20%</dd></div><div><dt>Énergie à produire</dt><dd>{selectedConfiguration.energy}</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire minimale</dt><dd>{selectedConfiguration.solar}</dd></div></dl></div><div className="knowMore"><I.Lightbulb size={22}/><div><h3>Bon à savoir</h3><p>La configuration {selectedConfiguration.title.toLowerCase()} couvre vos besoins avec une autonomie de {selectedConfiguration.target} et une marge de sécurité confortable.</p></div></div></div>:<div className="technicalDetails"><div><I.SolarPanel/><b>{selectedConfiguration.solar} de panneaux solaires</b><small>Production adaptée à l'ensoleillement de {project.city}.</small></div><div><I.BatteryFull/><b>{selectedConfiguration.battery} de stockage LiFePO₄</b><small>Réserve d'énergie utilisable pour la soirée et la nuit.</small></div><div><I.Power/><b>Onduleur hybride {selectedConfiguration.inverter}</b><small>Compatible avec l'évolution de vos usages.</small></div></div>}
+          {tab==='why'?<div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Part couverte par le solaire</dt><dd>{selectedConfiguration.solarShare} %</dd></div><div><dt>Rôle du réseau électrique</dt><dd>{selectedConfiguration.gridRole}</dd></div><div><dt>Pertes et marge de sécurité</dt><dd>+ 35 %</dd></div><div><dt>Énergie solaire à produire</dt><dd>{selectedConfiguration.energy}</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire proposée</dt><dd>{selectedConfiguration.solar}</dd></div></dl></div><div className="knowMore"><I.Lightbulb size={22}/><div><h3>Bon à savoir</h3><p>{selectedConfiguration.gridCopy} Cette option prévoit une réserve d’environ {selectedConfiguration.target} pour vos usages essentiels.</p></div></div></div>:<div className="technicalDetails"><div><I.SolarPanel/><b>{selectedConfiguration.solar} de panneaux solaires</b><small>Dimensionnés pour couvrir environ {selectedConfiguration.solarShare} % de votre consommation à {project.city}.</small></div><div><I.BatteryFull/><b>{selectedConfiguration.battery} de stockage LiFePO₄</b><small>Réserve utile estimée à {selectedConfiguration.target} selon le mode choisi.</small></div><div><I.Power/><b>Onduleur hybride {selectedConfiguration.inverter}</b><small>{selectedConfiguration.gridCopy}</small></div></div>}
         </section>
       </div>
       <aside className="recommendationRail">
-        <section className="railCard energySummary"><div className="railTitle"><h2>Résumé énergétique</h2><button onClick={()=>nav(`/dimensionnements/${id||'jean'}/appareils`)}><span>Modifier</span><I.Pencil size={14}/></button></div><dl><div><dt>Consommation quotidienne</dt><dd>{dailyKwh} kWh / jour</dd></div><div><dt>Puissance simultanée</dt><dd>{peakKw} kW</dd></div><div><dt>Répartition d’utilisation</dt><dd>Jour 38%　•　Nuit 62%</dd></div><div><dt>Autonomie cible</dt><dd>{selectedConfiguration.target}</dd></div></dl></section>
+        <section className="railCard energySummary"><div className="railTitle"><h2>Résumé énergétique</h2><button onClick={()=>nav(`/dimensionnements/${id||'jean'}/appareils`)}><span>Modifier</span><I.Pencil size={14}/></button></div><dl><div><dt>Consommation quotidienne</dt><dd>{dailyKwh} kWh / jour</dd></div><div><dt>Puissance simultanée</dt><dd>{peakKw} kW</dd></div><div><dt>Mode d’alimentation</dt><dd>{selectedConfiguration.title}</dd></div><div><dt>Rôle du réseau</dt><dd>{selectedConfiguration.gridRole}</dd></div><div><dt>Réserve cible</dt><dd>{selectedConfiguration.target}</dd></div></dl></section>
         <section className="railCard paymentMethod">
           <h2>Mode de paiement</h2>
           <div className="paymentTabs"><button className={paymentMode==='cash'?'active':''} onClick={()=>{setPaymentMode('cash');setQuote({...quote,payment:'cash'})}}>Comptant</button><button className={paymentMode==='installments'?'active':''} onClick={()=>{setPaymentMode('installments');setQuote({...quote,payment:'plan'})}}>Paiement échelonné</button></div>
