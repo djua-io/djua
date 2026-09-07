@@ -722,6 +722,12 @@
 .detailEquipmentRecap small { color: #68758d; font-size:10.29px; line-height: 1.25; }
 .quoteDetailRail { display: grid; align-content: start; gap: 16px; margin-top: 43px; }
 .quoteDetailRail .quoteProducts { display: none; }
+.quoteDetailRail .quoteDecisionPanel { margin-top: 0; }
+.quoteDetailRail .quoteDecisionActions { grid-template-columns: 1fr; gap: 8px; padding: 0 14px 14px; }
+.quoteDetailRail .quoteDecisionActions button { min-height: 54px; justify-content: flex-start; padding: 10px 12px; }
+.quoteDetailRail .quoteDecisionActions button b { font-size: 12.57px; }
+.quoteDetailRail .quoteDecisionActions button small { font-size: 10.29px; }
+.quoteDetailRail .quoteDecisionNote { padding: 12px 14px; }
 .detailRailCard { padding: 16px; border: 1px solid #dce4ee; border-radius: 8px; background: #fff; }
 .detailRailCard h2 { margin-bottom: 14px; }
 .quoteProducts > div { min-height: 52px; display: flex; align-items: center; justify-content: space-between; color: #202b3f; font-size:12.57px; }
