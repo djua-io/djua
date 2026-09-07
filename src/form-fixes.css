@@ -677,6 +677,28 @@
 .detailAlternate { margin-top: 16px; padding: 23px; border: 1px solid #d8e0ea; border-radius: 7px; background: #fff; }
 .detailAlternate h2 { margin: 0; font-size:17.14px; }
 .detailAlternate p { color: #58667e; }
+.detailSizingRecommendation { padding: 18px; }
+.detailSizingHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.detailSizingHeading h2 { color: #172033; font-size:17.14px; }
+.detailSizingHeading p { margin: 4px 0 0; font-size:12.57px; }
+.detailSizingHeading > span { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border-radius: 6px; color: #ff5a00; background: #fff1e8; font-size:11.43px; font-weight: 700; white-space: nowrap; }
+.detailSizingContent { display: grid; grid-template-columns: 190px minmax(0,1fr); align-items: center; gap: 18px; margin-top: 17px; padding: 14px; border: 1px solid #ffe0cc; border-radius: 8px; background: #fffdfb; }
+.detailSizingContent > img { width: 180px; height: 118px; object-fit: contain; }
+.detailBenefitGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; }
+.detailBenefitGrid > div { display: grid; grid-template-columns: 34px 1fr; column-gap: 9px; align-items: center; }
+.detailBenefitGrid i { width: 34px; height: 34px; display: grid; grid-row: span 2; place-items: center; border-radius: 50%; font-style: normal; }
+.detailBenefitGrid i.green { color: #00a45a; background: #e6f8ee; }
+.detailBenefitGrid i.orange { color: #f89500; background: #fff4df; }
+.detailBenefitGrid i.blue { color: #1676e8; background: #edf4ff; }
+.detailBenefitGrid i.purple { color: #7556e9; background: #f1eeff; }
+.detailBenefitGrid b { color: #172235; font-size:12.57px; }
+.detailBenefitGrid small { color: #65738d; font-size:10.29px; line-height: 1.25; }
+.detailEquipmentRecap { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 13px; }
+.detailEquipmentRecap > div { display: flex; align-items: center; gap: 9px; min-height: 62px; padding: 8px; border: 1px solid #e0e6ee; border-radius: 7px; background: #fff; }
+.detailEquipmentRecap img { width: 46px; height: 46px; object-fit: contain; }
+.detailEquipmentRecap span { display: grid; gap: 2px; min-width: 0; }
+.detailEquipmentRecap b { color: #182338; font-size:11.43px; }
+.detailEquipmentRecap small { color: #68758d; font-size:10.29px; line-height: 1.25; }
 .quoteDetailRail { display: grid; align-content: start; gap: 16px; margin-top: 43px; }
 .quoteDetailRail .quoteProducts { display: none; }
 .detailRailCard { padding: 16px; border: 1px solid #dce4ee; border-radius: 8px; background: #fff; }
@@ -710,6 +732,9 @@
   .detailMetaCard > div { min-height: 55px; border-top: 1px solid #dde5ef; border-left: 0; }
   .detailMetaCard > div:first-child { border-top: 0; }
   .detailTabs { gap: 14px; overflow-x: auto; }
+  .detailSizingHeading { align-items: flex-start; flex-direction: column; }
+  .detailSizingContent, .detailEquipmentRecap { grid-template-columns: 1fr; }
+  .detailSizingContent > img { margin: auto; }
   .relancePlan { padding: 16px 0 0; border-top: 1px solid #dfe5ed; border-left: 0; }
   .quoteDetailRail { grid-template-columns: 1fr; }
 }
