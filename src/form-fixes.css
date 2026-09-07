@@ -491,6 +491,19 @@
 .shopBrand i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 4px; color: #fff; background: #9a8500; font-size:14.86px; font-style: normal; font-weight: 700; }
 .newQuote { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 9px 15px; margin-bottom: 18px; color: #fff; background: #ff5a00; border: 1px solid #ff5a00; border-radius: 7px; text-decoration: none; font-size:14.86px; font-weight: 700; }
 .newQuote:hover { background: #e95000; }
+.sidebarFooter { display: grid; gap: 14px; margin-top: auto; }
+.sidebarFooter .profile, .sidebarFooter .help { width: 100%; text-align: left; }
+.sidebarFooter .profile { margin-top: 0; color: #202630; cursor: pointer; }
+.sidebarFooter .profile > span:nth-child(2) { min-width: 0; }
+.sidebarFooter .profile b { display: block; font-size:13.71px; }
+.sidebarFooter .profile small { font-size:11.43px; }
+.sidebarFooter .avatar { color: #6c3b22; background: linear-gradient(135deg, #f8d9c7, #c58d67); }
+.sidebarFooter .avatar svg { stroke-width: 1.8; }
+.sidebarFooter .profile > svg { color: #202630; }
+.sidebarFooter .help { margin-top: 0; border: 0; color: #3f4857; cursor: pointer; }
+.sidebarFooter .help > svg { flex: 0 0 auto; margin-top: 2px; color: #647084; }
+.sidebarFooter .help b { font-size:12.57px; }
+.sidebarFooter .help small { font-size:11.43px; }
 
 @media (min-width: 1001px) {
   .shell > aside { width: 280px; padding: 30px; }
