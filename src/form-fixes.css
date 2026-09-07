@@ -591,6 +591,8 @@
 .quoteStatus { display: inline-flex; padding: 5px 11px; border-radius: 6px; color: #516078; background: #f0f3f7; font-size:11.43px; font-style: normal; font-weight: 650; }
 .quoteStatus.partagé, .quoteStatus.accepté { color: #0a914a; background: #e2f7ea; }
 .quoteStatus.finalisé { color: #1474e8; background: #e6f2ff; }
+.quoteStatus.refusé { color: #d4232b; background: #fff0f1; }
+.quoteStatus.expiré { color: #5f6d84; background: #eef2f6; }
 .allQuotesPanel > footer { min-height: 61px; display: flex; align-items: center; justify-content: space-between; padding: 9px 18px; }
 .allQuotesPanel > footer small { color: #64728b; font-size:11.43px; }
 .pagination { display: flex; align-items: center; gap: 6px; }
@@ -736,6 +738,34 @@
 .draftQuoteStatus h2 { font-size: 14.86px; }
 .draftQuoteStatus p, .draftQuoteStatus small { margin: 0; color: #65738a; font-size: 10.29px; line-height: 1.4; }
 .draftQuoteStatus b { margin-top: 4px; color: #d75b00; font-size: 12.57px; }
+.closedQuoteFollowup { margin-top: 16px; padding: 18px; border: 1px solid #d8e0ea; border-radius: 8px; background: #fff; }
+.closedQuoteFollowup > header { display: flex; align-items: flex-start; gap: 12px; }
+.closedQuoteFollowup > header > i, .closedQuoteStatus > i { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; font-style: normal; }
+.closedQuoteFollowup.refused > header > i, .closedQuoteStatus.refused > i { color: #df2028; background: #fff0f1; }
+.closedQuoteFollowup.expired > header > i, .closedQuoteStatus.expired > i { color: #647289; background: #eef2f6; }
+.closedQuoteFollowup h2, .closedQuoteStatus h2, .closedQuoteNext h2 { margin: 0; color: #162034; font-size: 16px; }
+.closedQuoteFollowup > header p { margin: 4px 0 0; color: #4b5b72; font-size: 12.57px; }
+.closedQuoteSummary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; margin-top: 17px; }
+.closedQuoteSummary article { display: flex; align-items: flex-start; gap: 10px; min-height: 89px; padding: 12px; border: 1px solid #dce4ee; border-radius: 8px; background: #fcfdff; }
+.closedQuoteSummary article > i { width: 32px; height: 32px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; font-style: normal; }
+.closedQuoteSummary i.red { color: #dc2730; background: #fff0f1; }
+.closedQuoteSummary i.orange { color: #e57808; background: #fff2e2; }
+.closedQuoteSummary i.blue { color: #2476d7; background: #eaf3ff; }
+.closedQuoteSummary i.grey { color: #5f6c82; background: #eef2f6; }
+.closedQuoteSummary span { display: grid; gap: 3px; min-width: 0; }
+.closedQuoteSummary small { color: #6b788d; font-size: 10.29px; }
+.closedQuoteSummary b { color: #172237; font-size: 12.57px; }
+.closedQuoteSummary em { color: #4c5b73; font-size: 10.29px; font-style: normal; line-height: 1.35; }
+.closedQuoteNext { display: flex; align-items: flex-start; gap: 13px; margin-top: 16px; padding: 16px; border: 1px solid #d8e0ea; border-radius: 8px; background: #f8fafc; }
+.closedQuoteNext > i { width: 34px; height: 34px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: #40536e; background: #eaf0f6; }
+.closedQuoteNext h2 { font-size: 14.86px; }
+.closedQuoteNext p { margin: 5px 0 12px; color: #59677b; font-size: 11.43px; line-height: 1.45; }
+.closedQuoteNext .button { min-height: 38px; padding: 8px 14px; font-size: 12.57px; }
+.closedQuoteStatus { display: flex; align-items: flex-start; gap: 11px; padding: 15px; border: 1px solid #dce4ee; border-radius: 8px; background: #fff; }
+.closedQuoteStatus > div { display: grid; gap: 4px; }
+.closedQuoteStatus h2 { font-size: 14.86px; }
+.closedQuoteStatus p { margin: 0; color: #65738a; font-size: 10.29px; line-height: 1.4; }
+.closedQuoteStatus b { margin-top: 4px; color: #435570; font-size: 12.57px; }
 .detailAlternate { margin-top: 16px; padding: 23px; border: 1px solid #d8e0ea; border-radius: 7px; background: #fff; }
 .detailAlternate h2 { margin: 0; font-size:17.14px; }
 .detailAlternate p { color: #58667e; }
@@ -1204,6 +1234,7 @@
   .quoteDecisionActions button { min-height: 56px; }
   .acceptedOperationalSummary { grid-template-columns: 1fr; }
   .draftSteps { grid-template-columns: 1fr; }
+  .closedQuoteSummary { grid-template-columns: 1fr; }
   .acceptedConfirmation { padding: 16px; }
   .detailQuoteTable { overflow-x: auto; }
   .detailQuoteTableHeader, .detailQuoteTableRow { min-width: 720px; }
