@@ -674,6 +674,27 @@
 .historyItem hr { position: absolute; top: 32px; bottom: -2px; left: 14px; width: 1px; margin: 0; border: 0; background: #27aa79; }
 .detailFootnote { display: flex; align-items: center; gap: 10px; margin-top: 15px; padding: 11px 13px; border: 1px solid #dce7f7; border-radius: 6px; color: #33425e; background: #f7faff; font-size:11.43px; }
 .detailFootnote svg { color: #ff7a14; }
+.quoteDecisionPanel { margin-top: 15px; border: 1px solid #d8e0ea; border-radius: 8px; overflow: hidden; background: #fff; }
+.quoteDecisionPanel > div:first-child { padding: 18px 18px 15px; }
+.quoteDecisionPanel h2 { margin: 0; color: #161d2c; font-size: 16px; }
+.quoteDecisionPanel > div:first-child p { margin: 4px 0 0; color: #42516a; font-size: 12.57px; }
+.quoteDecisionActions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; padding: 0 18px 18px; }
+.quoteDecisionActions button { min-height: 64px; display: flex; align-items: flex-start; justify-content: center; gap: 9px; padding: 12px 10px; border: 1px solid #dce3ec; border-radius: 7px; color: #182235; background: #fff; text-align: left; cursor: pointer; transition: border-color .18s, background .18s, box-shadow .18s; }
+.quoteDecisionActions button:hover, .quoteDecisionActions button.selected { box-shadow: 0 0 0 2px rgba(22,37,58,.05); }
+.quoteDecisionActions button span { display: grid; gap: 5px; }
+.quoteDecisionActions button b { font-size: 13.71px; }
+.quoteDecisionActions button small { color: #48556c; font-size: 11.43px; }
+.quoteDecisionActions .accept { border-color: #aadfc1; color: #078243; }
+.quoteDecisionActions .accept:hover, .quoteDecisionActions .accept.selected { border-color: #0e9d52; background: #f4fcf7; }
+.quoteDecisionActions .refuse { border-color: #ffc3c4; color: #de151d; }
+.quoteDecisionActions .refuse:hover, .quoteDecisionActions .refuse.selected { border-color: #ef3b42; background: #fff7f7; }
+.quoteDecisionActions .expire { color: #263040; }
+.quoteDecisionActions .expire:hover, .quoteDecisionActions .expire.selected { border-color: #627084; background: #f7f9fb; }
+.quoteDecisionNote { display: flex; align-items: flex-start; gap: 11px; padding: 13px 18px; border-top: 1px solid #e4e9ef; color: #385071; background: #f8fbff; }
+.quoteDecisionNote svg { flex: 0 0 auto; color: #5882d5; }
+.quoteDecisionNote span { display: grid; gap: 3px; }
+.quoteDecisionNote b { color: #1d2c44; font-size: 12.57px; }
+.quoteDecisionNote small { font-size: 11.43px; }
 .detailAlternate { margin-top: 16px; padding: 23px; border: 1px solid #d8e0ea; border-radius: 7px; background: #fff; }
 .detailAlternate h2 { margin: 0; font-size:17.14px; }
 .detailAlternate p { color: #58667e; }
@@ -1133,6 +1154,8 @@
   .quoteServiceRow .quoteItemQuantity { display: none; }
   .quoteServiceRow strong { display: none; }
   .quoteEditRail { grid-template-columns: 1fr; }
+  .quoteDecisionActions { grid-template-columns: 1fr; gap: 8px; }
+  .quoteDecisionActions button { min-height: 56px; }
   .detailQuoteTable { overflow-x: auto; }
   .detailQuoteTableHeader, .detailQuoteTableRow { min-width: 720px; }
 }
