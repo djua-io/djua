@@ -688,13 +688,6 @@
 .quoteDecisionActions .accept:hover, .quoteDecisionActions .accept.selected { border-color: #0e9d52; background: #f4fcf7; }
 .quoteDecisionActions .refuse { border-color: #ffc3c4; color: #de151d; }
 .quoteDecisionActions .refuse:hover, .quoteDecisionActions .refuse.selected { border-color: #ef3b42; background: #fff7f7; }
-.quoteDecisionActions .expire { color: #263040; }
-.quoteDecisionActions .expire:hover, .quoteDecisionActions .expire.selected { border-color: #627084; background: #f7f9fb; }
-.quoteDecisionNote { display: flex; align-items: flex-start; gap: 11px; padding: 13px 18px; border-top: 1px solid #e4e9ef; color: #385071; background: #f8fbff; }
-.quoteDecisionNote svg { flex: 0 0 auto; color: #5882d5; }
-.quoteDecisionNote span { display: grid; gap: 3px; }
-.quoteDecisionNote b { color: #1d2c44; font-size: 12.57px; }
-.quoteDecisionNote small { font-size: 11.43px; }
 .detailAlternate { margin-top: 16px; padding: 23px; border: 1px solid #d8e0ea; border-radius: 7px; background: #fff; }
 .detailAlternate h2 { margin: 0; font-size:17.14px; }
 .detailAlternate p { color: #58667e; }
@@ -727,7 +720,6 @@
 .quoteDetailRail .quoteDecisionActions button { min-height: 54px; justify-content: flex-start; padding: 10px 12px; }
 .quoteDetailRail .quoteDecisionActions button b { font-size: 12.57px; }
 .quoteDetailRail .quoteDecisionActions button small { font-size: 10.29px; }
-.quoteDetailRail .quoteDecisionNote { padding: 12px 14px; }
 .detailRailCard { padding: 16px; border: 1px solid #dce4ee; border-radius: 8px; background: #fff; }
 .detailRailCard h2 { margin-bottom: 14px; }
 .quoteProducts > div { min-height: 52px; display: flex; align-items: center; justify-content: space-between; color: #202b3f; font-size:12.57px; }
