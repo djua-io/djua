@@ -505,6 +505,113 @@
 .sidebarFooter .help b { font-size:12.57px; }
 .sidebarFooter .help small { font-size:11.43px; }
 
+/* Quote list dashboard */
+@media (min-width: 1001px) {
+  .shell > aside { width: 236px; padding: 18px 16px; }
+  main { width: calc(100% - 236px); margin-left: 236px; }
+  .brand.djuaNavBrand { margin: 5px 10px 29px; color: #111827; font-size:30.86px; font-weight: 800; letter-spacing: -.7px; }
+  .brand.djuaNavBrand svg { color: #ff5a00; stroke-width: 2.1; }
+  .shell nav { gap: 4px; }
+  .shell nav a { height: 42px; padding: 0 12px; border-radius: 7px; color: #44516b; font-size:14.86px; font-weight: 500; }
+  .shell nav a.active { color: #ff5a00; background: #fff1ea; font-weight: 650; }
+  .shell nav a.active::before { left: -16px; height: 32px; }
+}
+.quotesHeader { height: 69px; padding-inline: 24px; }
+.quotesHeader > b { color: #101828; font-size:23px; letter-spacing: -.25px; }
+.globalSearch { width: 300px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 9px 0 12px; border: 1px solid #e0e5ee; border-radius: 8px; background: #fdfdfd; color: #4c5a72; }
+.globalSearch input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: #1c2638; font-size:12.57px; }
+.globalSearch kbd { padding: 2px 6px; border-radius: 5px; color: #68758d; background: #eef1f5; font-family: inherit; font-size:10.29px; }
+.headerBell { position: relative; width: 38px; height: 38px; border: 0; border-left: 1px solid #e4e8ef; background: transparent; color: #25334d; }
+.headerBell i { position: absolute; top: 6px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: #ff5a00; }
+.quotesHeader .saved { padding-right: 4px; color: #43516a; font-size:11.43px; }
+.headerNewQuote { min-height: 40px; padding-inline: 15px; font-size:12.57px; text-decoration: none; }
+.quoteListPage { max-width: none; padding: 19px 24px 36px; }
+.quoteListIntro h1 { margin: 0 0 1px; color: #121827; font-size:29.71px; line-height: 1.25; letter-spacing: -.65px; }
+.quoteListIntro p { margin: 0; color: #5b6a87; font-size:16px; }
+.quoteMetricGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 13px; margin-top: 16px; }
+.quoteMetricGrid > div { min-height: 114px; display: flex; align-items: flex-start; gap: 14px; padding: 17px; border: 1px solid #e1e7f0; border-radius: 8px; background: #fff; }
+.quoteMetricGrid .followMetric { border-color: #ffead9; background: linear-gradient(105deg,#fffaf5,#fffdfb); }
+.quoteMetricGrid i { width: 40px; height: 40px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; font-style: normal; }
+.quoteMetricGrid i.orange { color: #ff5a00; background: #fff1e6; }
+.quoteMetricGrid i.green { color: #00a353; background: #e7f8ef; }
+.quoteMetricGrid i.blue { color: #1670e7; background: #eaf2ff; }
+.quoteMetricGrid span { display: grid; gap: 1px; }
+.quoteMetricGrid small { color: #40506c; font-size:13.71px; font-weight: 600; }
+.quoteMetricGrid b { color: #111827; font-size:29.71px; line-height: 1.2; letter-spacing: -.6px; }
+.quoteMetricGrid em { color: #64728b; font-size:12.57px; font-style: normal; }
+.followUpPanel { margin-top: 16px; padding: 15px 16px 14px; border: 1px solid #ffe5d2; border-radius: 8px; background: linear-gradient(110deg,#fffaf5 0%,#fffdfb 100%); }
+.followUpPanel > header { height: auto; min-height: 38px; display: flex; justify-content: space-between; padding: 0; border: 0; background: transparent; position: static; }
+.followUpPanel > header > span { display: flex; gap: 14px; align-items: flex-start; }
+.followUpPanel > header > span > i { display: grid; place-items: center; color: #ff5a00; font-style: normal; }
+.followUpPanel h2 { margin: 0; color: #182130; font-size:16px; }
+.followUpPanel p { margin: 1px 0 0; color: #65738d; font-size:12.57px; }
+.followUpPanel > header > div { display: flex; align-items: center; gap: 18px; }
+.viewAll { border: 0; padding: 0; color: #ff5a00; background: transparent; font-size:12.57px; font-weight: 650; text-decoration: underline; }
+.followUpPanel > header b { padding: 7px 12px; border-radius: 7px; color: #fff; background: #ff5a00; font-size:11.43px; }
+.followUpRows { display: grid; gap: 7px; margin-top: 10px; }
+.followUpRow { min-height: 82px; display: grid; grid-template-columns: 55px minmax(0,1fr) auto; align-items: center; gap: 14px; padding: 11px 16px; border: 1px solid #ffe5d2; border-radius: 8px; background: rgba(255,255,255,.62); }
+.followAvatar { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; font-style: normal; }
+.followAvatar.person { color: #ff5a00; background: #fff0e5; }
+.followAvatar.company { color: #53627e; background: #eef2f8; }
+.followUpRow > span { min-width: 0; display: grid; gap: 1px; }
+.followUpRow b { color: #1a2333; font-size:14.86px; }
+.followUpRow b em { margin-left: 9px; padding: 4px 9px; border-radius: 12px; color: #ff5a00; background: #fff0dd; font-size:10.29px; font-style: normal; font-weight: 650; }
+.followUpRow small { color: #56657e; font-size:12.57px; }
+.followUpActions { display: flex; align-items: center; gap: 10px; }
+.followUpActions .button { min-height: 37px; padding: 7px 13px; color: #1c2a43; border-color: #e0e6ef; font-size:12.57px; }
+.followUpActions .button:first-child svg { color: #00a65a; }
+.moreAction { width: 38px; height: 37px; display: grid; place-items: center; border: 1px solid #e0e6ef; border-radius: 7px; color: #17233a; background: #fff; }
+.allQuotesPanel { margin-top: 12px; overflow: hidden; border: 1px solid #e1e7f0; border-radius: 8px; background: #fff; }
+.allQuotesTop { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 17px 10px; }
+.allQuotesTop h2 { margin: 0; color: #111827; font-size:20.57px; }
+.allQuotesTop > div { display: flex; align-items: center; gap: 10px; }
+.ownerFilter { min-height: 37px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid #e0e6ef; border-radius: 7px; color: #263450; background: #fff; font-size:12.57px; }
+.quoteSearch { width: 287px; min-height: 37px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid #e0e6ef; border-radius: 7px; color: #617089; }
+.quoteSearch input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; color: #1a2435; font-size:12.57px; }
+.quoteTabs { display: flex; padding: 0 17px 12px; overflow-x: auto; }
+.quoteTabs button { min-width: 99px; height: 33px; padding: 0 10px; border: 1px solid #e0e6ef; border-left: 0; color: #53627e; background: #fff; font-size:11.43px; white-space: nowrap; }
+.quoteTabs button:first-child { border-left: 1px solid #e0e6ef; border-radius: 6px 0 0 6px; }
+.quoteTabs button:last-child { border-radius: 0 6px 6px 0; }
+.quoteTabs button.active { z-index: 1; border-color: #ff5a00; color: #ff5a00; background: #fff9f5; }
+.quoteDataTable { margin: 0 8px; border: 1px solid #e4e9f0; border-radius: 7px 7px 0 0; overflow: hidden; }
+.quoteDataHeader, .quoteDataRow { display: grid; grid-template-columns: 38px 150px minmax(160px,1fr) 120px 140px 145px minmax(185px,1.3fr) 132px 38px; align-items: center; column-gap: 0; }
+.quoteDataHeader { min-height: 39px; color: #53617a; background: #f8fafc; font-size:11.43px; font-weight: 650; }
+.quoteDataHeader span { display: flex; align-items: center; gap: 5px; padding: 0 10px; }
+.quoteDataTable input[type='checkbox'] { width: 15px; height: 15px; accent-color: #ff5a00; }
+.quoteDataRow { width: 100%; min-height: 51px; border: 0; border-top: 1px solid #e9edf3; color: #25324b; background: #fff; text-align: left; font-family: inherit; font-size:12.57px; }
+.quoteDataRow:hover { background: #fffaf6; }
+.quoteDataRow > span, .quoteDataRow > strong { min-width: 0; padding: 7px 10px; }
+.quoteDataRow b { display: block; color: #172238; font-size:12.57px; }
+.quoteDataRow small { display: block; overflow: hidden; color: #66748c; font-size:11.43px; text-overflow: ellipsis; white-space: nowrap; }
+.quoteDataRow strong { color: #111b2e; font-size:14.86px; }
+.quoteDataRow .urgent b { color: #ff5a00; font-weight: 550; }
+.quoteStatus { display: inline-flex; padding: 5px 11px; border-radius: 6px; color: #516078; background: #f0f3f7; font-size:11.43px; font-style: normal; font-weight: 650; }
+.quoteStatus.partagé, .quoteStatus.accepté { color: #0a914a; background: #e2f7ea; }
+.quoteStatus.finalisé { color: #1474e8; background: #e6f2ff; }
+.allQuotesPanel > footer { min-height: 61px; display: flex; align-items: center; justify-content: space-between; padding: 9px 18px; }
+.allQuotesPanel > footer small { color: #64728b; font-size:11.43px; }
+.pagination { display: flex; align-items: center; gap: 6px; }
+.pagination button { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 6px; color: #52617b; background: #fff; font-size:12.57px; }
+.pagination button:first-child, .pagination button:last-child { border: 1px solid #e1e7f0; }
+.pagination button.active { border: 1px solid #ff5a00; color: #ff5a00; background: #fff9f5; }
+@media (max-width: 1100px) {
+  .quoteMetricGrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .followUpRow { grid-template-columns: 48px minmax(0,1fr); }
+  .followUpActions { grid-column: 1 / -1; justify-content: flex-end; }
+  .quoteDataTable { overflow-x: auto; }
+  .quoteDataHeader, .quoteDataRow { min-width: 1120px; }
+}
+@media (max-width: 760px) {
+  .quotesHeader .globalSearch, .quotesHeader .saved { display: none; }
+  .quoteListPage { padding: 18px 14px 30px; }
+  .quoteMetricGrid { grid-template-columns: 1fr; }
+  .allQuotesTop { align-items: flex-start; flex-direction: column; }
+  .allQuotesTop > div, .quoteSearch { width: 100%; }
+  .followUpPanel > header > div { display: none; }
+  .followUpRow { padding: 12px; }
+  .followUpActions { flex-wrap: wrap; justify-content: flex-start; }
+}
+
 @media (min-width: 1001px) {
   .shell > aside { width: 280px; padding: 30px; }
   main { width: calc(100% - 280px); margin-left: 280px; }
