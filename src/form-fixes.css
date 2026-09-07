@@ -541,8 +541,11 @@
 .quoteMetricGrid em { color: #64728b; font-size:12.57px; font-style: normal; }
 .followUpPanel { margin-top: 16px; padding: 15px 16px 14px; border: 1px solid #ffe5d2; border-radius: 8px; background: linear-gradient(110deg,#fffaf5 0%,#fffdfb 100%); }
 .followUpPanel > header { height: auto; min-height: 38px; display: flex; justify-content: space-between; padding: 0; border: 0; background: transparent; position: static; }
-.followUpPanel > header > span { display: flex; gap: 14px; align-items: flex-start; }
-.followUpPanel > header > span > i { display: grid; place-items: center; color: #ff5a00; font-style: normal; }
+.followUpToggle { min-width: 0; display: flex; flex: 1; align-items: flex-start; gap: 14px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+.followUpToggle > i { display: grid; place-items: center; color: #ff5a00; font-style: normal; }
+.followUpToggle > span { min-width: 0; }
+.followUpChevron { flex: 0 0 auto; margin: 8px 0 0 auto; color: #69768d; transition: transform .18s ease; }
+.followUpPanel.open .followUpChevron { transform: rotate(180deg); }
 .followUpPanel h2 { margin: 0; color: #182130; font-size:16px; }
 .followUpPanel p { margin: 1px 0 0; color: #65738d; font-size:12.57px; }
 .followUpPanel > header > div { display: flex; align-items: center; gap: 18px; }

@@ -25,8 +25,8 @@ type SizingProject={customerName:string;locationName:string;locationType:string;
 const store={get:<T,>(k:string,d:T):T=>{try{return JSON.parse(localStorage.getItem(k)||'') as T}catch{return d}},set:(k:string,v:unknown)=>localStorage.setItem(k,JSON.stringify(v))}
 const projectKey=(id?:string)=>`djua-project-${id||'jean'}`
 const defaultProject=(id?:string):SizingProject=>id==='kivu'?{customerName:'Kivu Market SARL',locationName:'Kivu Market — Gombe',locationType:'Commerce',city:'Kinshasa, RDC',address:'Avenue des Huileries, Gombe',company:true}:{customerName:'Jean Kabeya',locationName:'Maison de Jean Kabeya',locationType:'Maison individuelle',city:'Kinshasa, RDC',address:'Avenue de la Révolution, Gombe',company:false}
-const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Dimensionnements":I.Calculator,"Clients":I.UsersRound,"Devis":I.FileText,"Installations":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
-const nav=[['Tableau de bord','/dashboard'],['Dimensionnements','/dimensionnements'],['Clients','/clients'],['Devis','/devis'],['Installations','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
+const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Clients":I.UsersRound,"Devis":I.Calculator,"Installations":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
+const nav=[['Tableau de bord','/dashboard'],['Clients','/clients'],['Devis','/devis'],['Installations','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
 function Layout({children}:{children:React.ReactNode}){
   const {pathname}=useLocation();
   const navigate=useNavigate();
@@ -451,6 +451,7 @@ function QuoteList(){
   const {quote}=useData();
   const [search,setSearch]=useState('');
   const [activeFilter,setActiveFilter]=useState('Tous (24)');
+  const [followUpsOpen,setFollowUpsOpen]=useState(false);
   const total=quote.payment==='plan'?plans.find(plan=>plan.months===quote.plan)!.total:3480;
   const filters=['Tous (24)','Brouillon (5)','Finalisé (3)','Partagé (8)','Accepté (8)','Refusé (0)','Expiré (0)'];
   const quotes=[
@@ -471,12 +472,12 @@ function QuoteList(){
       <div><i className="green"><I.CheckCircle2 size={23}/></i><span><small>Acceptés</small><b>8</b><em>Ce mois-ci</em></span></div>
       <div><i className="blue"><I.BarChart3 size={23}/></i><span><small>Valeur en attente</small><b>18 450 $</b><em>Montants des devis actifs</em></span></div>
     </section>
-    <section className="followUpPanel">
-      <header><span><i><I.Bell size={23}/></i><span><h2>À relancer aujourd’hui</h2><p>Reprenez contact avec les clients qui attendent une réponse.</p></span></span><div><button type="button" className="viewAll">Voir tout</button><b>2 actions</b></div></header>
-      <div className="followUpRows">
+    <section className={'followUpPanel '+(followUpsOpen?'open':'collapsed')}>
+      <header><button type="button" className="followUpToggle" onClick={()=>setFollowUpsOpen(current=>!current)} aria-expanded={followUpsOpen}><i><I.Bell size={23}/></i><span><h2>À relancer aujourd’hui</h2><p>Reprenez contact avec les clients qui attendent une réponse.</p></span><I.ChevronDown className="followUpChevron" size={19}/></button><div><button type="button" className="viewAll">Voir tout</button><b>2 actions</b></div></header>
+      {followUpsOpen&&<div className="followUpRows">
         <div className="followUpRow"><i className="followAvatar person"><I.UserRound size={22}/></i><span><b>Jean Kabeya <em>À relancer</em></b><small>Devis OE-2026-00847 · {money(total)}</small><small>Aucune réponse depuis 4 jours · WhatsApp</small></span><div className="followUpActions"><Button secondary onClick={()=>nav('/devis/oe-2026-00847')}><I.MessageCircle size={18}/> Relancer sur WhatsApp</Button><Button secondary><I.Phone size={18}/> Appeler</Button><button type="button" className="moreAction"><I.MoreHorizontal size={20}/></button></div></div>
         <div className="followUpRow"><i className="followAvatar company"><I.Building2 size={22}/></i><span><b>Kivu Market SARL</b><small>Devis OE-2026-00851 · 8 750 $</small><small>Relance prévue aujourd’hui · E-mail</small></span><div className="followUpActions"><Button secondary><I.Mail size={18}/> Envoyer un e-mail</Button><Button secondary><I.Search size={18}/> Voir le suivi</Button><button type="button" className="moreAction"><I.MoreHorizontal size={20}/></button></div></div>
-      </div>
+      </div>}
     </section>
     <section className="allQuotesPanel">
       <div className="allQuotesTop"><h2>Tous les devis</h2><div><button type="button" className="ownerFilter"><I.UserRound size={16}/> Mes devis <I.ChevronDown size={15}/></button><label className="quoteSearch"><I.Search size={17}/><input value={search} onChange={event=>setSearch(event.target.value)} placeholder="Rechercher un devis, client, numéro…"/></label></div></div>
