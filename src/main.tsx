@@ -501,13 +501,13 @@ function Tracking(){
 }
 type QuoteDecision = 'pending'|'accepted'|'refused';
 function AcceptedQuoteFollowup(){
-  const milestones=[
-    {title:'Devis créé',copy:'Le devis a été créé.',time:'28 août 2026 · 11:40',icon:I.Check},
-    {title:'Devis finalisé',copy:'Le devis a été finalisé.',time:'28 août 2026 · 11:42',icon:I.Check},
-    {title:'Envoyé par WhatsApp',copy:'Envoyé à Jean Kabeya · +243 81 234 5678',time:'28 août 2026 · 11:43',icon:I.MessageCircle},
-    {title:'Devis accepté',copy:'Le client a accepté le devis.',time:'Aujourd’hui · 14:20',icon:I.Check}
+  const summary=[
+    {icon:I.CheckCircle2,label:'Décision client',value:'Accepté aujourd’hui',detail:'Validation reçue à 14:20 via WhatsApp',tone:'green'},
+    {icon:I.SolarPanel,label:'Système validé',value:'2,4 kWc · 5 kWh · 3 kVA',detail:'4 panneaux, batterie et onduleur hybride',tone:'orange'},
+    {icon:I.CalendarClock,label:'Paiement retenu',value:'Échelonné · 24 mois',detail:'Premier paiement : 145 $',tone:'blue'},
+    {icon:I.MapPin,label:'Site d’installation',value:'Kinshasa, RDC',detail:'Avenue de la Révolution, Gombe',tone:'purple'}
   ];
-  return <section className="acceptedQuoteFollowup"><header><h2>Suivi du devis</h2><p>Suivez l’état d’avancement et l’historique de ce devis.</p></header><div className="acceptedMilestones">{milestones.map(({title,copy,time,icon:Icon},index)=><div className="acceptedMilestone" key={title}><i><Icon size={17}/></i><span><b>{title}</b><small>{copy}</small></span><time>{time}</time>{index<milestones.length-1&&<hr/>}</div>)}</div><section className="acceptedConfirmation"><i><I.Check size={25}/></i><div><h2>Le devis a été accepté !</h2><p>Le client est prêt à passer à l’installation. Vous pouvez maintenant créer le dossier et planifier l’installation.</p><div><Button><I.FolderOpen size={18}/> Créer le dossier</Button><Button secondary><I.CalendarDays size={18}/> Planifier l’installation</Button></div></div></section><div className="acceptedNote"><I.ClipboardList size={19}/><span><b>Bon à savoir</b><small>Vous pouvez créer le dossier d’installation pour ce client et planifier les prochaines étapes.</small></span></div></section>
+  return <section className="acceptedQuoteFollowup"><header><h2>Prêt pour l’installation</h2><p>Les informations essentielles pour organiser la mise en service.</p></header><div className="acceptedOperationalSummary">{summary.map(({icon:Icon,label,value,detail,tone})=><article key={label}><i className={tone}><Icon size={19}/></i><span><small>{label}</small><b>{value}</b><em>{detail}</em></span></article>)}</div><section className="acceptedConfirmation"><i><I.Check size={25}/></i><div><h2>Le devis a été accepté !</h2><p>Le client est prêt à passer à l’installation. Vous pouvez maintenant créer le dossier et planifier l’installation.</p><div><Button><I.FolderOpen size={18}/> Créer le dossier</Button><Button secondary><I.CalendarDays size={18}/> Planifier l’installation</Button></div></div></section><div className="acceptedNote"><I.ClipboardList size={19}/><span><b>Bon à savoir</b><small>Vous pouvez créer le dossier d’installation pour ce client et planifier les prochaines étapes.</small></span></div></section>
 }
 function QuoteDecisionPanel({decision,onDecision}:{decision:QuoteDecision;onDecision:(decision:QuoteDecision)=>void}){
   const message=decision==='pending'?'En attente de la réponse du client.':decision==='accepted'?'Le client a accepté ce devis.':'Le client a refusé ce devis.';
