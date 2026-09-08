@@ -1331,3 +1331,6 @@
   .parcInstallationsPanel > header { display: grid; }.parcInstallationsPanel > header > div { justify-content: flex-start; }.parcTableSearch { width: 100%; }
   .parcInstallationsPanel footer { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; }.parcInstallationsPanel footer nav button:nth-of-type(n+6):not(:last-child), .parcInstallationsPanel footer nav span { display: none; }
 }
+
+/* Keep all descriptive interface copy at the requested readable body size. */
+main p, main .muted { font-size: 16px !important; }
