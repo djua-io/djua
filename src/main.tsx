@@ -631,6 +631,14 @@ function drawParkMapMarkers(L:any,layer:any,statusFilter:string){
     L.circleMarker([location.lat,location.lng],{radius:7,weight:2,color:'#fff',fillColor:location.tone==='critical'?'#e51a2d':location.tone==='watch'?'#ff7900':'#08a75d',fillOpacity:1}).bindTooltip(`${location.name} · ${location.province}`).addTo(layer)
   })
 }
+function getParkLegendCounts(province:string,statusFilter:string){
+  const provinceIndex=Math.max(0,drcProvinces.findIndex(item=>item.name===province))
+  const base=province==='Kinshasa'
+    ? {normal:4041,watch:187,critical:58,muted:43}
+    : {normal:102+((provinceIndex*83)%307),watch:8+((provinceIndex*7)%31),critical:3+((provinceIndex*5)%14),muted:3+((provinceIndex*3)%12)}
+  const activeTone=statusFilter==='À surveiller'?'watch':statusFilter==='Critique'?'critical':undefined
+  return activeTone?{normal:0,watch:activeTone==='watch'?base.watch:0,critical:activeTone==='critical'?base.critical:0,muted:0}:base
+}
 function ParcOpenStreetMap({province,statusFilter,expanded=false}:{province:string;statusFilter:string;expanded?:boolean}){
   const elementRef=useRef<HTMLDivElement>(null)
   const mapRef=useRef<any>(null)
@@ -663,7 +671,8 @@ function ParcOpenStreetMap({province,statusFilter,expanded=false}:{province:stri
     const L=(window as Window & {L?:any}).L
     if(L&&markerLayerRef.current)drawParkMapMarkers(L,markerLayerRef.current,statusFilter)
   },[statusFilter])
-  return <div className="parkOpenStreetMapWrap"><div className="parkOpenStreetMap" ref={elementRef} aria-label={'Carte OpenStreetMap — '+province}/><div className="parkMapLegend"><span><i className="normal"/>En bon état <b>4 041</b></span><span><i className="watch"/>À surveiller <b>187</b></span><span><i className="critical"/>Critique <b>58</b></span><span><i className="muted"/>Données indisponibles <b>43</b></span></div>{status&&<small className="parkMapStatus">{status}</small>}</div>
+  const legendCounts=getParkLegendCounts(province,statusFilter)
+  return <div className="parkOpenStreetMapWrap"><div className="parkOpenStreetMap" ref={elementRef} aria-label={'Carte OpenStreetMap — '+province}/><div className="parkMapLegend" aria-live="polite"><span><i className="normal"/>En bon état <b>{legendCounts.normal.toLocaleString('fr-FR')}</b></span><span><i className="watch"/>À surveiller <b>{legendCounts.watch.toLocaleString('fr-FR')}</b></span><span><i className="critical"/>Critique <b>{legendCounts.critical.toLocaleString('fr-FR')}</b></span><span><i className="muted"/>Données indisponibles <b>{legendCounts.muted.toLocaleString('fr-FR')}</b></span></div>{status&&<small className="parkMapStatus">{status}</small>}</div>
 }
 function ParcSolaire(){
   const [query,setQuery]=useState('')
