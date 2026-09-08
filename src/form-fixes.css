@@ -1394,3 +1394,16 @@ main p, main .muted { font-size: 16px !important; }
 .parkAlertAction { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 6px; color: #506078; background: transparent; }.parkAlertAction:hover { color: #ff5a00; background: #fff3ec; }
 
 @media (max-width: 1180px) { .parkAlert { grid-template-columns: 42px minmax(0, 1fr) 28px; } }
+
+/* Reference treatment for the solar alert card. */
+.recentAlerts { background: #fff; }
+.recentAlerts > header { min-height: 55px; padding: 0 16px; border-bottom: 0; }
+.recentAlerts > header > div { display: block; }
+.recentAlerts h2 { font-size: 17px; }
+.recentAlerts > header button { min-height: auto; padding: 0; border: 0; border-radius: 0; color: #ff5a00; background: transparent; font-size: 12px; font-weight: 700; text-decoration: underline; }
+.recentAlerts > .parkAlertList { display: block; padding: 0 12px 10px; }
+.parkAlert { grid-template-columns: 44px minmax(0, 1fr) auto 24px; gap: 8px; min-height: 72px; padding: 10px 2px; overflow: visible; border: 0; border-top: 1px solid #e7ecf2; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+.parkAlert:first-child { border-top: 0; }.parkAlert::before { display: none; }.parkAlert:hover { border-color: #e7ecf2; box-shadow: none; transform: none; }
+.parkAlert > i { width: 40px; height: 40px; }.parkAlertBody { align-self: center; }.parkAlertMeta { display: block; }.parkAlertMeta > span { gap: 7px; }.parkAlertMeta b { font-size: 12.57px; }.parkAlertMeta em { margin: 0; padding: 3px 7px; border-radius: 7px; font-size: 10.29px; }.parkAlert.critical .parkAlertMeta em { color: #dd1d2e; background: #ffebed; }.parkAlert.watch .parkAlertMeta em { color: #f06d00; background: #fff2e5; }
+.parkAlertBody small { margin-top: 3px; color: #64718a; font-size: 11.43px; }.parkAlertBody p { margin-top: 3px; color: #53627d; line-height: 1.25; }
+.parkAlert > time { align-self: start; padding-top: 9px; color: #68758e; font-size: 12.57px; white-space: nowrap; }.parkAlertAction { align-self: center; }
