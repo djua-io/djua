@@ -1247,6 +1247,15 @@
 .parcMetric strong { color: #10192a; font-size: 29px; line-height: 1; letter-spacing: -.7px; }
 .parcOverviewGrid { display: grid; grid-template-columns: minmax(0, 1.82fr) minmax(330px, .96fr); gap: 14px; margin-top: 12px; }
 .parkMapCard, .recentAlerts, .parcInstallationsPanel { border: 1px solid #e0e7f0; border-radius: 9px; background: #fff; }
+.parkOpenStreetMapWrap { position: relative; min-height: 294px; margin: 0 10px 10px; overflow: hidden; border-radius: 7px; background: #edf3ee; }
+.parkOpenStreetMap { width: 100%; min-height: 294px; height: 294px; }
+.parkOpenStreetMap .leaflet-control-zoom { margin: 0 14px 57px 0; overflow: hidden; border: 1px solid #e0e6ed; border-radius: 6px; box-shadow: 0 4px 10px rgba(49,72,98,.11); }
+.parkOpenStreetMap .leaflet-control-zoom a { width: 35px; height: 35px; border: 0; border-bottom: 1px solid #e6ebf1; color: #44526a; line-height: 34px; }
+.parkOpenStreetMap .leaflet-control-zoom a:last-child { border-bottom: 0; }
+.parkOpenStreetMap .leaflet-control-attribution { padding: 2px 5px; color: #66758a; background: rgba(255,255,255,.78); font-size: 9px; }
+.parkOpenStreetMap .leaflet-control-attribution a { color: #526b88; }
+.parkOpenStreetMapWrap .parkMapLegend { z-index: 1000; }
+.parkMapStatus { position: absolute; z-index: 1001; right: 12px; bottom: 12px; padding: 7px 9px; border: 1px solid #ffd7c2; border-radius: 6px; color: #c44a00; background: rgba(255,250,247,.94); font-size: 11px; }
 .parkMapHeader { min-height: 50px; padding: 0 14px 0 16px; }
 .parkMapHeader h2, .recentAlerts h2, .parcInstallationsPanel h2 { margin: 0; color: #111a2b; font-size: 17px; letter-spacing: -.25px; }
 .parkMapFilters { display: flex; align-items: center; gap: 8px; }
