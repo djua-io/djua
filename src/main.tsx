@@ -624,9 +624,17 @@ const parkMapLocations=[
   {name:'Centre Bunia',province:'Ituri',lat:1.5592,lng:30.2522,tone:'critical'},{name:'Hôpital Kisangani',province:'Tshopo',lat:0.5153,lng:25.1910,tone:'normal'},
   {name:'Mbandaka Hôtel',province:'Équateur',lat:0.0486,lng:18.2603,tone:'watch'},{name:'École Kananga',province:'Kasaï-Central',lat:-5.8962,lng:22.4166,tone:'normal'}
 ]
-function ParcOpenStreetMap({province,expanded=false}:{province:string;expanded?:boolean}){
+function drawParkMapMarkers(L:any,layer:any,statusFilter:string){
+  const selectedTone=statusFilter==='À surveiller'?'watch':statusFilter==='Critique'?'critical':undefined
+  layer.clearLayers()
+  parkMapLocations.filter(location=>!selectedTone||location.tone===selectedTone).forEach(location=>{
+    L.circleMarker([location.lat,location.lng],{radius:7,weight:2,color:'#fff',fillColor:location.tone==='critical'?'#e51a2d':location.tone==='watch'?'#ff7900':'#08a75d',fillOpacity:1}).bindTooltip(`${location.name} · ${location.province}`).addTo(layer)
+  })
+}
+function ParcOpenStreetMap({province,statusFilter,expanded=false}:{province:string;statusFilter:string;expanded?:boolean}){
   const elementRef=useRef<HTMLDivElement>(null)
   const mapRef=useRef<any>(null)
+  const markerLayerRef=useRef<any>(null)
   const [status,setStatus]=useState('')
   useEffect(()=>{
     let active=true
@@ -635,7 +643,9 @@ function ParcOpenStreetMap({province,expanded=false}:{province:string;expanded?:
       const map=L.map(elementRef.current,{zoomControl:false,attributionControl:true}).setView([-4.3317,15.3136],11)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map)
       L.control.zoom({position:'bottomright'}).addTo(map)
-      parkMapLocations.forEach(location=>L.circleMarker([location.lat,location.lng],{radius:7,weight:2,color:'#fff',fillColor:location.tone==='critical'?'#e51a2d':location.tone==='watch'?'#ff7900':'#08a75d',fillOpacity:1}).bindTooltip(`${location.name} · ${location.province}`).addTo(map))
+      const markerLayer=L.layerGroup().addTo(map)
+      markerLayerRef.current=markerLayer
+      drawParkMapMarkers(L,markerLayer,statusFilter)
       mapRef.current=map
       requestAnimationFrame(()=>map.invalidateSize({pan:false}))
       setStatus('')
@@ -649,6 +659,10 @@ function ParcOpenStreetMap({province,expanded=false}:{province:string;expanded?:
       mapRef.current?.setView(selected.center,selected.zoom,{animate:true})
     })
   },[province,expanded])
+  useEffect(()=>{
+    const L=(window as Window & {L?:any}).L
+    if(L&&markerLayerRef.current)drawParkMapMarkers(L,markerLayerRef.current,statusFilter)
+  },[statusFilter])
   return <div className="parkOpenStreetMapWrap"><div className="parkOpenStreetMap" ref={elementRef} aria-label={'Carte OpenStreetMap — '+province}/><div className="parkMapLegend"><span><i className="normal"/>En bon état <b>4 041</b></span><span><i className="watch"/>À surveiller <b>187</b></span><span><i className="critical"/>Critique <b>58</b></span><span><i className="muted"/>Données indisponibles <b>43</b></span></div>{status&&<small className="parkMapStatus">{status}</small>}</div>
 }
 function ParcSolaire(){
@@ -669,7 +683,7 @@ function ParcSolaire(){
     <div className="parcSolarHead"><div><h1>Parc solaire</h1><p>Vue d’ensemble de toutes vos installations connectées.</p></div><button className="parcDateRange"><I.CalendarDays size={17}/>30 derniers jours<I.ChevronDown size={16}/></button></div>
     <section className="parcMetricGrid" aria-label="Indicateurs du parc solaire">{metrics.map(({label,value,icon:Icon,tone})=><article className={'parcMetric '+tone} key={label}><i><Icon size={25}/></i><span><small>{label}</small><strong>{value}</strong></span></article>)}</section>
     <section className="parcOverviewGrid">
-      <section className={'parkMapCard'+(mapFullscreen?' mapFullscreen':'')}><header className="parkMapHeader"><h2>Carte du parc</h2><div className="parkMapFilters"><label><I.Search size={16}/><input value={mapQuery} onChange={event=>setMapQuery(event.target.value)} placeholder="Rechercher une zone, une ville…"/></label><select aria-label="Province de la RDC" value={province} onChange={event=>setProvince(event.target.value)}>{drcProvinces.map(item=><option key={item.name}>{item.name}</option>)}</select><select aria-label="Statut" value={statusFilter} onChange={event=>setStatusFilter(event.target.value)}><option>Tous les statuts</option><option>À surveiller</option><option>Critique</option></select><button aria-label={mapFullscreen?'Réduire la carte':'Agrandir la carte'} onClick={()=>setMapFullscreen(value=>!value)}>{mapFullscreen?<I.Minimize2 size={17}/>:<I.Maximize2 size={17}/>}</button></div></header><ParcOpenStreetMap province={province} expanded={mapFullscreen}/></section>
+      <section className={'parkMapCard'+(mapFullscreen?' mapFullscreen':'')}><header className="parkMapHeader"><h2>Carte du parc</h2><div className="parkMapFilters"><label><I.Search size={16}/><input value={mapQuery} onChange={event=>setMapQuery(event.target.value)} placeholder="Rechercher une zone, une ville…"/></label><select aria-label="Province de la RDC" value={province} onChange={event=>setProvince(event.target.value)}>{drcProvinces.map(item=><option key={item.name}>{item.name}</option>)}</select><select aria-label="Statut" value={statusFilter} onChange={event=>setStatusFilter(event.target.value)}><option>Tous les statuts</option><option>À surveiller</option><option>Critique</option></select><button aria-label={mapFullscreen?'Réduire la carte':'Agrandir la carte'} onClick={()=>setMapFullscreen(value=>!value)}>{mapFullscreen?<I.Minimize2 size={17}/>:<I.Maximize2 size={17}/>}</button></div></header><ParcOpenStreetMap province={province} statusFilter={statusFilter} expanded={mapFullscreen}/></section>
       <section className="recentAlerts"><header><h2>Alertes récentes</h2><button>Voir tout</button></header><div className="parkAlertList">{parkAlerts.map(alert=>{const Icon=alert.tone==='critical'?I.CircleAlert:I.TriangleAlert;return <article className={'parkAlert '+alert.tone} key={alert.id}><i><Icon size={19}/></i><div className="parkAlertBody"><div className="parkAlertMeta"><span><b>{alert.id}</b><em>{alert.tag}</em></span></div><small>{alert.name} · {alert.place}</small><p>{alert.detail}</p></div><time>{alert.time}</time><button className="parkAlertAction" aria-label={'Ouvrir l’alerte '+alert.id}><I.ChevronRight size={18}/></button></article>})}</div></section>
     </section>
     <section className="parcInstallationsPanel"><header><h2>Toutes les installations <span>(4 286)</span></h2><div><label className="parcTableSearch"><I.Search size={16}/><input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Rechercher une installation…"/></label><button className="parcOutlineButton"><I.SlidersHorizontal size={16}/>Filtres</button><button className="parcOutlineButton"><I.Download size={16}/>Exporter</button></div></header><div className="parcTableScroll"><div className="parcInstallTable"><div className="parcInstallHead"><span><input aria-label="Sélectionner toutes les installations" type="checkbox"/></span><span>Installation</span><span>Client / Site</span><span>Production<br/>vs. habitude</span><span>Consommation<br/>vs. habitude</span><span>Position<br/>du boîtier</span><span>Intégrité<br/>du boîtier</span><span>État global</span><span>Dernière donnée</span><span>Actions</span></div>{filtered.map(item=><div className="parcInstallRow" key={item.id}><span><input aria-label={'Sélectionner '+item.id} type="checkbox"/></span><b>{item.id}</b><span><b>{item.client}</b><small>{item.site}</small></span><span><ParkPill text={item.production} kind={item.production==='Normale'?'normal':'low'}/></span><span><ParkPill text={item.consumption} kind={item.consumption==='Normale'?'normal':'high'}/></span><span><ParkPill text={item.boxPosition} kind={item.positionNeedsCheck?'watch':'secure'}/></span><span><ParkPill text={item.boxIntegrity} kind={item.integrityNeedsCheck?'watch':'secure'}/></span><span><ParkPill text={item.global} kind={item.status}/></span><span>{item.last}</span><button className="parkMoreButton" aria-label={'Actions pour '+item.id}><I.Ellipsis size={19}/></button></div>)}</div></div><footer><span>Affichage de {filtered.length} sur 4 286 installations</span><nav aria-label="Pagination"><button><I.ChevronLeft size={17}/></button><button className="current">1</button><button>2</button><button>3</button><button>4</button><button>5</button><span>…</span><button>858</button><button><I.ChevronRight size={17}/></button></nav></footer></section>
