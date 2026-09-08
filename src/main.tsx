@@ -35,8 +35,8 @@ const quoteDirectory:Record<string,QuoteDirectoryEntry>={
   ,'OE-2026-00833':{id:'OE-2026-00833',date:'21 août 2026',client:'Patrick Mbuyi',type:'Maison individuelle',city:'Kinshasa, RDC',address:'Avenue Kasa-Vubu, Lingwala',phone:'+243 82 340 1902',email:'patrick.mbuyi@email.com',amount:5600,payment:'Comptant',monthly:'Paiement unique',status:'Refusé',action:'Archiver le devis',actionCopy:'Refus confirmé le 21 août',tone:''}
   ,'OE-2026-00824':{id:'OE-2026-00824',date:'18 août 2026',client:'École Horizon',type:'Établissement scolaire',city:'Kinshasa, RDC',address:'Avenue de la Paix, Ngaliema',phone:'+243 85 774 0123',email:'direction@ecolehorizon.cd',amount:3900,payment:'24 mois',monthly:'163 $ / mois',status:'Expiré',action:'Renouveler le devis',actionCopy:'Validité expirée le 18 août',tone:''}
 }
-const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Clients":I.UsersRound,"Devis":I.Calculator,"Installations":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
-const nav=[['Tableau de bord','/dashboard'],['Devis','/devis'],['Installations','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
+const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Clients":I.UsersRound,"Devis":I.Calculator,"Parc solaire":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
+const nav=[['Tableau de bord','/dashboard'],['Devis','/devis'],['Parc solaire','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
 function Layout({children}:{children:React.ReactNode}){
   const {pathname}=useLocation();
   const navigate=useNavigate();
