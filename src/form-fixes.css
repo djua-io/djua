@@ -1344,8 +1344,8 @@ main p, main .muted { font-size: 16px !important; }
 .parcTableSearch input { font-size: 12.57px; }
 .parcOutlineButton { min-height: 37px; height: 37px; padding: 0 12px; border-color: #e0e6ef; border-radius: 7px; color: #263450; font-size: 12.57px; }
 .parcTableScroll { margin: 0 8px; padding: 0; border: 1px solid #e4e9f0; border-radius: 7px 7px 0 0; }
-.parcInstallTable { min-width: 1120px; border: 0; border-radius: 0; overflow: visible; }
-.parcInstallHead, .parcInstallRow { grid-template-columns: 38px 150px minmax(160px,1fr) 120px 140px 145px minmax(185px,1.3fr) 132px 38px; column-gap: 0; }
+.parcInstallTable { min-width: 1210px; border: 0; border-radius: 0; overflow: visible; }
+.parcInstallHead, .parcInstallRow { grid-template-columns: 38px 150px minmax(160px,1fr) 120px 140px 120px 120px minmax(185px,1.3fr) 132px 38px; column-gap: 0; }
 .parcInstallHead { min-height: 39px; padding: 0; color: #53617a; background: #f8fafc; font-size: 11.43px; font-weight: 650; }
 .parcInstallHead span { display: flex; align-items: center; gap: 5px; padding: 0 10px; }
 .parcInstallRow { min-height: 51px; padding: 0; border-top-color: #e9edf3; color: #25324b; background: #fff; font-size: 12.57px; }
