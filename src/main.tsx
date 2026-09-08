@@ -709,12 +709,21 @@ function InstallationDetail(){
   const [period,setPeriod]=useState('30 derniers jours')
   const [periodMenuOpen,setPeriodMenuOpen]=useState(false)
   const dateFilterRef=useRef<HTMLDivElement>(null)
+  const [chartEndDate,setChartEndDate]=useState('2025-04-16')
+  const [chartPickerOpen,setChartPickerOpen]=useState(false)
+  const chartDateRef=useRef<HTMLDivElement>(null)
   useEffect(()=>{
     if(!periodMenuOpen)return
     const closeMenu=(event:MouseEvent)=>{if(!dateFilterRef.current?.contains(event.target as Node))setPeriodMenuOpen(false)}
     document.addEventListener('mousedown',closeMenu)
     return ()=>document.removeEventListener('mousedown',closeMenu)
   },[periodMenuOpen])
+  useEffect(()=>{
+    if(!chartPickerOpen)return
+    const closePicker=(event:MouseEvent)=>{if(!chartDateRef.current?.contains(event.target as Node))setChartPickerOpen(false)}
+    document.addEventListener('mousedown',closePicker)
+    return ()=>document.removeEventListener('mousedown',closePicker)
+  },[chartPickerOpen])
   const needsAttention=installation.status!=='normal'
   const periodDetails:{[key:string]:{chartDate:string;productionLabel:string;productionValue:string}}={
     'Aujourd’hui':{chartDate:'Aujourd’hui, 16 avr. 2025',productionLabel:'Aujourd’hui',productionValue:installation.production==='Normale'?'4,8 kWh':'3,1 kWh'},
@@ -723,6 +732,15 @@ function InstallationDetail(){
     '90 derniers jours':{chartDate:'17 janv. – 16 avr. 2025',productionLabel:'90 derniers jours',productionValue:installation.production==='Normale'?'428,5 kWh':'280,2 kWh'}
   }
   const selectedPeriod=periodDetails[period]
+  const periodDays=period==='Aujourd’hui'?1:period==='7 derniers jours'?7:period==='90 derniers jours'?90:30
+  const chartDateLabel=useMemo(()=>{
+    const end=new Date(chartEndDate+'T12:00:00')
+    const start=new Date(end)
+    start.setDate(start.getDate()-(periodDays-1))
+    const format=(date:Date,withYear=true)=>new Intl.DateTimeFormat('fr-FR',withYear?{day:'numeric',month:'short',year:'numeric'}:{day:'numeric',month:'short'}).format(date)
+    return periodDays===1?'Aujourd’hui, '+format(end):format(start,false)+' – '+format(end)
+  },[chartEndDate,periodDays])
+  const shiftChartPeriod=(direction:number)=>setChartEndDate(value=>{const next=new Date(value+'T12:00:00');next.setDate(next.getDate()+direction*periodDays);return next.toISOString().slice(0,10)})
   const currentProduction=installation.production==='Normale'?'358 W':'214 W'
   const currentConsumption=installation.consumption==='Plus élevée'?'780 W':'358 W'
   const alerts=needsAttention?[{icon:I.TriangleAlert,tone:'watch',title:installation.consumption==='Plus élevée'?'Consommation plus élevée que d’habitude':'Point de vigilance détecté',detail:installation.consumption==='Plus élevée'?'Consommation : 780 W (habituel : 320 W)':'Une vérification est recommandée.',time:'Il y a 12 min'},{icon:I.Wifi,tone:'normal',title:'Dernière donnée reçue',detail:'L’installation communique normalement',time:installation.last},{icon:I.MapPin,tone:'normal',title:'Position vérifiée',detail:'Position conforme',time:'Aujourd’hui à 06:18'}]:[{icon:I.Wifi,tone:'normal',title:'Dernière donnée reçue',detail:'L’installation communique normalement',time:installation.last},{icon:I.MapPin,tone:'normal',title:'Position vérifiée',detail:'Position conforme',time:'Aujourd’hui à 06:18'}]
@@ -738,7 +756,7 @@ function InstallationDetail(){
     </section>
     <section className="installationDetailGrid">
       <div className="installationMainColumn">
-        <section className="installationCard energyChart"><header><h2>{period==='Aujourd’hui'?'Aujourd’hui':period} vs habituel</h2><button><I.ChevronLeft size={16}/><I.CalendarDays size={16}/>{selectedPeriod.chartDate}<I.ChevronRight size={16}/></button></header><div className="chartFrame"><svg viewBox="0 0 800 210" role="img" aria-label={'Comparaison de la production et de la consommation — '+period}><g className="chartGrid">{[20,62,104,146,188].map(y=><line key={y} x1="44" x2="790" y1={y} y2={y}/>)}</g><polyline className="chartProduction" points="44,186 120,186 178,184 230,177 280,151 326,105 370,69 414,45 460,38 500,58 540,98 583,145 630,174 700,184 790,186"/><polyline className="chartProduction average" points="44,187 175,187 250,178 326,126 400,89 460,78 510,92 583,139 650,178 790,187"/><polyline className="chartConsumption" points="44,154 106,161 168,153 228,159 300,151 370,160 440,148 500,133 552,125 605,116 650,84 696,69 730,76 760,108 790,127"/><polyline className="chartConsumption average" points="44,173 175,172 260,160 370,166 480,154 580,150 650,137 710,126 790,155"/></svg><div className="chartAxis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div></div><footer><span className="prod">Production aujourd’hui</span><span className="prod dashed">Production habituelle</span><span className="cons">Consommation aujourd’hui</span><span className="cons dashed">Consommation habituelle</span></footer></section>
+        <section className="installationCard energyChart"><header><h2>{period==='Aujourd’hui'?'Aujourd’hui':period} vs habituel</h2><div className="chartDateControl" ref={chartDateRef}><button className="chartDateShift" type="button" aria-label="Période précédente" onClick={()=>shiftChartPeriod(-1)}><I.ChevronLeft size={16}/></button><button className="chartDateDisplay" type="button" aria-haspopup="dialog" aria-expanded={chartPickerOpen} onClick={()=>setChartPickerOpen(open=>!open)}><I.CalendarDays size={16}/>{chartDateLabel}</button><button className="chartDateShift" type="button" aria-label="Période suivante" onClick={()=>shiftChartPeriod(1)}><I.ChevronRight size={16}/></button>{chartPickerOpen&&<div className="chartDatePicker" role="dialog" aria-label="Choisir la date du graphique"><b>Date de fin</b><label>Choisir une date<input type="date" value={chartEndDate} onChange={event=>{setChartEndDate(event.target.value);setChartPickerOpen(false)}}/></label><button type="button" onClick={()=>{setChartEndDate('2025-04-16');setChartPickerOpen(false)}}>Revenir à aujourd’hui</button></div>}</div></header><div className="chartFrame"><svg viewBox="0 0 800 210" role="img" aria-label={'Comparaison de la production et de la consommation — '+period}><g className="chartGrid">{[20,62,104,146,188].map(y=><line key={y} x1="44" x2="790" y1={y} y2={y}/>)}</g><polyline className="chartProduction" points="44,186 120,186 178,184 230,177 280,151 326,105 370,69 414,45 460,38 500,58 540,98 583,145 630,174 700,184 790,186"/><polyline className="chartProduction average" points="44,187 175,187 250,178 326,126 400,89 460,78 510,92 583,139 650,178 790,187"/><polyline className="chartConsumption" points="44,154 106,161 168,153 228,159 300,151 370,160 440,148 500,133 552,125 605,116 650,84 696,69 730,76 760,108 790,127"/><polyline className="chartConsumption average" points="44,173 175,172 260,160 370,166 480,154 580,150 650,137 710,126 790,155"/></svg><div className="chartAxis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div></div><footer><span className="prod">Production aujourd’hui</span><span className="prod dashed">Production habituelle</span><span className="cons">Consommation aujourd’hui</span><span className="cons dashed">Consommation habituelle</span></footer></section>
         <section className="installationCard technicalCard"><header><h2><I.Gauge size={19}/>Mesures techniques <em className="technicalScope"><I.Activity size={13}/>Diagnostic</em></h2><button>Tout afficher<I.ChevronUp size={16}/></button></header><div>{[{title:'Solaire',icon:I.Sun,values:[['42,6 V','Tension'],['8,4 A','Courant'],['358 W','Puissance']]},{title:'Batterie',icon:I.Battery,values:[['25,4 V','Tension'],['3,2 A','Courant'],['En décharge','État']]},{title:'Sortie AC',icon:I.Activity,values:[['221 V','Tension'],['3,5 A','Courant'],['774 W','Puissance']]},{title:'GPS / GSM',icon:I.Radio,values:[['Position conforme','Position'],['06:18','Dernière transmission']]}].map(({title,icon:Icon,values})=><article key={title}><i><Icon size={16}/></i><div><b>{title}</b><span>{values.map(([value,label])=><strong key={label}>{value}<small>{label}</small></strong>)}</span></div></article>)}</div></section>
         <section className="installationCard insightCard"><h2>Ce qui se passe sur cette installation</h2><div><article className="insight good"><I.Sun size={28}/><span><b>Ce qui est normal</b><p>La production solaire fonctionne normalement, la communication est active et la localisation est correcte.</p></span></article><article className="insight warning"><I.CircleAlert size={28}/><span><b>Ce qui nécessite votre attention</b><p>{needsAttention?'La consommation est actuellement plus élevée que d’habitude. Nous vous recommandons de vérifier avec le client.':'Aucun point critique n’est à signaler pour le moment.'}</p></span></article></div></section>
       </div>
