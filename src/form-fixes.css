@@ -1369,3 +1369,28 @@ main p, main .muted { font-size: 16px !important; }
 @media (max-width: 600px) { .parcTableSearch { width: 100%; flex-basis: 100%; } }
 
 .parkPill.secure { color: #008c4c; background: #e8f9ee; }
+
+/* Recent alerts: compact priority cards rather than a flat event list. */
+.recentAlerts { overflow: hidden; background: linear-gradient(180deg, #fff 0%, #fcfdff 100%); }
+.recentAlerts > header { min-height: 72px; padding: 14px 17px; border-bottom: 1px solid #e7ecf2; }
+.recentAlerts > header > div { display: grid; gap: 4px; }
+.recentAlerts h2 { font-size: 17px; }
+.recentAlertCount { display: inline-flex; align-items: center; gap: 5px; width: max-content; color: #c44a00; font-size: 10.5px; font-weight: 750; }
+.recentAlertCount svg { color: #ff5a00; }
+.recentAlerts > header button { display: inline-flex; align-items: center; gap: 5px; min-height: 32px; padding: 0 9px; border: 1px solid #ffd7c2; border-radius: 6px; color: #e95000; background: #fffaf7; font-size: 11.43px; text-decoration: none; }
+.recentAlerts > header button:hover { border-color: #ff5a00; background: #fff3ec; }
+.recentAlerts > .parkAlertList { display: grid; gap: 8px; padding: 10px; }
+.parkAlert { position: relative; grid-template-columns: 42px minmax(0, 1fr) 28px; gap: 9px; min-height: 83px; padding: 10px 8px 10px 10px; overflow: hidden; border: 1px solid #e8edf3; border-radius: 8px; background: #fff; transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease; }
+.parkAlert::before { position: absolute; top: 0; bottom: 0; left: 0; width: 3px; content: ''; }
+.parkAlert.critical::before { background: #e51a2d; }.parkAlert.watch::before { background: #ff7900; }
+.parkAlert:hover { border-color: #d7e0ea; box-shadow: 0 5px 14px rgba(45,65,91,.08); transform: translateY(-1px); }
+.parkAlert > i { width: 38px; height: 38px; }.parkAlert.critical > i { color: #e51a2d; background: #ffeaed; }.parkAlert.watch > i { color: #ef6e00; background: #fff1e4; }
+.parkAlertBody { min-width: 0; }
+.parkAlertMeta { display: flex; align-items: center; justify-content: space-between; gap: 7px; }
+.parkAlertMeta > span { display: flex; align-items: center; gap: 5px; min-width: 0; }.parkAlertMeta b { color: #1f2d43; font-size: 11.43px; }.parkAlertMeta em { margin: 0; white-space: nowrap; }
+.parkAlertMeta time { display: inline-flex; align-items: center; gap: 3px; align-self: auto; padding: 0; color: #758197; font-size: 10px; }
+.parkAlertBody small { display: flex; align-items: center; gap: 4px; margin-top: 4px; color: #68778f; font-size: 10.29px; }
+.parkAlertBody p { overflow: hidden; margin: 4px 0 0; color: #35445d; font-size: 16px; line-height: 1.28; white-space: nowrap; text-overflow: ellipsis; }
+.parkAlertAction { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 6px; color: #506078; background: transparent; }.parkAlertAction:hover { color: #ff5a00; background: #fff3ec; }
+
+@media (max-width: 1180px) { .parkAlert { grid-template-columns: 42px minmax(0, 1fr) 28px; } }
