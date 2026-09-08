@@ -703,7 +703,6 @@ function ParcSolaire(){
 }
 function InstallationDetail(){
   const {id}=useParams()
-  const navigate=useNavigate()
   const installation=parkInstallations.find(item=>item.id===id)||parkInstallations[0]
   const needsAttention=installation.status!=='normal'
   const production=installation.production==='Normale'?'4,8 kWh':'3,1 kWh'
@@ -712,7 +711,6 @@ function InstallationDetail(){
   const alerts=needsAttention?[{icon:I.TriangleAlert,tone:'watch',title:installation.consumption==='Plus élevée'?'Consommation plus élevée que d’habitude':'Point de vigilance détecté',detail:installation.consumption==='Plus élevée'?'Consommation : 780 W (habituel : 320 W)':'Une vérification est recommandée.',time:'Il y a 12 min'},{icon:I.Wifi,tone:'normal',title:'Dernière donnée reçue',detail:'L’installation communique normalement',time:installation.last},{icon:I.MapPin,tone:'normal',title:'Position vérifiée',detail:'Position conforme',time:'Aujourd’hui à 06:18'}]:[{icon:I.Wifi,tone:'normal',title:'Dernière donnée reçue',detail:'L’installation communique normalement',time:installation.last},{icon:I.MapPin,tone:'normal',title:'Position vérifiée',detail:'Position conforme',time:'Aujourd’hui à 06:18'}]
   const Metric=({icon:Icon,title,kind,children}:{icon:React.ElementType;title:string;kind:'normal'|'watch'|'online'|'secure';children:React.ReactNode})=><article className={'installationMetric '+kind}><i><Icon size={25}/></i><div><header><b>{title}</b><ParkPill text={kind==='watch'?'Plus élevée':kind==='online'?'Active':'Normale'} kind={kind}/></header>{children}</div></article>
   return <section className="installationDetailPage">
-    <button className="installationBack" onClick={()=>navigate('/installations')}><I.ArrowLeft size={17}/>Retour au parc</button>
     <header className="installationDetailHead"><div><span><h1>{installation.client}</h1><ParkPill text="En ligne" kind="online"/></span><p>{installation.id}<b>•</b>{installation.site}<b>•</b>{installation.location}, Kinshasa<b>•</b>Dernière donnée reçue : {installation.last}</p></div><div><button className="parcDateRange"><I.CalendarDays size={17}/>30 derniers jours<I.ChevronDown size={16}/></button><button className="installationAction"><I.Ellipsis size={19}/>Actions<I.ChevronDown size={16}/></button></div></header>
     <nav className="installationTabs"><button className="active">Vue d’ensemble</button><button>Énergie</button><button>Localisation</button><button>Alertes</button><button>Historique</button></nav>
     <section className="installationMetricGrid">
