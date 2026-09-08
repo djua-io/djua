@@ -1334,3 +1334,36 @@
 
 /* Keep all descriptive interface copy at the requested readable body size. */
 main p, main .muted { font-size: 16px !important; }
+
+/* Reuse the Devis data-table language for the solar-park listing. */
+.parcInstallationsPanel { margin-top: 12px; overflow: visible; border-color: #e1e7f0; border-radius: 8px; }
+.parcInstallationsPanel > header { min-height: auto; padding: 13px 17px 10px; }
+.parcInstallationsPanel h2 { color: #111827; font-size: 20.57px; white-space: nowrap; }
+.parcInstallationsPanel > header > div { gap: 10px; }
+.parcTableSearch { width: 287px; min-height: 37px; height: 37px; padding: 0 10px; border-color: #e0e6ef; }
+.parcTableSearch input { font-size: 12.57px; }
+.parcOutlineButton { min-height: 37px; height: 37px; padding: 0 12px; border-color: #e0e6ef; border-radius: 7px; color: #263450; font-size: 12.57px; }
+.parcTableScroll { margin: 0 8px; padding: 0; border: 1px solid #e4e9f0; border-radius: 7px 7px 0 0; }
+.parcInstallTable { min-width: 1130px; border: 0; border-radius: 0; overflow: visible; }
+.parcInstallHead, .parcInstallRow { grid-template-columns: 38px 130px minmax(160px,1fr) 110px 125px 140px 120px 118px 120px 38px; column-gap: 0; }
+.parcInstallHead { min-height: 39px; padding: 0; color: #53617a; background: #f8fafc; font-size: 11.43px; font-weight: 650; }
+.parcInstallHead span { display: flex; align-items: center; gap: 5px; padding: 0 10px; }
+.parcInstallRow { min-height: 51px; padding: 0; border-top-color: #e9edf3; color: #25324b; background: #fff; font-size: 12.57px; }
+.parcInstallRow:hover { background: #fffaf6; }
+.parcInstallRow > span, .parcInstallRow > b { min-width: 0; padding: 7px 10px; }
+.parcInstallRow > b, .parcInstallRow span > b { color: #172238; font-size: 12.57px; }
+.parcInstallRow span > small { overflow: hidden; color: #66748c; font-size: 11.43px; text-overflow: ellipsis; white-space: nowrap; }
+.parkPill { min-width: auto; padding: 5px 9px; border-radius: 6px; font-size: 11.43px; font-weight: 650; }
+.parkMoreButton { width: 30px; height: 30px; margin: auto; }.parkMoreButton:hover { border-color: #dbe3ed; color: #ff5a00; background: #fffaf6; }
+.parcInstallationsPanel footer { min-height: 61px; padding: 9px 18px; }.parcInstallationsPanel footer > span { color: #64728b; font-size: 11.43px; }.parcInstallationsPanel footer nav { gap: 6px; }.parcInstallationsPanel footer button { width: 32px; height: 32px; font-size: 12.57px; }.parcInstallationsPanel footer button:first-child, .parcInstallationsPanel footer button:last-child { border: 1px solid #e1e7f0; }.parcInstallationsPanel footer button.current { border-color: #ff5a00; background: #fff9f5; }
+
+@media (max-width: 860px) { .parcInstallationsPanel > header { padding: 13px 17px 10px; } }
+@media (max-width: 600px) { .parcTableSearch { width: 100%; }.parcInstallationsPanel footer { padding: 12px 16px; } }
+
+@media (max-width: 1180px) {
+  .parcInstallationsPanel > header { align-items: flex-start; }
+  .parcInstallationsPanel > header > div { min-width: 0; flex: 1; flex-wrap: wrap; justify-content: flex-end; }
+  .parcTableSearch { width: auto; min-width: 0; flex: 1 1 220px; }
+}
+
+@media (max-width: 600px) { .parcTableSearch { width: 100%; flex-basis: 100%; } }
