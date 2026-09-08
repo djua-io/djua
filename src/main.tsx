@@ -53,6 +53,8 @@ function Layout({children}:{children:React.ReactNode}){
 }
 function Button({children,onClick,secondary=false,disabled=false}:{children:React.ReactNode,onClick?:()=>void,secondary?:boolean,disabled?:boolean}){return <button disabled={disabled} onClick={onClick} className={secondary?'button secondary':'button'}>{children}</button>}
 function fmt(n:number){return n>=1000?`${(n/1000).toFixed(2)} kWh`:`${Math.round(n)} Wh`}
+function kinshasaDateKey(){const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Kinshasa',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(part=>part.type!=='literal').map(part=>[part.type,part.value]));return `${parts.year}-${parts.month}-${parts.day}`}
+function addDateKeyDays(value:string,days:number){const date=new Date(value+'T12:00:00');date.setDate(date.getDate()+days);return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`}
 function useData(){const [items,setItems]=useState<Appliance[]>(()=>store.get<Appliance[]>('djua-items',[]));const [quote,setQuote]=useState<Quote>(()=>store.get('djua-quote',{status:'Brouillon',payment:'plan',plan:24,activities:['Devis créé depuis le dimensionnement']}));useEffect(()=>store.set('djua-items',items),[items]);useEffect(()=>store.set('djua-quote',quote),[quote]);return {items,setItems,quote,setQuote}}
 function Dashboard(){const metrics:{label:string;value:string|number;icon:React.ElementType}[]=[{label:'Dimensionnements',value:12,icon:I.Calculator},{label:'Devis partagés',value:8,icon:I.FileText},{label:'À relancer',value:3,icon:I.MessageCircle},{label:'Revenu potentiel',value:'13 920 $',icon:I.TrendingUp}];return <Page title="Bonjour Chris 👋" sub="Voici ce qui se passe aujourd'hui."><div className="metrics">{metrics.map(({label,value,icon:Icon})=><div className="metric" key={label}><Icon/><small>{label}</small><strong>{value}</strong><em>+12% ce mois</em></div>)}</div><div className="grid two"><Card title="À relancer aujourd'hui"><p>Jean Kabeya · Devis OE-2026-00847</p><Button>Relancer sur WhatsApp</Button></Card><Card title="Activité récente"><p>Devis envoyé à Jean Kabeya</p><p>Dimensionnement Kivu Market calculé</p></Card></div></Page>}
 function Page({title,sub,children,hideTitle=false}:{title:string,sub?:string,children:React.ReactNode,hideTitle?:boolean}){return <section className="page">{!hideTitle&&<h1>{title}</h1>}{sub&&<p className="muted">{sub}</p>}{children}</section>}
@@ -709,11 +711,12 @@ function InstallationDetail(){
   const [period,setPeriod]=useState('30 derniers jours')
   const [periodMenuOpen,setPeriodMenuOpen]=useState(false)
   const dateFilterRef=useRef<HTMLDivElement>(null)
-  const [chartStartDate,setChartStartDate]=useState('2025-03-18')
-  const [chartEndDate,setChartEndDate]=useState('2025-04-16')
-  const [draftStartDate,setDraftStartDate]=useState('2025-03-18')
-  const [draftEndDate,setDraftEndDate]=useState('2025-04-16')
-  const [calendarMonth,setCalendarMonth]=useState('2025-03-01')
+  const [todayKey,setTodayKey]=useState(kinshasaDateKey)
+  const [chartStartDate,setChartStartDate]=useState(()=>addDateKeyDays(todayKey,-29))
+  const [chartEndDate,setChartEndDate]=useState(todayKey)
+  const [draftStartDate,setDraftStartDate]=useState(()=>addDateKeyDays(todayKey,-29))
+  const [draftEndDate,setDraftEndDate]=useState(todayKey)
+  const [calendarMonth,setCalendarMonth]=useState(()=>addDateKeyDays(todayKey,-29).slice(0,7)+'-01')
   const [chartCustomRange,setChartCustomRange]=useState(false)
   const [chartPickerOpen,setChartPickerOpen]=useState(false)
   const chartDateRef=useRef<HTMLDivElement>(null)
@@ -729,6 +732,8 @@ function InstallationDetail(){
     document.addEventListener('mousedown',closePicker)
     return ()=>document.removeEventListener('mousedown',closePicker)
   },[chartPickerOpen])
+  useEffect(()=>{const refreshToday=()=>setTodayKey(value=>{const current=kinshasaDateKey();return value===current?value:current});const timer=window.setInterval(refreshToday,60000);return ()=>window.clearInterval(timer)},[])
+  useEffect(()=>{if(chartCustomRange)return;const days=period==='Aujourd’hui'?1:period==='7 derniers jours'?7:period==='90 derniers jours'?90:30;setChartEndDate(todayKey);setChartStartDate(addDateKeyDays(todayKey,-(days-1)))},[todayKey,period,chartCustomRange])
   const needsAttention=installation.status!=='normal'
   const periodDetails:{[key:string]:{productionLabel:string;productionValue:string}}={
     'Aujourd’hui':{productionLabel:'Aujourd’hui',productionValue:installation.production==='Normale'?'4,8 kWh':'3,1 kWh'},
@@ -741,7 +746,7 @@ function InstallationDetail(){
   const dateFromKey=(value:string)=>new Date(value+'T12:00:00')
   const dateKey=(value:Date)=>`${value.getFullYear()}-${String(value.getMonth()+1).padStart(2,'0')}-${String(value.getDate()).padStart(2,'0')}`
   const addDays=(value:string,days:number)=>{const next=dateFromKey(value);next.setDate(next.getDate()+days);return dateKey(next)}
-  const setPeriodRange=(value:string)=>{const days=getPeriodDays(value);setPeriod(value);setChartEndDate('2025-04-16');setChartStartDate(addDays('2025-04-16',-(days-1)));setChartCustomRange(false);setPeriodMenuOpen(false)}
+  const setPeriodRange=(value:string)=>{const days=getPeriodDays(value);setPeriod(value);setChartEndDate(todayKey);setChartStartDate(addDays(todayKey,-(days-1)));setChartCustomRange(false);setPeriodMenuOpen(false)}
   const openChartPicker=()=>{setDraftStartDate(chartStartDate);setDraftEndDate(chartEndDate);setCalendarMonth(chartStartDate.slice(0,7)+'-01');setChartPickerOpen(true)}
   const chooseChartDate=(value:string)=>{if(!draftStartDate||draftEndDate){setDraftStartDate(value);setDraftEndDate('');return}if(value<draftStartDate){setDraftStartDate(value);return}if(value>draftStartDate)setDraftEndDate(value)}
   const applyChartRange=()=>{if(!draftStartDate||!draftEndDate)return;setChartStartDate(draftStartDate);setChartEndDate(draftEndDate);setChartCustomRange(true);setChartPickerOpen(false)}
