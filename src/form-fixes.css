@@ -1280,8 +1280,8 @@
 .parkMapCity { top: 83px; left: 53%; color: #182238; font-size: 18px; }
 .parkMapPlace { font-size: 12px; font-weight: 600; }
 .parkMapPlace.ngaliema { top: 52%; left: 28%; }.parkMapPlace.limete { top: 33%; left: 46%; }.parkMapPlace.masina { right: 22%; bottom: 22%; }
-.parkMapLegend { position: absolute; z-index: 5; top: 12px; left: 12px; display: grid; gap: 8px; width: 190px; padding: 13px 14px; border: 1px solid rgba(220,227,235,.9); border-radius: 7px; background: rgba(255,255,255,.94); box-shadow: 0 6px 15px rgba(49,72,98,.09); }
-.parkMapLegend span { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 7px; color: #46536a; font-size: 11px; }.parkMapLegend i { width: 9px; height: 9px; border-radius: 50%; }.parkMapLegend b { color: #172237; font-size: 11px; }
+.parkMapLegend { position: absolute; z-index: 5; top: 12px; left: 12px; display: grid; gap: 8px; width: 216px; padding: 13px 14px; border: 1px solid rgba(220,227,235,.9); border-radius: 7px; background: rgba(255,255,255,.94); box-shadow: 0 6px 15px rgba(49,72,98,.09); }
+.parkMapLegend span { display: grid; grid-template-columns: 10px minmax(0,1fr) 28px; align-items: center; gap: 7px; color: #46536a; font-size: 11px; white-space: nowrap; }.parkMapLegend i { width: 9px; height: 9px; border-radius: 50%; }.parkMapLegend b { color: #172237; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
 .parkMapLegend i.normal, .parkMapMarker.normal { background: #08a75d; }.parkMapLegend i.watch, .parkMapMarker.watch { background: #ff7900; }.parkMapLegend i.critical, .parkMapMarker.critical { background: #ea1529; }.parkMapLegend i.muted, .parkMapMarker.muted { background: #9fa8b5; }
 .parkMapMarker { position: absolute; z-index: 5; width: 13px; height: 13px; margin: -6px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 1px 5px rgba(34,50,68,.28); }
 .parkMapZoom { position: absolute; z-index: 6; right: 14px; bottom: 57px; display: grid; overflow: hidden; border: 1px solid #e0e6ed; border-radius: 6px; background: #fff; box-shadow: 0 4px 10px rgba(49,72,98,.11); }.parkMapZoom button { display: grid; width: 35px; height: 35px; place-items: center; border: 0; border-bottom: 1px solid #e6ebf1; color: #44526a; background: #fff; }.parkMapZoom button:last-child { margin-top: 9px; border: 0; }.parkMapScale { right: 17px; bottom: 12px; padding-top: 3px; border-top: 2px solid #44526a; font-size: 10px; }
@@ -1341,7 +1341,7 @@
   .parcSolarHead { display: grid; }.parcDateRange { width: 100%; }
   .parcMetricGrid { grid-template-columns: 1fr; }.parcMetric { min-height: 76px; }
   .parkMapHeader { display: grid; }.parkMapFilters { justify-content: flex-start; }.parkMapFilters label { width: 100%; }.parkMapFilters select { flex: 1; }
-  .parkMapCanvas { min-height: 260px; }.parkMapLegend { width: 170px; }.parkMapPlace { display: none; }
+  .parkMapCanvas { min-height: 260px; }.parkMapLegend { width: 216px; }.parkMapPlace { display: none; }
   .parcInstallationsPanel > header { display: grid; }.parcInstallationsPanel > header > div { justify-content: flex-start; }.parcTableSearch { width: 100%; }
   .parcInstallationsPanel footer { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; }.parcInstallationsPanel footer nav button:nth-of-type(n+6):not(:last-child), .parcInstallationsPanel footer nav span { display: none; }
 }
