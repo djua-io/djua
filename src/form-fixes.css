@@ -1227,6 +1227,53 @@
 .detailQuoteTableTotal { display: flex; align-items: center; justify-content: flex-end; gap: 28px; min-height: 58px; padding: 0 18px; border-top: 1px solid #e1e7ef; color: #152238; font-size: 14.86px; font-weight: 800; }
 .detailQuoteTableTotal b { color: #ff5a00; font-size: 22.86px; }
 
+/* Parc solaire overview. */
+.parcSolarPage { min-height: calc(100vh - 68px); padding: 22px 28px 32px; background: #fbfcfe; }
+.parcSolarHead, .parcInstallationsPanel > header, .recentAlerts > header, .parkMapHeader { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.parcSolarHead { margin: 0 0 14px; }
+.parcSolarHead h1 { margin: 0; color: #111a2b; font-size: 30px; line-height: 1.1; letter-spacing: -.8px; }
+.parcSolarHead p { margin: 4px 0 0; color: #68758c; font-size: 14px; }
+.parcDateRange, .parkMapFilters select, .parkMapFilters > button, .parcOutlineButton { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 38px; padding: 0 13px; border: 1px solid #dce4ee; border-radius: 8px; color: #1e2b40; background: #fff; font-size: 12px; font-weight: 650; }
+.parcDateRange { min-width: 184px; }
+.parcDateRange svg:last-child { margin-left: auto; }
+.parcMetricGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.parcMetric { display: flex; align-items: center; gap: 17px; min-height: 88px; padding: 16px 20px; border: 1px solid #e0e7f0; border-radius: 8px; background: #fff; }
+.parcMetric > i { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: #52627c; background: #f0f3f8; font-style: normal; }
+.parcMetric.good > i { color: #009f58; background: #e8fbef; }
+.parcMetric.watch > i { color: #ff7200; background: #fff2e5; }
+.parcMetric.critical > i { color: #e51b2d; background: #ffeaed; }
+.parcMetric span { display: grid; gap: 3px; }
+.parcMetric small { color: #34425a; font-size: 12px; font-weight: 650; }
+.parcMetric strong { color: #10192a; font-size: 29px; line-height: 1; letter-spacing: -.7px; }
+.parcOverviewGrid { display: grid; grid-template-columns: minmax(0, 1.82fr) minmax(330px, .96fr); gap: 14px; margin-top: 12px; }
+.parkMapCard, .recentAlerts, .parcInstallationsPanel { border: 1px solid #e0e7f0; border-radius: 9px; background: #fff; }
+.parkMapHeader { min-height: 50px; padding: 0 14px 0 16px; }
+.parkMapHeader h2, .recentAlerts h2, .parcInstallationsPanel h2 { margin: 0; color: #111a2b; font-size: 17px; letter-spacing: -.25px; }
+.parkMapFilters { display: flex; align-items: center; gap: 8px; }
+.parkMapFilters label, .parcTableSearch { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 11px; border: 1px solid #dfe6ef; border-radius: 7px; color: #53627a; background: #fff; }
+.parkMapFilters label { width: 270px; }
+.parkMapFilters input, .parcTableSearch input { width: 100%; min-width: 0; border: 0; outline: 0; color: #263249; background: transparent; font: inherit; }
+.parkMapFilters input::placeholder, .parcTableSearch input::placeholder { color: #7a879c; }
+.parkMapFilters select, .parkMapFilters > button { min-height: 34px; height: 34px; padding: 0 10px; font-size: 11px; }
+.parkMapFilters select { min-width: 112px; }
+.parkMapFilters > button { width: 38px; padding: 0; }
+.parkMapCanvas { position: relative; min-height: 294px; margin: 0 10px 10px; overflow: hidden; border-radius: 7px; background: linear-gradient(160deg, #d9f0eb 0 34%, #dcefd4 34% 100%); }
+.parkMapCanvas::before { position: absolute; inset: 0; opacity: .65; background: repeating-linear-gradient(20deg, transparent 0 18px, rgba(255,255,255,.6) 18px 20px, transparent 20px 50px), repeating-linear-gradient(108deg, transparent 0 30px, rgba(139,186,155,.27) 31px 33px, transparent 34px 70px); content: ''; }
+.parkMapCanvas::after { position: absolute; inset: 25% -5% auto -5%; height: 8px; transform: rotate(-7deg); background: rgba(255,255,255,.72); box-shadow: 0 58px 0 rgba(255,255,255,.48), 110px 105px 0 rgba(255,255,255,.5); content: ''; }
+.parkMapRiver { position: absolute; z-index: 1; top: -20px; right: -5%; left: -5%; height: 89px; transform: rotate(3deg); background: rgba(170,222,243,.72); border-bottom: 2px solid rgba(126,198,224,.34); }
+.parkMapWaterLabel, .parkMapCity, .parkMapPlace, .parkMapScale { position: absolute; z-index: 3; color: #4f607b; }
+.parkMapWaterLabel { top: 25px; left: 35%; color: #4682ae; font-size: 11px; font-style: italic; }
+.parkMapCity { top: 83px; left: 53%; color: #182238; font-size: 18px; }
+.parkMapPlace { font-size: 12px; font-weight: 600; }
+.parkMapPlace.ngaliema { top: 52%; left: 28%; }.parkMapPlace.limete { top: 33%; left: 46%; }.parkMapPlace.masina { right: 22%; bottom: 22%; }
+.parkMapLegend { position: absolute; z-index: 5; top: 12px; left: 12px; display: grid; gap: 8px; width: 190px; padding: 13px 14px; border: 1px solid rgba(220,227,235,.9); border-radius: 7px; background: rgba(255,255,255,.94); box-shadow: 0 6px 15px rgba(49,72,98,.09); }
+.parkMapLegend span { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 7px; color: #46536a; font-size: 11px; }.parkMapLegend i { width: 9px; height: 9px; border-radius: 50%; }.parkMapLegend b { color: #172237; font-size: 11px; }
+.parkMapLegend i.normal, .parkMapMarker.normal { background: #08a75d; }.parkMapLegend i.watch, .parkMapMarker.watch { background: #ff7900; }.parkMapLegend i.critical, .parkMapMarker.critical { background: #ea1529; }.parkMapLegend i.muted, .parkMapMarker.muted { background: #9fa8b5; }
+.parkMapMarker { position: absolute; z-index: 5; width: 13px; height: 13px; margin: -6px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 1px 5px rgba(34,50,68,.28); }
+.parkMapZoom { position: absolute; z-index: 6; right: 14px; bottom: 57px; display: grid; overflow: hidden; border: 1px solid #e0e6ed; border-radius: 6px; background: #fff; box-shadow: 0 4px 10px rgba(49,72,98,.11); }.parkMapZoom button { display: grid; width: 35px; height: 35px; place-items: center; border: 0; border-bottom: 1px solid #e6ebf1; color: #44526a; background: #fff; }.parkMapZoom button:last-child { margin-top: 9px; border: 0; }.parkMapScale { right: 17px; bottom: 12px; padding-top: 3px; border-top: 2px solid #44526a; font-size: 10px; }
+.recentAlerts > header { min-height: 50px; padding: 0 16px; }.recentAlerts > header button { padding: 0; border: 0; color: #ff5a00; background: transparent; font-size: 12px; font-weight: 700; text-decoration: underline; }.recentAlerts > div { padding: 0 13px 6px; }.parkAlert { display: grid; grid-template-columns: 38px minmax(0,1fr) auto 16px; gap: 8px; align-items: center; min-height: 67px; border-top: 1px solid #e7ecf2; }.parkAlert:first-child { border-top: 0; }.parkAlert > i { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; font-style: normal; }.parkAlert > i.critical { color: #e51a2d; background: #ffeaed; }.parkAlert > i.watch { color: #ef6e00; background: #fff1e4; }.parkAlert > span { min-width: 0; }.parkAlert b { color: #243149; font-size: 11px; }.parkAlert em { margin-left: 5px; padding: 3px 6px; border-radius: 6px; font-size: 9px; font-style: normal; font-weight: 700; }.parkAlert em.critical { color: #dd1d2e; background: #ffebed; }.parkAlert em.watch { color: #f06d00; background: #fff2e5; }.parkAlert small, .parkAlert p { display: block; overflow: hidden; margin: 3px 0 0; color: #64718a; font-size: 10px; white-space: nowrap; text-overflow: ellipsis; }.parkAlert p { color: #57657d; }.parkAlert time { align-self: start; padding-top: 10px; color: #6d788c; font-size: 10px; white-space: nowrap; }.parkAlert > svg { color: #4e5d75; }
+.parcInstallationsPanel { margin-top: 13px; overflow: hidden; }.parcInstallationsPanel > header { min-height: 58px; padding: 0 16px; }.parcInstallationsPanel h2 span { color: #718099; font-weight: 500; }.parcInstallationsPanel > header > div { display: flex; align-items: center; gap: 9px; }.parcTableSearch { width: 275px; }.parcOutlineButton { min-height: 34px; height: 34px; padding: 0 12px; font-size: 11px; }.parcTableScroll { overflow-x: auto; padding: 0 10px; }.parcInstallTable { min-width: 1130px; border: 1px solid #e1e7ef; border-radius: 7px; overflow: hidden; }.parcInstallHead, .parcInstallRow { display: grid; grid-template-columns: 38px 112px minmax(150px,1.3fr) 95px 120px 135px 105px 106px 102px 42px; align-items: center; column-gap: 8px; }.parcInstallHead { min-height: 39px; padding: 0 10px; color: #53627a; background: #f8fafc; font-size: 10px; font-weight: 700; }.parcInstallHead span { line-height: 1.2; }.parcInstallRow { min-height: 57px; padding: 0 10px; border-top: 1px solid #e5eaf1; color: #516078; font-size: 11px; }.parcInstallRow > b, .parcInstallRow span > b { color: #1f2d43; font-size: 11px; }.parcInstallRow span > small { display: block; margin-top: 2px; color: #6e7c92; font-size: 10px; }.parcInstallRow input, .parcInstallHead input { width: 14px; height: 14px; accent-color: #ff5a00; }.parkPill { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: max-content; min-width: 75px; padding: 5px 8px; border-radius: 6px; font-size: 10px; white-space: nowrap; }.parkPill.normal, .parkPill.online { color: #008c4c; background: #e8f9ee; }.parkPill.watch, .parkPill.low, .parkPill.high { color: #ec6800; background: #fff2e3; }.parkPill.critical, .parkPill.offline { color: #df1b2e; background: #ffeaed; }.parkMoreButton { display: grid; width: 32px; height: 32px; place-items: center; border: 0; border-radius: 6px; color: #2b3850; background: transparent; }.parkMoreButton:hover { background: #f2f5f8; }.parcInstallationsPanel footer { display: flex; align-items: center; justify-content: space-between; min-height: 57px; padding: 0 16px; color: #687791; font-size: 11px; }.parcInstallationsPanel footer nav { display: flex; align-items: center; gap: 4px; }.parcInstallationsPanel footer button { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid transparent; border-radius: 6px; color: #495871; background: #fff; font-size: 11px; }.parcInstallationsPanel footer button.current { border-color: #ff5a00; color: #ff5a00; }
+
 @media (max-width: 1100px) {
   .quoteEditWorkspace { grid-template-columns: 1fr; }
   .quoteEditRail { position: static; grid-template-columns: 1fr 1fr; }
@@ -1256,4 +1303,31 @@
   .acceptedConfirmation { padding: 16px; }
   .detailQuoteTable { overflow-x: auto; }
   .detailQuoteTableHeader, .detailQuoteTableRow { min-width: 720px; }
+}
+
+@media (max-width: 1180px) {
+  .parcOverviewGrid { grid-template-columns: 1fr; }
+  .recentAlerts { min-height: auto; }
+  .parkAlert { grid-template-columns: 38px minmax(0, 1fr) auto 16px; }
+}
+
+@media (max-width: 860px) {
+  .parcSolarPage { padding: 18px; }
+  .parcMetricGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .parcSolarHead { align-items: flex-start; }
+  .parkMapHeader { align-items: flex-start; padding: 14px; }
+  .parkMapFilters { flex-wrap: wrap; justify-content: flex-end; }
+  .parkMapFilters label { width: 230px; }
+  .parcInstallationsPanel > header { align-items: flex-start; padding: 14px 16px; }
+  .parcInstallationsPanel > header > div { flex-wrap: wrap; justify-content: flex-end; }
+}
+
+@media (max-width: 600px) {
+  .parcSolarPage { padding: 16px 12px 28px; }
+  .parcSolarHead { display: grid; }.parcDateRange { width: 100%; }
+  .parcMetricGrid { grid-template-columns: 1fr; }.parcMetric { min-height: 76px; }
+  .parkMapHeader { display: grid; }.parkMapFilters { justify-content: flex-start; }.parkMapFilters label { width: 100%; }.parkMapFilters select { flex: 1; }
+  .parkMapCanvas { min-height: 260px; }.parkMapLegend { width: 170px; }.parkMapPlace { display: none; }
+  .parcInstallationsPanel > header { display: grid; }.parcInstallationsPanel > header > div { justify-content: flex-start; }.parcTableSearch { width: 100%; }
+  .parcInstallationsPanel footer { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px 16px; }.parcInstallationsPanel footer nav button:nth-of-type(n+6):not(:last-child), .parcInstallationsPanel footer nav span { display: none; }
 }
