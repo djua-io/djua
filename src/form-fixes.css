@@ -518,6 +518,7 @@
 }
 .quotesHeader { height: 69px; padding-inline: 24px; }
 .quotesHeader > b { color: #101828; font-size:23px; letter-spacing: -.25px; }
+.installationBackHeader { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 7px; color: #25334b; font-size: 14px; font-weight: 750; }
 .globalSearch { width: 300px; height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 9px 0 12px; border: 1px solid #e0e5ee; border-radius: 8px; background: #fdfdfd; color: #4c5a72; }
 .globalSearch input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: #1c2638; font-size:12.57px; }
 .globalSearch kbd { padding: 2px 6px; border-radius: 5px; color: #68758d; background: #eef1f5; font-family: inherit; font-size:10.29px; }
