@@ -857,7 +857,7 @@ function ProductsCatalogue(){
     return matchesCategory&&matchesQuery&&matchesStatus&&matchesUsage
   })
   return <section className="workspacePage cataloguePage">
-    <header className="workspaceHeading catalogueHead"><div><small><I.ChevronLeft size={14}/>Catalogue</small><h1>Catalogue de produits</h1><p>Gérez les équipements utilisés par Djúa pour construire les recommandations.</p></div><div><button className="catalogueImport"><I.Upload size={17}/>Importer (CSV)</button><button className="catalogueAdd"><I.Plus size={18}/>Ajouter un produit</button></div></header>
+    <header className="workspaceHeading catalogueHead"><div><h1>Catalogue de produits</h1><p>Gérez les équipements utilisés par Djúa pour construire les recommandations.</p></div><div><button className="catalogueImport"><I.Upload size={17}/>Importer (CSV)</button><button className="catalogueAdd"><I.Plus size={18}/>Ajouter un produit</button></div></header>
     <div className="catalogueLayout">
       <div className="catalogueMain">
         <nav className="catalogueCategories" aria-label="Catégories de produits">{catalogueCategories.map(({label,count,icon:Icon})=><button type="button" key={label} className={category===label?'active':''} onClick={()=>setCategory(label)}><i><Icon size={19}/></i><b>{label}</b><span>{count}</span></button>)}</nav>
