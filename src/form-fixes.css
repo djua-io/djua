@@ -1464,6 +1464,19 @@ main p, main .muted { font-size: 16px !important; }
 .catalogueHead { height: auto; min-height: 0; padding: 0; border: 0; background: transparent; position: static; }
 @media (max-width: 1180px) { .catalogueHead { align-items: flex-start; flex-direction: column; }.catalogueHead > div:last-child { align-self: stretch; }.catalogueHead > div:last-child button { flex: 0 0 auto; } }
 @media (max-width: 760px) { .workspacePage, .quoteDetailPage { padding: 18px 14px 30px; } }
+
+/* Top-level list actions share one clear pattern across Devis and Parc solaire. */
+.workspacePageHeader { position: static; display: flex; height: auto; min-height: 0; align-items: flex-end; justify-content: space-between; gap: 20px; padding: 0; border: 0; background: transparent; }
+.workspaceActions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex: 0 0 auto; }
+.workspaceAction, .workspacePrimaryAction { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border-radius: 7px; font-size: 12px; font-weight: 750; white-space: nowrap; }
+.workspaceAction { border: 1px solid #dce4ee; color: #26344b; background: #fff; }
+.workspacePrimaryAction { border: 1px solid #ff5a00; color: #fff; background: #ff5a00; }
+.workspacePrimaryAction:hover { background: #e95000; }
+.exportMenu { position: relative; }.exportMenuList { position: absolute; z-index: 20; top: calc(100% + 7px); right: 0; display: grid; width: 148px; gap: 2px; padding: 6px; border: 1px solid #dce4ee; border-radius: 8px; background: #fff; box-shadow: 0 12px 28px rgba(20,34,57,.16); }.exportMenuList button { display: flex; min-height: 34px; align-items: center; gap: 9px; padding: 7px 8px; border: 0; border-radius: 5px; color: #26344b; background: transparent; font: inherit; font-size: 12px; font-weight: 650; text-align: left; }.exportMenuList button:hover { color: #ff5a00; background: #fff6f0; }
+.parcSolarActions { gap: 10px; }.installationAddDialog { width: min(540px,100%); }.installationAddDialog > p { margin: 4px 0 20px; color: #64728a; }.installationAddDialog footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+.overlay { z-index: 4001; }
+@media (max-width: 1180px) { .parcSolarHead { align-items: flex-start; flex-direction: column; }.parcSolarActions { align-self: stretch; justify-content: flex-start; } }
+@media (max-width: 700px) { .workspacePageHeader, .workspaceActions, .parcSolarActions { align-items: flex-start; flex-direction: column; }.workspaceActions, .parcSolarActions { width: 100%; }.workspaceAction, .workspacePrimaryAction, .parcSolarActions .parcDateRange { width: 100%; }.exportMenu { width: 100%; }.exportMenuList { right: auto; left: 0; width: 100%; } }
 .parkAlert > i { width: 40px; height: 40px; }.parkAlertBody { align-self: center; }.parkAlertMeta { display: block; }.parkAlertMeta > span { gap: 7px; }.parkAlertMeta b { font-size: 12.57px; }.parkAlertMeta em { margin: 0; padding: 3px 7px; border-radius: 7px; font-size: 10.29px; }.parkAlert.critical .parkAlertMeta em { color: #dd1d2e; background: #ffebed; }.parkAlert.watch .parkAlertMeta em { color: #f06d00; background: #fff2e5; }
 .parkAlertBody small { margin-top: 3px; color: #64718a; font-size: 11.43px; }.parkAlertBody p { margin-top: 3px; color: #53627d; line-height: 1.25; }
 .parkAlert > time { align-self: start; padding-top: 9px; color: #68758e; font-size: 12.57px; white-space: nowrap; }.parkAlertAction { align-self: center; }
