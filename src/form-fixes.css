@@ -1478,6 +1478,12 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .productStatusSelect > i { position: absolute; z-index: 1; top: 50%; left: 12px; width: 8px; height: 8px; border-radius: 50%; transform: translateY(-50%); background: #08a75d; pointer-events: none; }
 .productStatusSelect.inactive > i { background: #aab5c3; }
 .productStatusSelect > select { padding-left: 28px !important; }
+.catalogueActionCell { position: relative; }
+.catalogueActionMenu { position: absolute; z-index: 4; top: 38px; right: 5px; display: grid; width: 152px; padding: 5px; border: 1px solid #dfe6ee; border-radius: 7px; box-shadow: 0 8px 20px rgba(28,43,66,.14); background: #fff; text-align: left; }
+.catalogueActionMenu button { display: flex; min-height: 33px; align-items: center; gap: 8px; padding: 0 9px; border: 0; border-radius: 5px; color: #2c3a53; background: transparent; font: inherit; font-size: 11px; font-weight: 650; }
+.catalogueActionMenu button:hover { background: #f5f7fa; }
+.catalogueActionMenu button.danger { color: #d74444; }
+.catalogueActionMenu button.danger:hover { background: #fff0f0; }
 .productTechFields.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 780px) { .productTechFields.four { grid-template-columns: 1fr; } }
 @media (max-width: 760px) { .workspacePage, .quoteDetailPage { padding: 18px 14px 30px; } }
