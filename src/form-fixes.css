@@ -1469,6 +1469,7 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .productEntryScroll { height: calc(100vh - 69px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: #fcfcfc; }
 .productCreateHead h1 { margin: 0 0 3px; }.productCreateHead p { font-size: 14px !important; line-height: 1.4; }.productFormCard > header > span { display: grid; gap: 3px; }.productFormCard header p { font-size: 12px !important; line-height: 1.35; }
 .productFields label, .productTechFields label { display: block; }.productFields label > input, .productFields label > .productUnitField, .productTechFields label > input, .productTechFields label > select, .productTechFields label > .productUnitField { display: block; margin-top: 6px; }.productImageUpload { align-content: start; }.productImageUpload > div { min-height: 215px; margin-top: 14px; }.productFields label > b, .productTechFields label > b, label > em { display: contents; }
+.productFields label > .productUnitField, .productTechFields label > .productUnitField { display: grid; }
 @media (max-width: 760px) { .workspacePage, .quoteDetailPage { padding: 18px 14px 30px; } }
 
 /* Top-level list actions share one clear pattern across Devis and Parc solaire. */
