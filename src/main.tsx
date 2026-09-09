@@ -694,18 +694,29 @@ function ParcSolaire(){
   const [mapFullscreen,setMapFullscreen]=useState(false)
   const [installations,setInstallations]=useState<ParkInstallation[]>(parkInstallations)
   const [addingInstallation,setAddingInstallation]=useState(false)
+  const [period,setPeriod]=useState('30 derniers jours')
+  const [periodMenuOpen,setPeriodMenuOpen]=useState(false)
+  const periodFilterRef=useRef<HTMLDivElement>(null)
   useEffect(()=>{
     if(!mapFullscreen)return
     const previousOverflow=document.body.style.overflow
     document.body.style.overflow='hidden'
     return ()=>{document.body.style.overflow=previousOverflow}
   },[mapFullscreen])
+  useEffect(()=>{
+    if(!periodMenuOpen)return
+    const close=(event:MouseEvent)=>{if(periodFilterRef.current&&!periodFilterRef.current.contains(event.target as Node))setPeriodMenuOpen(false)}
+    document.addEventListener('mousedown',close)
+    return ()=>document.removeEventListener('mousedown',close)
+  },[periodMenuOpen])
   const filtered=installations.filter(item=>`${item.id} ${item.client} ${item.site} ${item.location}`.toLowerCase().includes(query.toLowerCase()))
   const installationCount=4281+installations.length
-  const metrics=[{label:'Installations',value:installationCount.toLocaleString('fr-FR'),icon:I.Box,tone:'neutral'},{label:'En bon état (en ligne)',value:'4 041',icon:I.Wifi,tone:'good'},{label:'À surveiller',value:'187',icon:I.TriangleAlert,tone:'watch'},{label:'Critique',value:'58',icon:I.CircleAlert,tone:'critical'}]
+  const periodMetrics:{[key:string]:[string,string,string]}={"Aujourd’hui":['4 041','17','5'],'7 derniers jours':['4 035','71','21'],'30 derniers jours':['4 041','187','58'],'90 derniers jours':['4 018','416','122']}
+  const [healthy,watch,critical]=periodMetrics[period]
+  const metrics=[{label:'Installations',value:installationCount.toLocaleString('fr-FR'),icon:I.Box,tone:'neutral'},{label:'En bon état (en ligne)',value:healthy,icon:I.Wifi,tone:'good'},{label:'À surveiller',value:watch,icon:I.TriangleAlert,tone:'watch'},{label:'Critique',value:critical,icon:I.CircleAlert,tone:'critical'}]
   return <section className="workspacePage parcSolarPage">
     {addingInstallation&&<InstallationAddDialog onClose={()=>setAddingInstallation(false)} onAdd={draft=>{setInstallations(current=>[{id:`INS-${String(1200+current.length).padStart(5,'0')}`,client:draft.client,site:draft.site,location:draft.location,production:'Normale',consumption:'Normale',boxPosition:'Confirmée',positionNeedsCheck:false,boxIntegrity:'Intact',integrityNeedsCheck:false,global:'En bon état',last:'À l’instant',status:'normal'},...current]);setAddingInstallation(false)}}/>}
-    <div className="workspaceHeading parcSolarHead"><div><h1>Parc solaire</h1><p>Vue d’ensemble de toutes vos installations connectées.</p></div><div className="workspaceActions parcSolarActions"><button className="parcDateRange"><I.CalendarDays size={17}/>30 derniers jours<I.ChevronDown size={16}/></button><ExportMenu title="Liste des installations" fileName="liste-des-installations" columns={['Installation','Client','Site','Localisation','Production','Consommation','État global','Dernière donnée']} rows={installations.map(item=>[item.id,item.client,item.site,item.location,item.production,item.consumption,item.global,item.last])}/><button type="button" className="workspacePrimaryAction" onClick={()=>setAddingInstallation(true)}><I.Plus size={17}/>Ajouter une installation</button></div></div>
+    <div className="workspaceHeading parcSolarHead"><div><h1>Parc solaire</h1><p>Vue d’ensemble de toutes vos installations connectées.</p></div><div className="workspaceActions parcSolarActions"><div className="parcPeriodFilter" ref={periodFilterRef}><button className="parcDateRange" type="button" aria-haspopup="listbox" aria-expanded={periodMenuOpen} onClick={()=>setPeriodMenuOpen(open=>!open)}><I.CalendarDays size={17}/>{period}<I.ChevronDown size={16}/></button>{periodMenuOpen&&<div className="parcPeriodMenu" role="listbox" aria-label="Période affichée">{['Aujourd’hui','7 derniers jours','30 derniers jours','90 derniers jours'].map(option=><button type="button" role="option" aria-selected={period===option} className={period===option?'selected':''} key={option} onClick={()=>{setPeriod(option);setPeriodMenuOpen(false)}}>{option}{period===option&&<I.Check size={16}/>}</button>)}</div>}</div><ExportMenu title="Liste des installations" fileName="liste-des-installations" columns={['Installation','Client','Site','Localisation','Production','Consommation','État global','Dernière donnée']} rows={installations.map(item=>[item.id,item.client,item.site,item.location,item.production,item.consumption,item.global,item.last])}/><button type="button" className="workspacePrimaryAction" onClick={()=>setAddingInstallation(true)}><I.Plus size={17}/>Ajouter une installation</button></div></div>
     <section className="parcMetricGrid" aria-label="Indicateurs du parc solaire">{metrics.map(({label,value,icon:Icon,tone})=><article className={'parcMetric '+tone} key={label}><i><Icon size={25}/></i><span><small>{label}</small><strong>{value}</strong></span></article>)}</section>
     <section className="parcOverviewGrid">
       <section className={'parkMapCard'+(mapFullscreen?' mapFullscreen':'')}><header className="parkMapHeader"><h2>Carte du parc</h2><div className="parkMapFilters"><label><I.Search size={16}/><input value={mapQuery} onChange={event=>setMapQuery(event.target.value)} placeholder="Rechercher une zone, une ville…"/></label><select aria-label="Province de la RDC" value={province} onChange={event=>setProvince(event.target.value)}>{drcProvinces.map(item=><option key={item.name}>{item.name}</option>)}</select><select aria-label="Statut" value={statusFilter} onChange={event=>setStatusFilter(event.target.value)}><option>Tous les statuts</option><option>En bon état</option><option>À surveiller</option><option>Critique</option><option>Données indisponibles</option></select><button aria-label={mapFullscreen?'Réduire la carte':'Agrandir la carte'} onClick={()=>setMapFullscreen(value=>!value)}>{mapFullscreen?<I.Minimize2 size={17}/>:<I.Maximize2 size={17}/>}</button></div></header><ParcOpenStreetMap province={province} statusFilter={statusFilter} expanded={mapFullscreen}/></section>
