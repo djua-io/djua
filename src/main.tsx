@@ -36,7 +36,7 @@ const quoteDirectory:Record<string,QuoteDirectoryEntry>={
   ,'OE-2026-00824':{id:'OE-2026-00824',date:'18 août 2026',client:'École Horizon',type:'Établissement scolaire',city:'Kinshasa, RDC',address:'Avenue de la Paix, Ngaliema',phone:'+243 85 774 0123',email:'direction@ecolehorizon.cd',amount:3900,payment:'24 mois',monthly:'163 $ / mois',status:'Expiré',action:'Renouveler le devis',actionCopy:'Validité expirée le 18 août',tone:''}
 }
 const names:Record<string,React.ElementType>={"Tableau de bord":I.LayoutDashboard,"Clients":I.UsersRound,"Devis":I.Calculator,"Parc solaire":I.SolarPanel,"Interventions":I.Wrench,"Produits":I.Lightbulb,"Rapports":I.Image,"Paramètres":I.Settings}
-const nav=[['Tableau de bord','/dashboard'],['Devis','/devis'],['Parc solaire','/installations'],['Interventions','/interventions'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
+const nav=[['Tableau de bord','/dashboard'],['Devis','/devis'],['Parc solaire','/installations'],['Produits','/produits'],['Rapports','/rapports'],['Paramètres','/parametres']]
 function Layout({children}:{children:React.ReactNode}){
   const {pathname}=useLocation();
   const navigate=useNavigate();
