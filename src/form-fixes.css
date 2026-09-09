@@ -1471,6 +1471,7 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .productFields label, .productTechFields label { display: block; }.productFields label > input, .productFields label > .productUnitField, .productTechFields label > input, .productTechFields label > select, .productTechFields label > .productUnitField { display: block; margin-top: 6px; }.productImageUpload { align-content: start; }.productImageUpload > div { min-height: 215px; margin-top: 14px; }.productFields label > b, .productTechFields label > b, label > em { display: contents; }
 .productFields label > .productUnitField, .productTechFields label > .productUnitField { display: grid; }
 .productFields .productUnitField { grid-template-columns: minmax(0,1fr) 48px; }
+.productImageUpload img { width: 128px; height: 108px; }
 @media (max-width: 760px) { .workspacePage, .quoteDetailPage { padding: 18px 14px 30px; } }
 
 /* Top-level list actions share one clear pattern across Devis and Parc solaire. */
