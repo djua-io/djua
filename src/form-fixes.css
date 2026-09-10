@@ -1621,3 +1621,11 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 
 /* Keep the donut’s centre anchored to its ring while the page scrolls. */
 .healthDonut { position: relative; }
+
+/* Compact live OpenStreetMap view in the dashboard. */
+.dashboardMap .dashboardOpenStreetMapWrap { min-height: 219px; height: 219px; margin: 0 10px; }
+.dashboardMap .dashboardOpenStreetMapWrap .parkOpenStreetMap { min-height: 0; height: 100%; }
+.dashboardMap .dashboardOpenStreetMapWrap .leaflet-control-zoom { margin: 0 8px 8px 0; }
+@media (min-width:1151px) and (max-width:1450px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 185px; height: 185px; } }
+@media (max-width:960px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 200px; height: 200px; } }
+@media (max-width:620px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 185px; height: 185px; } }
