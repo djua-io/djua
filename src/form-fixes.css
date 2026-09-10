@@ -1857,6 +1857,6 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 
 @media (min-width: 961px) {
   .dashboardTop {
-    grid-template-columns: minmax(0, 1.35fr) minmax(300px, .85fr);
+    grid-template-columns: minmax(0, .4fr) minmax(300px, .6fr);
   }
 }
