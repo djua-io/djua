@@ -1839,3 +1839,13 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .accountBottom {
   grid-template-columns: 1fr;
 }
+
+/* Persistent workspace brand. */
+.shopBrand > span {
+  font-size: 0;
+}
+
+.shopBrand > span::after {
+  content: 'Orange Energies';
+  font-size: 20.57px;
+}
