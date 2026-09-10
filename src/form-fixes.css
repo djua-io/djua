@@ -1618,3 +1618,6 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .parkAlert > i { width: 40px; height: 40px; }.parkAlertBody { align-self: center; }.parkAlertMeta { display: block; }.parkAlertMeta > span { gap: 7px; }.parkAlertMeta b { font-size: 12.57px; }.parkAlertMeta em { margin: 0; padding: 3px 7px; border-radius: 7px; font-size: 10.29px; }.parkAlert.critical .parkAlertMeta em { color: #dd1d2e; background: #ffebed; }.parkAlert.watch .parkAlertMeta em { color: #f06d00; background: #fff2e5; }
 .parkAlertBody small { margin-top: 3px; color: #64718a; font-size: 11.43px; }.parkAlertBody p { margin-top: 3px; color: #53627d; line-height: 1.25; }
 .parkAlert > time { align-self: start; padding-top: 9px; color: #68758e; font-size: 12.57px; white-space: nowrap; }.parkAlertAction { align-self: center; }
+
+/* Keep the donut’s centre anchored to its ring while the page scrolls. */
+.healthDonut { position: relative; }
