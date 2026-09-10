@@ -1966,3 +1966,14 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 }
 
 .dashboardHealth li:nth-child(1)::after { height: 145px; }
+
+/* The lower dashboard focuses on current work and installations needing attention. */
+.dashboardRecent {
+  display: none;
+}
+
+@media (min-width: 961px) {
+  .dashboardBottom {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
