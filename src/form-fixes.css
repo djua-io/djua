@@ -1825,3 +1825,8 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .productDetailPage {
   max-width: 1320px;
 }
+
+/* Inner workflows share the same desktop shell as their parent workspaces. */
+.page {
+  max-width: 1320px;
+}
