@@ -1629,3 +1629,124 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 @media (min-width:1151px) and (max-width:1450px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 185px; height: 185px; } }
 @media (max-width:960px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 200px; height: 200px; } }
 @media (max-width:620px) { .dashboardMap .dashboardOpenStreetMapWrap { min-height: 185px; height: 185px; } }
+
+/* Application-wide type scale: readable at the standard desktop viewport. */
+:where(.workspacePage, .page, .quoteListPage, .quoteDetailPage, .parcSolarPage, .productCreatePage, .settingsPage) {
+  font-size: 14px;
+  line-height: 1.45;
+}
+:where(.workspacePage, .page, .quoteListPage, .quoteDetailPage, .parcSolarPage, .productCreatePage, .settingsPage) :is(button, input, select, textarea) {
+  font-size: 13px !important;
+}
+:where(.workspacePage, .page, .quoteListPage, .quoteDetailPage, .parcSolarPage, .productCreatePage, .settingsPage) :is(label, th, td, dt, dd) {
+  font-size: 13px !important;
+}
+:where(.workspacePage, .page, .quoteListPage, .quoteDetailPage, .parcSolarPage, .productCreatePage, .settingsPage) small {
+  font-size: 12px !important;
+  line-height: 1.35;
+}
+
+/* Settings keeps its information density without sacrificing legibility. */
+.settingsNav > small,
+.settingsOrgMark em,
+.settingsGeneral dt,
+.settingsGeneralGrid aside > small,
+.settingsGeneralGrid aside em,
+.settingsConfig label,
+.settingsConfig > p,
+.settingsRail dt,
+.settingsRail dd,
+.settingsRail p,
+.settingsStatus,
+.settingsModule small,
+.settingsCard header p {
+  font-size: 12px !important;
+}
+.settingsNav nav button { font-size: 13px !important; }
+.settingsMain > header p { font-size: 14px !important; }
+.settingsCard h3 { font-size: 17px; }
+.settingsRail h3 { font-size: 16px; }
+.settingsMain :is(.settingsUserHead, .settingsUserTable article, .settingsShopHead, .settingsShopTable article) {
+  font-size: 13px;
+}
+.settingsMain :is(.settingsUserHead, .settingsShopHead) { min-height: 42px; }
+.settingsMain :is(.settingsUserTable article, .settingsShopTable article) { min-height: 58px; }
+
+/* Dense dashboard content is promoted from 8–10 px to readable UI text. */
+.dashboardCard > header > button,
+.dashboardMap footer span,
+.dashboardHealth li,
+.dashboardHealth footer b,
+.dashboardSales > h3 { font-size: 12px !important; }
+.dashboardTasks article b,
+.dashboardTasks article strong,
+.dashboardWatch article b,
+.dashboardWatch article strong,
+.dashboardRecent article b,
+.dimensionRow b { font-size: 13px !important; }
+.dashboardTasks article small,
+.dashboardWatch article small,
+.dashboardRecent article small,
+.dimensionRow small,
+.dashboardHealth footer small,
+.dashboardHealth li small,
+.dashboardMap footer b,
+.dashboardMetrics article small,
+.salesMetrics small,
+.salesMetrics em,
+.dimensionRow em { font-size: 12px !important; }
+.dashboardTasks article,
+.dashboardWatch article,
+.dashboardRecent article { min-height: 74px; }
+.dimensionRow { min-height: 62px; }
+.dashboardMetrics article { min-height: 120px; }
+.dashboardMap footer { padding-top: 14px; padding-bottom: 16px; }
+
+/* Reports and product data use the same 12–14 px reading scale. */
+.reportsPage :is(.reportYAxis, .reportXAxis, .reportChart footer span, .reportTableHead, .reportProductHead, .reportProducts article, .reportProducts b, .reportProducts strong, .reportAnomalies > p, .reportAnomalies > p b, .reportDistribution li, .reportDistribution li b, .reportAdvice p) {
+  font-size: 12px !important;
+}
+.reportsPage :is(.reportChart header button, .reportAnomalies header button, .reportProducts header button, .reportAdvice button) {
+  font-size: 13px !important;
+}
+.reportProducts article { min-height: 36px; padding-top: 6px; padding-bottom: 6px; }
+.productCreatePage :is(.productFormCard header p, .productCategoryChoices button small, .productFields label, .productTechFields label, .productAdvanced label, .productStatusField label) {
+  font-size: 12px !important;
+}
+.productCreatePage :is(.productCategoryChoices button b, .productFormCard h2, .productCreateRail h2) {
+  font-size: 14px !important;
+}
+
+/* Compact status treatments remain compact, but never microscopic. */
+.catalogueTable th { font-size: 12px !important; }
+.catalogueTable td,
+.catalogueProduct b,
+.catalogueSpecs b { font-size: 13px !important; }
+.catalogueProduct small,
+.catalogueSpecs small,
+.catalogueCategoryPill,
+.catalogueStatus { font-size: 11px !important; }
+.productDetailPage { font-size: 14px; line-height: 1.45; }
+.productDetailPage :is(button, input, select, textarea) { font-size: 13px !important; }
+.productDetailPage small { font-size: 12px !important; }
+.productDetailPage :is(.productDetailData b, .productHistory article b, .productDetailSummary dd, .productDetailState > p, .productDetailRecent p, .productDetailAdvice p) {
+  font-size: 13px !important;
+}
+.metricHeading > em { font-size: 11px !important; }
+.metricFoot,
+.metricFoot b { font-size: 12px !important; }
+
+/* Final dashboard details that were previously below the metadata floor. */
+.dashboardHeader aside span,
+.dashboardHeader aside small,
+.dashboardHealth li b,
+.dashboardHealth footer em,
+.dashboardSales > header p,
+.dashboardWatch > header p,
+.dashboardWatch time,
+.dashboardRecent time { font-size: 12px !important; }
+
+.cataloguePopular em,
+.cataloguePopular b,
+.cataloguePopular strong { font-size: 12px !important; }
+.cataloguePopular small { font-size: 11px !important; }
