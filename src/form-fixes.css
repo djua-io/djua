@@ -1860,3 +1860,76 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
     grid-template-columns: minmax(0, .4fr) minmax(300px, .6fr);
   }
 }
+
+/* Full-width fleet-health bar chart replaces the compact donut. */
+.dashboardHealth > div {
+  display: block;
+  min-height: 244px;
+  padding: 16px 20px 18px;
+}
+
+.healthDonut {
+  display: none;
+}
+
+.dashboardHealth ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  height: 228px;
+  gap: 22px;
+}
+
+.dashboardHealth li {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-items: start;
+  justify-items: center;
+  gap: 4px;
+  padding: 0;
+  color: #647793;
+  font-size: 12px;
+  text-align: center;
+}
+
+.dashboardHealth li > i {
+  display: none;
+}
+
+.dashboardHealth li span {
+  display: grid;
+  gap: 3px;
+}
+
+.dashboardHealth li b {
+  color: #17243a;
+  font-size: 16px;
+}
+
+.dashboardHealth li small {
+  min-height: 18px;
+  font-size: 12px;
+}
+
+.dashboardHealth li::after {
+  grid-row: 3;
+  align-self: end;
+  width: min(76px, 100%);
+  min-height: 12px;
+  border-radius: 7px 7px 2px 2px;
+  background: #0aae61;
+  content: '';
+}
+
+.dashboardHealth li:nth-child(1)::after { height: 94.2%; }
+.dashboardHealth li:nth-child(2)::after { height: 4.4%; background: #f3af18; }
+.dashboardHealth li:nth-child(3)::after { height: 1.3%; background: #ef3543; }
+.dashboardHealth li:nth-child(4)::after { height: .6%; background: #8896b0; }
+
+@media (max-width: 640px) {
+  .dashboardHealth ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 300px;
+  }
+}
