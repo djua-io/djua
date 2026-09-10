@@ -1750,3 +1750,67 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .cataloguePopular b,
 .cataloguePopular strong { font-size: 12px !important; }
 .cataloguePopular small { font-size: 11px !important; }
+
+/* Strict 12 px minimum for all readable interface text. */
+.profile small,
+.help small,
+.globalSearch kbd,
+.leaflet-control-attribution,
+.leaflet-control-attribution a,
+.metricHeading > em,
+.quoteDataHeader,
+.quoteStatus,
+.parkMapLegend span,
+.parkMapLegend b,
+.parkAlertMeta em,
+.parkAlertMeta time,
+.parcInstallHead,
+.parcInstallRow,
+.parcInstallRow > b,
+.parcInstallRow span > b,
+.parcInstallRow span > small,
+.parkPill,
+.parcInstallationsPanel footer,
+.parcInstallationsPanel footer button,
+.parcOutlineButton,
+.catalogueCategories button span,
+.catalogueProduct small,
+.catalogueSpecs small,
+.catalogueCategoryPill,
+.catalogueStatus,
+.cataloguePopular small,
+.catalogueRail header small,
+.catalogueHealth small,
+.catalogueIncomplete p,
+.catalogueHelp p,
+.catalogueHelp button {
+  font-size: 12px !important;
+}
+
+.followUpPanel > header > div > b,
+.parcInstallationsPanel footer > span,
+.catalogueTableWrap footer > span {
+  font-size: 12px !important;
+}
+
+/* Settings panels previously used a compact, inconsistent metadata scale. */
+.settingsNav > small,
+.settingsOrgMark em,
+.settingsNav nav button,
+.settingsMain :is(p, small, em, b, strong, span, h4, label, button, input, select),
+.settingsRail :is(p, small, em, b, strong, span, dt, dd, button),
+.settingsMain .settingsUserIdentity > i,
+.settingsMain .teamAvatar,
+.settingsMain .teamMore {
+  font-size: 12px !important;
+}
+
+.settingsMain > header p { font-size: 14px !important; }
+.settingsMain h3,
+.settingsRail h3 { font-size: 16px !important; }
+.accountProfile aside > b,
+.accountSummary b { font-size: 14px !important; }
+.settingsMain .settingsUserTable i,
+.settingsMain .settingsInvitation i,
+.settingsRail .settingsInvitation i,
+.quoteCalculation > div p { font-size: 12px !important; }
