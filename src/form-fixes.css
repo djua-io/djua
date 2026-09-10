@@ -1814,3 +1814,14 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .settingsMain .settingsInvitation i,
 .settingsRail .settingsInvitation i,
 .quoteCalculation > div p { font-size: 12px !important; }
+
+/* One shared desktop content shell across every workspace view. */
+.workspacePage,
+.quoteDetailPage,
+.quoteDetailWorkspace,
+.recommendationPage,
+.cataloguePage,
+.productCreatePage,
+.productDetailPage {
+  max-width: 1320px;
+}
