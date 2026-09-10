@@ -1830,3 +1830,12 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
 .page {
   max-width: 1320px;
 }
+
+/* The account view keeps personal notifications as the sole lower panel. */
+.accountSessions {
+  display: none;
+}
+
+.accountBottom {
+  grid-template-columns: 1fr;
+}
