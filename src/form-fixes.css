@@ -1096,7 +1096,7 @@
 .paymentSelectionSummary > small { display: block; margin-top: 15px; color: #67748a; font-size:12.57px; }
 .paymentSelectionSummary > strong { display: block; margin-top: 4px; color: #ff5a00; font-size:24px; letter-spacing: -.5px; }
 .paymentSelectionSummary > p { margin: 7px 0 0; color: #67748a; font-size:12.57px; }
-.paymentConfigActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+.paymentConfigActions { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 2px; }
 .paymentConfigActions .button { min-height: 43px; }
 
 @media (max-width: 900px) {
