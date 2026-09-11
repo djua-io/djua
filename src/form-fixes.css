@@ -91,6 +91,8 @@
 }
 
 .locationStep .progress { margin-top: 0; }
+.locationStep .progress,
+.clientCreation .progress { display: none; }
 .page:has(.locationStep) > h1 { display: none; }
 .locationCard { padding: 22px; border: 1px solid #e8e8e8; border-radius: 10px; background: #fff; }
 .locationCard h2 { margin: 1px 0 4px; font-size:21.71px; }
