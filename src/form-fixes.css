@@ -1991,16 +1991,61 @@ option,
   font-family: 'Rethink Sans', Arial, sans-serif !important;
 }
 
-/* Lead with the commercial overview before operational follow-up. */
-.dashboardPage {
-  display: flex;
-  flex-direction: column;
+/* Pair related dashboard cards in two balanced, well-spaced rows. */
+@media (min-width: 961px) {
+  .dashboardPage {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 12px;
+  }
+
+  .dashboardHeader,
+  .dashboardMetrics {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .dashboardTop,
+  .dashboardBottom {
+    display: contents;
+  }
+
+  .dashboardTasks,
+  .dashboardWatch {
+    grid-row: 3;
+  }
+
+  .dashboardSales,
+  .dashboardHealth {
+    grid-row: 4;
+  }
+
+  .dashboardTasks,
+  .dashboardSales {
+    grid-column: 1;
+  }
+
+  .dashboardWatch,
+  .dashboardHealth {
+    grid-column: 2;
+  }
 }
 
-.dashboardBottom {
-  order: 1;
+.dimensionRow {
+  grid-template-columns: 26px minmax(0, 1fr) minmax(0, 1.15fr) 72px;
+  column-gap: 8px;
 }
 
-.dashboardTop {
-  order: 2;
+.dimensionRow > span:last-of-type {
+  min-width: 0;
+}
+
+.dimensionRow > span:last-of-type b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dimensionRow button {
+  min-width: 72px;
 }
