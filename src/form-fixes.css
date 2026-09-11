@@ -2071,3 +2071,9 @@ option,
   outline: 2px solid #ff5a00;
   outline-offset: -2px;
 }
+
+/* Keep product details focused on the summary and practical guidance. */
+.productDetailState,
+.productDetailRecent {
+  display: none;
+}
