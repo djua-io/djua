@@ -1059,8 +1059,9 @@
 .paymentSystemPrice { display: grid; min-width: 192px; gap: 2px; padding: 13px 15px; border: 1px solid #e0e7ef; border-radius: 10px; background: #fff; text-align: right; }
 .paymentSystemPrice small, .paymentSystemPrice em { color: #66748b; font-size:11.43px; font-style: normal; }
 .paymentSystemPrice strong { color: #17202d; font-size:22px; letter-spacing: -.45px; }
-.paymentConfigLayout { display: grid; grid-template-columns: minmax(0,1fr) 340px; align-items: start; gap: 20px; }
+.paymentConfigLayout { display: grid; grid-template-columns: minmax(0,1fr); align-items: start; gap: 16px; }
 .paymentConfigMain, .paymentConfigRail { display: grid; gap: 16px; }
+.paymentConfigRail { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .paymentConfigCard { padding: 19px; border: 1px solid #e1e7ee; border-radius: 10px; background: #fff; box-shadow: 0 1px 2px rgba(21,29,43,.02); }
 .paymentConfigCard > header h2, .paymentConfigCard > h2 { margin: 0; color: #17202d; font-size:17.14px; }
 .paymentConfigCard > header p { margin: 5px 0 0; color: #66748b; font-size:12.57px; }
@@ -1098,10 +1099,6 @@
 .paymentConfigActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 .paymentConfigActions .button { min-height: 43px; }
 
-@media (max-width: 900px) {
-  .paymentConfigLayout { grid-template-columns: 1fr; }
-  .paymentConfigRail { grid-template-columns: repeat(2,minmax(0,1fr)); }
-}
 @media (max-width: 620px) {
   .paymentConfigPage { padding: 18px; }
   .paymentConfigHeading, .paymentConfigActions { align-items: stretch; flex-direction: column; }
