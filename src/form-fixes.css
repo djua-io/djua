@@ -244,6 +244,9 @@
 .applianceHeading h1 { display: flex; align-items: center; gap: 7px; margin: 0; font-size:24px; }
 .applianceHeading h1 .plain { color: #4d5668; }
 .applianceHeading p { margin: 4px 0 0; color: #667085; font-size:14.86px; }
+.applianceHeading:not(:has(h1 button)) .applianceStats { display: none; }
+.page:has(.applianceHeading:not(:has(h1 button))) .energyDevices { display: none; }
+.applianceEnergy .energyDevices { display: none; }
 .applianceStats { display: flex; align-items: center; gap: 28px; }
 .applianceStats span { display: grid; grid-template-columns: 20px 1fr; column-gap: 8px; align-items: center; color: #5f6879; font-size:13.71px; }
 .applianceStats svg { grid-row: 1 / span 2; }
