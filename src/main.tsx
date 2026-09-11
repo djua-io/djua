@@ -926,7 +926,7 @@ function ProductsCatalogue(){
       <aside className="catalogueRail">
         <section>
           <header><h2>Produits les plus utilisés</h2><small>30 derniers jours</small></header>
-          {catalogueProducts.slice(0,5).map((product,index)=><Link className="cataloguePopular" key={product.name} to={'/produits/'+encodeURIComponent(product.name)} aria-label={'Voir le détail de '+product.name}><em>{index+1}</em><img src={product.image} alt=""/><span><b>{product.name}</b><small>{product.brand}</small></span><strong>{[56,42,38,27,19][index]} utilisations</strong></Link>)}
+          {catalogueProducts.slice(0,5).map((product,index)=><Link className="cataloguePopular" key={product.name} to={'/produits/'+encodeURIComponent(product.name)} aria-label={'Voir le détail de '+product.name}><em>{index+1}</em><img src={product.image} alt=""/><span><b>{product.name}</b><small>{product.brand}</small></span><strong>{[56,42,38,27,19][index]} fois</strong></Link>)}
         </section>
         <section className="catalogueHelp"><I.BookOpen size={25}/><span><b>Besoin d’aide ?</b><p>Découvrez comment bien renseigner vos produits dans notre guide.</p><button>Voir le guide <I.ExternalLink size={14}/></button></span></section>
       </aside>
