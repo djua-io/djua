@@ -902,7 +902,7 @@
 .configurationOption.selected > strong { color: #ff5a00; }
 .configurationOption > strong span + span { border-left: 1px solid #e6e8ed; padding-left: 12px; }
 .configurationOption > em { display: block; margin-top: 16px; color: #657084; font-size:12.57px; font-style: normal; }
-.compositionCard { padding-bottom: 15px; }
+.compositionCard { display: none; }
 .compositionGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 16px; }
 .equipmentCard { position: relative; min-height: 150px; padding: 15px; border: 1px solid #e3e7ed; border-radius: 9px; background: #fff; color: #18202d; text-align: left; }
 .equipmentCard > b { position: absolute; top: 18px; left: 49px; font-size:16px; }
