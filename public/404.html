@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset="utf-8">
+<script>
+  const base = '/djua';
+  const route = location.pathname.slice(base.length).replace(/^\//, '');
+  const query = location.search ? '&' + location.search.slice(1).replace(/&/g, '~and~') : '';
+  location.replace(base + '/?/' + route + query + location.hash);
+</script>

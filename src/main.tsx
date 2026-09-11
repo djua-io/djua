@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {createRoot} from 'react-dom/client'
-import {HashRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate, useParams} from 'react-router-dom'
+import {BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate, useParams} from 'react-router-dom'
 import * as I from 'lucide-react'
 import {Appliance, dailyWh, sizing} from './domain/sizing'
 import {plans} from './domain/financing'
@@ -1275,4 +1275,4 @@ function DynamicHousing(){
     </div>
   </Page>
 }
-createRoot(document.getElementById('root')!).render(<HashRouter><App/></HashRouter>)
+createRoot(document.getElementById('root')!).render(<BrowserRouter basename={import.meta.env.BASE_URL}><App/></BrowserRouter>)
