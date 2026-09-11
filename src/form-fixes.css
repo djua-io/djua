@@ -2058,11 +2058,13 @@ option,
 
 /* Product-usage entries link directly to the matching catalogue detail. */
 .cataloguePopular {
+  color: inherit;
   text-decoration: none;
 }
 
+.cataloguePopular:visited,
 .cataloguePopular:hover {
-  background: #fff8f4;
+  color: inherit;
 }
 
 .cataloguePopular:focus-visible {
