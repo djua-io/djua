@@ -1977,3 +1977,16 @@ main .installationTabs { position: sticky; top: 69px; z-index: 3; display: flex;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
+
+/* Keep application controls and third-party map controls on the Djua typeface. */
+:root,
+body,
+button,
+input,
+select,
+textarea,
+option,
+.leaflet-container,
+.leaflet-container * {
+  font-family: 'Rethink Sans', Arial, sans-serif !important;
+}
