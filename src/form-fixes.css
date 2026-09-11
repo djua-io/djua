@@ -410,9 +410,9 @@
 .electricalSection, .usageSection { position: relative; border-top: 1px solid #edf0f2; padding: 18px 0; }
 .electricalSection h3, .usageSection h3 { margin: 0; font-size:17.14px; }
 .electricalSection > p, .usageSection > p { margin: 4px 0 13px; color: #687083; font-size:13.71px; }
-.electricalSection .toggle { width: 513px; max-width: calc(100% - 312px); margin: 0 0 15px; }
+.electricalSection .toggle { width: 513px; max-width: calc(100% - 312px); margin: 0; }
 .electricalSection .toggle button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
-.electricalSection > label { width: 513px; max-width: calc(100% - 312px); }
+.electricalSection > label { width: 513px; max-width: calc(100% - 312px); margin: 0; padding-top: 14px; }
 .powerInput { height: 44px; display: grid; grid-template-columns: 1fr 34px; align-items: center; border: 1px solid #dfe3ea; border-radius: 7px; overflow: hidden; }
 .powerInput input { height: 100%; min-width: 0; border: 0; outline: 0; padding: 0 13px; font-size:18.29px; font-weight: 700; }
 .powerInput span { padding-right: 13px; color: #171717; font-size:13.71px; }
@@ -436,8 +436,8 @@
 .applianceNotes { width: min(100%, 520px); margin-top: 12px; }
 .applianceNotes textarea { min-height: 84px; resize: vertical; padding: 11px 12px; border: 1px solid #dfe3ea; border-radius: 7px; outline-color: #ff5a00; color: #171717; background: #fff; font: inherit; font-size:13.71px; }
 .referenceModal footer { min-height: 78px; margin-top: 0; padding: 17px 30px 22px; }
-.voltageCurrentFields { width: 513px; max-width: calc(100% - 312px); display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
-.voltageCurrentFields label { min-width: 0; }
+.voltageCurrentFields { width: 513px; max-width: calc(100% - 312px); display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin: 0; padding-top: 14px; }
+.voltageCurrentFields label { min-width: 0; margin: 0; }
 .calculatedPower { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid #cfe9d8; border-radius: 7px; color: #187543; background: #f4fcf7; font-size:13.71px; }
 .calculatedPower strong { font-size:17.14px; }
 
