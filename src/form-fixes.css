@@ -884,7 +884,7 @@
 .recommendationHeading p { margin: 0; color: #526079; font-size:16px; }
 .recommendationBadge { display: inline-flex; align-items: center; min-height: 25px; padding: 0 13px; border-radius: 8px; color: #ff5a00; background: #fff1e8; font-size:12.57px; font-weight: 700; letter-spacing: 0; }
 .recommendationLayout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; align-items: start; gap: 20px; }
-.recommendationMain { display: grid; gap: 6px; min-width: 0; }
+.recommendationMain { display: grid; gap: 10px; min-width: 0; container-type: inline-size; }
 .recommendationCard, .railCard { border: 1px solid #e7e9ee; border-radius: 10px; background: #fff; box-shadow: 0 1px 2px rgba(21,29,43,.02); }
 .recommendationCard { padding: 17px; }
 .recommendationCard h2, .railCard h2 { margin: 0; color: #151922; font-size:16px; font-weight: 750; }
@@ -898,9 +898,10 @@
 .configurationCheck { position: absolute; top: 9px; right: 9px; fill: #ff5a00; color: #fff; }
 .configurationTop b { font-size:16px; }
 .configurationOption > small { display: block; margin: 6px 0 20px 27px; color: #687386; font-size:12.57px; }
-.configurationOption > strong { display: flex; align-items: center; gap: 12px; color: #131923; font-size:20.57px; letter-spacing: -.4px; white-space: nowrap; }
+.configurationOption > strong { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); align-items: center; gap: 0; color: #131923; font-size:15.43px; letter-spacing: -.25px; }
 .configurationOption.selected > strong { color: #ff5a00; }
-.configurationOption > strong span + span { border-left: 1px solid #e6e8ed; padding-left: 12px; }
+.configurationOption > strong span { min-width: 0; white-space: nowrap; }
+.configurationOption > strong span + span { border-left: 1px solid #e6e8ed; padding-left: 8px; }
 .configurationOption > em { display: block; margin-top: 16px; color: #657084; font-size:12.57px; font-style: normal; }
 .compositionCard { display: none; }
 .compositionGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 16px; }
@@ -938,7 +939,7 @@
 .detailsTabs button { position: relative; padding: 0; border: 0; color: #677388; background: transparent; font-size:13.71px; font-weight: 650; cursor: pointer; }
 .detailsTabs button.active { color: #17202d; }
 .detailsTabs button.active::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: #ff5a00; content: ''; }
-.detailsContent { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(230px,.85fr); gap: 12px; padding-top: 12px; }
+.detailsContent { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; padding-top: 12px; }
 .calculationSummary { padding: 13px; border: 1px solid #edf0f3; border-radius: 9px; }
 .calculationSummary h3, .knowMore h3 { margin: 0 0 8px; font-size:13.71px; }
 .calculationSummary dl { display: grid; gap: 6px; margin: 0; }
@@ -954,6 +955,10 @@
 .technicalDetails small { font-size:11.43px; line-height: 1.5; }
 .recommendationRail { display: grid; gap: 16px; }
 .railCard { padding: 18px; }
+.recommendationKnowMore { display: flex; gap: 11px; border-color: #ffe2d2; color: #5a473d; background: linear-gradient(135deg,#fffaf5,#fff); }
+.recommendationKnowMore > svg { flex: 0 0 auto; color: #ff9800; }
+.recommendationKnowMore h2 { margin-bottom: 8px; }
+.recommendationKnowMore p { margin: 0; color: #596477; font-size:12.57px; line-height: 1.55; }
 .railTitle { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid #eceef1; }
 .railTitle button { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; color: #59667a; background: transparent; font-size:11.43px; cursor: pointer; }
 .energySummary dl { display: grid; gap: 15px; margin: 15px 0 0; }
@@ -1038,8 +1043,14 @@
 @media (max-width: 1200px) {
   .recommendationLayout { grid-template-columns: minmax(0,1fr) 325px; }
   .configurationOption { padding-inline: 12px; }
-  .configurationOption > strong { gap: 8px; font-size:17.14px; }
+  .configurationOption > strong { font-size:14.29px; }
   .configurationOption > strong span + span { padding-left: 8px; }
+}
+
+@container (max-width: 680px) {
+  .systemMetrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .systemMetrics > div:nth-child(odd) { border-left: 0; }
+  .systemMetrics > div:nth-child(n+3) { border-top: 1px solid #e7e9ee; }
 }
 
 @media (max-width: 1050px) {
