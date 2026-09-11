@@ -888,7 +888,7 @@
 .recommendationCard, .railCard { border: 1px solid #e7e9ee; border-radius: 10px; background: #fff; box-shadow: 0 1px 2px rgba(21,29,43,.02); }
 .recommendationCard { padding: 17px; }
 .recommendationCard h2, .railCard h2 { margin: 0; color: #151922; font-size:16px; font-weight: 750; }
-.configurationOptions { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 14px; }
+.configurationOptions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 14px; }
 .configurationOption { position: relative; min-height: 152px; padding: 18px 16px; border: 1px solid #e1e5ec; border-radius: 10px; color: #202430; background: #fff; text-align: left; cursor: pointer; transition: border-color .16s, box-shadow .16s; }
 .configurationOption:hover { border-color: #ffb287; }
 .configurationOption.selected { border-color: #ff5a00; background: linear-gradient(107deg,#fff 0%,#fff9f5 100%); box-shadow: 0 3px 12px rgba(255,90,0,.08); }

@@ -347,7 +347,7 @@ function Recommendation(){
   const {items,quote,setQuote}=useData();
   const s=sizing(items);
   const project={...defaultProject(id),...store.get<SizingProject>(projectKey(id),{} as SizingProject)};
-  const [configuration,setConfiguration]=useState('solar-first');
+  const [configuration,setConfiguration]=useState('solar-only');
   const [tab,setTab]=useState<'why'|'technical'>('why');
   const [paymentMode,setPaymentMode]=useState<'cash'|'installments'>(quote.payment==='cash'?'cash':'installments');
   const [selectedPlanMonths,setSelectedPlanMonths]=useState(quote.plan);
@@ -360,8 +360,7 @@ function Recommendation(){
   const number=(value:number)=>value.toLocaleString('fr-FR',{maximumFractionDigits:1}).replace(/\u202f/g,' ');
   const sourceModes=[
     {id:'grid-first',icon:I.Plug,title:'Solaire complémentaire',subtitle:'Le réseau est la source principale.',solarShare:35,backupDays:.25,gridRole:'Source principale',gridCopy:'Le solaire réduit la facture en journée.',inverterFactor:.8},
-    {id:'solar-only',icon:I.SunMedium,title:'Solaire autonome',subtitle:'Le solaire est votre seule source d’énergie.',solarShare:100,backupDays:1,gridRole:'Hors réseau',gridCopy:'Toute l’énergie est produite et stockée sur place.',inverterFactor:1.2},
-    {id:'solar-first',icon:I.SolarPanel,title:'Solaire prioritaire',subtitle:'Le solaire alimente d’abord, le réseau prend le relais.',solarShare:80,backupDays:.6,gridRole:'Réseau de secours',gridCopy:'Le réseau couvre les pointes et les jours moins ensoleillés.',inverterFactor:1}
+    {id:'solar-only',icon:I.SunMedium,title:'Solaire autonome',subtitle:'Le solaire est votre seule source d’énergie.',solarShare:100,backupDays:1,gridRole:'Hors réseau',gridCopy:'Toute l’énergie est produite et stockée sur place.',inverterFactor:1.2}
   ];
   const configurations=sourceModes.map(mode=>{
     const solarEnergy=demandDaily*1.35*(mode.solarShare/100);
@@ -377,7 +376,7 @@ function Recommendation(){
     const autonomyLabel=mode.backupDays<1?`≈ ${Math.round(mode.backupDays*24)} h`:`≈ ${number(mode.backupDays)} jour${mode.backupDays>1?'s':''}`;
     return {...mode,solar:`${number(solarKw)} kWc`,battery:`${number(batteryCapacity)} kWh`,inverter:`${number(inverterKva)} kVA`,autonomy:`Réserve ${autonomyLabel}`,target:autonomyLabel,priceNumber,price:`${number(priceNumber)} $`,production:`≈ ${number(dailyProduction)} kWh / jour`,energy:`${number(solarEnergy)} kWh / jour`,panels:{value:`${panelQuantity} × 600 W`,details:`Couvre environ ${mode.solarShare} % de vos besoins`,tag:'Monocristallin'},storage:{value:`${number(batteryCapacity)} kWh LiFePO₄`,details:`Réserve utile pour ${autonomyLabel.replace('≈ ','')}`,tag:'48 V'},converter:{value:`${number(inverterKva)} kVA / 48 V`,details:'Protège vos appareils et gère les sources',tag:mode.gridRole}};
   });
-  const selectedConfiguration=configurations.find(option=>option.id===configuration)??configurations[2];
+  const selectedConfiguration=configurations.find(option=>option.id===configuration)??configurations[1];
   const equipment=[
     {icon:I.SunMedium, title:'Panneaux solaires', image:solarPanelsProduct, alt:'Panneaux solaires', tone:'sun', ...selectedConfiguration.panels},
     {icon:I.BatteryCharging, title:'Batterie', image:batteryProduct, alt:'Batterie solaire', tone:'battery', ...selectedConfiguration.storage},
