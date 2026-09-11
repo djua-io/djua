@@ -399,6 +399,7 @@
 .referenceModal .appliancePreview { min-height: 299px; padding: 25px 16px 18px; border-color: #ffdfc9; background: #fffaf6; }
 .referenceModal .appliancePreview.emptyPreview { min-height: 299px; }
 .appliancePreviewRail { position: sticky; top: 20px; align-self: start; display: flex; flex-direction: column; gap: 56px; margin-top: 35px; }
+.appliancePreviewRail .appliancePreview { width: 100%; align-self: stretch; }
 .emptyPreviewSpace { height: 109px; }
 .uploadedAppliancePreview { width: 92px; height: 92px; display: block; margin: 0 auto 17px; object-fit: cover; }
 .referenceModal .appliancePreview .deviceicon.big { width: 92px; height: 92px; margin-bottom: 17px; color: #1f2937; background: #fff; }
