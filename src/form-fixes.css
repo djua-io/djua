@@ -2056,7 +2056,16 @@ option,
   display: none;
 }
 
-/* The product rail starts with usage insights, without the catalogue-status summary. */
-.catalogueRail > section:first-child {
-  display: none;
+/* Product-usage entries link directly to the matching catalogue detail. */
+.cataloguePopular {
+  text-decoration: none;
+}
+
+.cataloguePopular:hover {
+  background: #fff8f4;
+}
+
+.cataloguePopular:focus-visible {
+  outline: 2px solid #ff5a00;
+  outline-offset: -2px;
 }
