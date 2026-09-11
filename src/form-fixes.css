@@ -935,13 +935,16 @@
 .systemMetrics small { color: #657185; font-size:11.43px; }
 .systemMetrics strong { color: #111827; font-size:16px; }
 .systemMetrics em { color: #657185; font-size:11.43px; font-style: normal; }
-.detailsCard { padding: 0 17px 17px; }
-.detailsTabs { display: flex; gap: 22px; height: 50px; border-bottom: 1px solid #e6e9ee; }
-.detailsTabs h2 { display: flex; align-items: center; margin: 0; color: #17202d; font-size:13.71px; }
+.detailsCard { padding: 0; overflow: hidden; }
+.detailsToggle { display: flex; width: 100%; min-height: 50px; align-items: center; justify-content: space-between; gap: 12px; padding: 0 17px; border: 0; color: #17202d; background: #fff; font: inherit; font-size:13.71px; font-weight: 700; cursor: pointer; text-align: left; }
+.detailsToggle > span:last-child { display: inline-flex; align-items: center; gap: 6px; color: #5f6d83; font-size:12.57px; font-weight: 650; }
+.detailsToggle svg { transition: transform .16s ease; }
+.detailsCard.isOpen .detailsToggle { border-bottom: 1px solid #e6e9ee; }
+.detailsCard.isOpen .detailsToggle svg { transform: rotate(180deg); }
 .detailsTabs button { position: relative; padding: 0; border: 0; color: #677388; background: transparent; font-size:13.71px; font-weight: 650; cursor: pointer; }
 .detailsTabs button.active { color: #17202d; }
 .detailsTabs button.active::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: #ff5a00; content: ''; }
-.detailsContent { display: grid; grid-template-columns: minmax(0,1fr); width: min(100%, 540px); gap: 12px; padding-top: 12px; }
+.detailsContent { display: grid; grid-template-columns: minmax(0,1fr); width: min(100% - 34px, 540px); gap: 12px; padding: 12px 17px 17px; }
 .calculationSummary { padding: 13px; border: 1px solid #edf0f3; border-radius: 9px; }
 .calculationSummary h3, .knowMore h3 { margin: 0 0 8px; font-size:13.71px; }
 .calculationSummary dl { display: grid; gap: 6px; margin: 0; }

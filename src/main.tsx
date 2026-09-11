@@ -348,6 +348,7 @@ function Recommendation(){
   const s=sizing(items);
   const project={...defaultProject(id),...store.get<SizingProject>(projectKey(id),{} as SizingProject)};
   const [configuration,setConfiguration]=useState('solar-only');
+  const [showCalculation,setShowCalculation]=useState(false);
   const [paymentMode,setPaymentMode]=useState<'cash'|'installments'>(quote.payment==='cash'?'cash':'installments');
   const [selectedPlanMonths,setSelectedPlanMonths]=useState(quote.plan);
   const applianceCount=items.reduce((count,item)=>count+item.quantity,0);
@@ -410,9 +411,9 @@ function Recommendation(){
           </div>)}</div>
         </section>
         <section className="systemMetrics">{metrics.map(({icon:Icon,title:metricTitle,value,copy,tone})=><div key={metricTitle}><i className={tone}><Icon size={27}/></i><span><small>{metricTitle}</small><strong>{value}</strong><em>{copy}</em></span></div>)}</section>
-        <section className="recommendationCard detailsCard">
-          <div className="detailsTabs"><h2>Pourquoi cette configuration ?</h2></div>
-          <div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Part couverte par le solaire</dt><dd>{selectedConfiguration.solarShare} %</dd></div><div><dt>Rôle du réseau électrique</dt><dd>{selectedConfiguration.gridRole}</dd></div><div><dt>Pertes et marge de sécurité</dt><dd>+ 35 %</dd></div><div><dt>Énergie solaire à produire</dt><dd>{selectedConfiguration.energy}</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire proposée</dt><dd>{selectedConfiguration.solar}</dd></div></dl></div></div>
+        <section className={'recommendationCard detailsCard '+(showCalculation?'isOpen':'')}>
+          <button type="button" className="detailsToggle" onClick={()=>setShowCalculation(!showCalculation)}><span>Pourquoi cette configuration ?</span><span>{showCalculation?'Masquer le détail':'Voir le détail du calcul'}<I.ChevronDown size={17}/></span></button>
+          {showCalculation&&<div className="detailsContent"><div className="calculationSummary"><h3>Résumé du calcul</h3><dl><div><dt>Consommation quotidienne (client)</dt><dd>{dailyKwh} kWh</dd></div><div><dt>Part couverte par le solaire</dt><dd>{selectedConfiguration.solarShare} %</dd></div><div><dt>Rôle du réseau électrique</dt><dd>{selectedConfiguration.gridRole}</dd></div><div><dt>Pertes et marge de sécurité</dt><dd>+ 35 %</dd></div><div><dt>Énergie solaire à produire</dt><dd>{selectedConfiguration.energy}</dd></div><div><dt>Irradiation solaire utilisée (PSH)</dt><dd>5.1 h / jour</dd></div><div><dt>Puissance solaire proposée</dt><dd>{selectedConfiguration.solar}</dd></div></dl></div></div>}
         </section>
       </div>
       <aside className="recommendationRail">
