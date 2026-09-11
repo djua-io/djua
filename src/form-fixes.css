@@ -345,7 +345,7 @@
 .applianceModal .preview .deviceicon.big { color: #ff5a00; background: #fff; }
 
 /* Detailed appliance form follows the supplied multi-step reference. */
-.referenceModal { width: min(952px, calc(100% - 36px)); max-height: calc(100vh - 28px); padding: 0; overflow: auto; }
+.referenceModal { width: min(980px, calc(100% - 36px)); max-height: calc(100vh - 28px); padding: 0; overflow: auto; }
 .referenceModalHeader { min-height: 109px; display: flex; align-items: flex-start; justify-content: space-between; padding: 25px 30px 20px; border-bottom: 1px solid #edf0f2; }
 .referenceModalHeader h1 { margin: 0; font-size:25.14px; }
 .referenceModalHeader p { margin: 8px 0 0; color: #687083; font-size:13.71px; }
@@ -361,7 +361,7 @@
 .applianceSteps .current strong { color: #ff5a00; }
 .applianceSteps .current b { background: #ff5a00; }
 .referenceModalMain { min-width: 0; }
-.modalTopDetails { display: grid; grid-template-columns: minmax(0, 1fr) 209px; gap: 31px; padding-bottom: 22px; }
+.modalTopDetails { display: grid; grid-template-columns: minmax(0, 1fr) 236px; gap: 31px; padding-bottom: 22px; }
 .referenceModal label { display: grid; gap: 8px; color: #171717; font-size:13.71px; font-weight: 650; }
 .devicePicker { position: relative; }
 .deviceSelect { height: 52px; display: grid; grid-template-columns: 27px minmax(0, 1fr) 28px; gap: 9px; align-items: center; padding: 0 13px; border: 1px solid #dfe3ea; border-radius: 7px; color: #4d5668; background: #fff; }
@@ -408,7 +408,7 @@
 .referenceModal .preview > small { display: block; text-align: left; color: #697180; font-size:12.57px; }
 .referenceModal .preview > strong { display: block; margin-top: 4px; text-align: left; font-size:20.57px; }
 .electricalSection, .usageSection { position: relative; border-top: 1px solid #edf0f2; padding: 18px 0; }
-.electricalSection { display: grid; grid-template-columns: minmax(0, 1fr) 209px; column-gap: 31px; align-items: start; }
+.electricalSection { display: grid; grid-template-columns: minmax(0, 1fr) 236px; column-gap: 31px; align-items: start; }
 .electricalSection h3, .usageSection h3 { margin: 0; font-size:17.14px; }
 .electricalSection > p, .usageSection > p { margin: 4px 0 13px; color: #687083; font-size:13.71px; }
 .electricalSection h3, .electricalSection > p, .electricalSection .toggle, .electricalSection > label, .voltageCurrentFields, .suggestedValue { grid-column: 1; }
@@ -423,7 +423,7 @@
 .powerHelp > svg { flex: 0 0 auto; color: #ff9b0a; }
 .powerHelp b { display: block; color: #171717; font-size:12.57px; }
 .powerHelp p { margin: 7px 0 0; color: #677083; font-size:12.57px; }
-.usageSection { padding-right: 240px; padding-bottom: 16px; }
+.usageSection { padding-right: 267px; padding-bottom: 16px; }
 .usageLayout { display: block; width: 100%; }
 .referenceTimeSlot { max-width: none; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); gap: 9px; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .referenceTimeSlot:has(.removeSlot) { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) 28px; }
