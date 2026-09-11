@@ -1045,6 +1045,72 @@
 .recommendationQuoteActions .button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; padding: 0 12px; font-size:12.57px; }
 .recommendationQuoteActions .button:last-child { justify-content: space-between; }
 
+/* Dedicated payment configuration step */
+.paymentNextStep { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 10px; border-color: #dce8f4; }
+.paymentNextStep > i { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 8px; color: #ff5a00; background: #fff0e8; font-style: normal; }
+.paymentNextStep h2 { margin-top: 2px; }
+.paymentNextStep p { margin: 5px 0 13px; color: #66748b; font-size:12.57px; line-height:1.45; }
+.paymentNextStep .button { grid-column: 1 / -1; width: 100%; justify-content: space-between; }
+.paymentConfigPage { max-width: 1120px; padding-top: 26px; }
+.paymentConfigHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.paymentConfigHeading > div:first-child > span { display: inline-flex; margin-bottom: 8px; color: #ff5a00; font-size:12.57px; font-weight:750; }
+.paymentConfigHeading h1 { margin: 0; color: #121927; font-size:28px; letter-spacing: -.65px; }
+.paymentConfigHeading p { margin: 5px 0 0; color: #627089; font-size:14.86px; }
+.paymentSystemPrice { display: grid; min-width: 192px; gap: 2px; padding: 13px 15px; border: 1px solid #e0e7ef; border-radius: 10px; background: #fff; text-align: right; }
+.paymentSystemPrice small, .paymentSystemPrice em { color: #66748b; font-size:11.43px; font-style: normal; }
+.paymentSystemPrice strong { color: #17202d; font-size:22px; letter-spacing: -.45px; }
+.paymentConfigLayout { display: grid; grid-template-columns: minmax(0,1fr) 340px; align-items: start; gap: 20px; }
+.paymentConfigMain, .paymentConfigRail { display: grid; gap: 16px; }
+.paymentConfigCard { padding: 19px; border: 1px solid #e1e7ee; border-radius: 10px; background: #fff; box-shadow: 0 1px 2px rgba(21,29,43,.02); }
+.paymentConfigCard > header h2, .paymentConfigCard > h2 { margin: 0; color: #17202d; font-size:17.14px; }
+.paymentConfigCard > header p { margin: 5px 0 0; color: #66748b; font-size:12.57px; }
+.paymentModeChoices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 17px; }
+.paymentModeChoices button { display: grid; grid-template-columns: 39px minmax(0,1fr) 20px; gap: 10px; min-height: 112px; align-items: start; padding: 14px; border: 1px solid #e1e7ee; border-radius: 9px; color: #243047; background: #fff; font: inherit; text-align: left; cursor: pointer; }
+.paymentModeChoices button > i { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 8px; color: #62718a; background: #f3f6f9; font-style: normal; }
+.paymentModeChoices button > span { display: grid; gap: 4px; padding-top: 2px; }
+.paymentModeChoices button b { color: #1a2434; font-size:13.71px; }
+.paymentModeChoices button small { color: #68758b; font-size:11.43px; line-height: 1.4; }
+.paymentModeChoices button > svg { color: #ff5a00; }
+.paymentModeChoices button.selected { border-color: #ff5a00; background: #fffaf7; }
+.paymentModeChoices button.selected > i { color: #ff5a00; background: #fff0e8; }
+.paymentPlanOptions { display: grid; gap: 10px; margin-top: 16px; }
+.paymentPlanOptions button { display: grid; grid-template-columns: minmax(145px,1fr) minmax(130px,.82fr); gap: 5px 18px; align-items: center; padding: 14px 15px; border: 1px solid #e1e7ee; border-radius: 8px; color: #253047; background: #fff; font: inherit; text-align: left; cursor: pointer; }
+.paymentPlanOptions button > span { display: flex; align-items: center; gap: 8px; }
+.paymentPlanOptions button > span i { display: inline-flex; color: #8b99ae; }
+.paymentPlanOptions button > span b { font-size:13.71px; }
+.paymentPlanOptions button em { padding: 3px 6px; border-radius: 5px; color: #ed5700; background: #fff0e7; font-size:10.29px; font-style: normal; font-weight:750; }
+.paymentPlanOptions button > strong { color: #17202d; font-size:15.43px; text-align: right; }
+.paymentPlanOptions button > small { color: #68758b; font-size:11.43px; }
+.paymentPlanOptions button > small:last-child { text-align: right; }
+.paymentPlanOptions button.selected { border-color: #ff5a00; background: #fffaf7; }
+.paymentPlanOptions button.selected > span i { color: #ff5a00; }
+.cashPaymentCard > div { display: flex; align-items: baseline; justify-content: space-between; margin-top: 20px; padding: 17px; border-radius: 8px; color: #627089; background: #f7f9fb; font-size:13.71px; }
+.cashPaymentCard > div strong { color: #ff5a00; font-size:24px; letter-spacing: -.45px; }
+.cashPaymentCard ul { display: grid; gap: 8px; margin: 16px 0 0; padding: 0; color: #526077; font-size:12.57px; list-style: none; }
+.cashPaymentCard li { display: flex; align-items: center; gap: 8px; }
+.cashPaymentCard li svg { color: #0aaa61; }
+.paymentSystemSummary dl, .paymentSelectionSummary dl { display: grid; gap: 12px; margin: 16px 0 0; }
+.paymentSystemSummary dl div, .paymentSelectionSummary dl div { display: flex; justify-content: space-between; gap: 10px; color: #69768c; font-size:12.57px; }
+.paymentSystemSummary dd, .paymentSelectionSummary dd { margin: 0; color: #1c2636; font-weight: 700; text-align: right; }
+.paymentSelectionSummary > small { display: block; margin-top: 15px; color: #67748a; font-size:12.57px; }
+.paymentSelectionSummary > strong { display: block; margin-top: 4px; color: #ff5a00; font-size:24px; letter-spacing: -.5px; }
+.paymentSelectionSummary > p { margin: 7px 0 0; color: #67748a; font-size:12.57px; }
+.paymentConfigActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+.paymentConfigActions .button { min-height: 43px; }
+
+@media (max-width: 900px) {
+  .paymentConfigLayout { grid-template-columns: 1fr; }
+  .paymentConfigRail { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 620px) {
+  .paymentConfigPage { padding: 18px; }
+  .paymentConfigHeading, .paymentConfigActions { align-items: stretch; flex-direction: column; }
+  .paymentSystemPrice { text-align: left; }
+  .paymentModeChoices, .paymentConfigRail { grid-template-columns: 1fr; }
+  .paymentPlanOptions button { grid-template-columns: 1fr; }
+  .paymentPlanOptions button > strong, .paymentPlanOptions button > small:last-child { text-align: left; }
+}
+
 @media (max-width: 1200px) {
   .recommendationLayout { grid-template-columns: minmax(0,1fr) 325px; }
   .configurationOption { padding-inline: 12px; }
