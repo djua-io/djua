@@ -2049,3 +2049,9 @@ option,
 .dimensionRow button {
   min-width: 72px;
 }
+
+/* Keep the dashboard focused on the two action queues. */
+.dashboardSales,
+.dashboardHealth {
+  display: none;
+}
