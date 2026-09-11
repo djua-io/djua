@@ -1990,3 +1990,17 @@ option,
 .leaflet-container * {
   font-family: 'Rethink Sans', Arial, sans-serif !important;
 }
+
+/* Lead with the commercial overview before operational follow-up. */
+.dashboardPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboardBottom {
+  order: 1;
+}
+
+.dashboardTop {
+  order: 2;
+}
