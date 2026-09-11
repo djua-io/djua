@@ -190,6 +190,7 @@
 .locationSummary .card, .clientCreationSidebar .card { margin: 0 0 14px; padding: 18px; box-shadow: none; }
 .clientContextCard h3 { display: flex; gap: 9px; align-items: center; margin: 0 0 15px; color: #182131; font-size:14.86px; }
 .clientContextCard h3 svg { color: #56657d; }
+.clientContextCard { display: none; }
 .contextClient { display: flex; gap: 11px; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #edf0f2; }
 .contextClient > i { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: #4e68c6; background: #f0f4ff; font-style: normal; }
 .contextClient b { color: #171717; font-size:14.86px; }
