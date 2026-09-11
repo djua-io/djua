@@ -432,8 +432,10 @@
 .referenceTimeSlot:has(.removeSlot) { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) 28px; }
 .referenceTimeSlot .timeTextField { width: 100%; height: 43px; padding: 0 12px; border: 1px solid #dfe3ea; border-radius: 7px; outline-color: #ff5a00; background: #fff; color: #171717; font-size:14.86px; }
 .referenceTimeSlot .timeConnector { display: grid; place-items: center; color: #596273; font-size:14.86px; font-weight: 600; }
-.slotSummary { width: fit-content; display: flex; align-items: center; gap: 13px; margin-top: 10px; padding: 0; color: #667085; font-size:12.57px; }
+.slotSummary { width: 100%; display: flex; align-items: center; gap: 13px; margin-top: 10px; padding: 0; color: #667085; font-size:12.57px; }
 .slotSummary > span b { color: #171717; }
+.timePeriodSummary { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-left: auto; color: #667085; }
+.timePeriodTag { display: inline-flex; align-items: center; min-height: 25px; padding: 3px 9px; border-radius: 20px; color: #9b4300; background: #fff1e7; font-size:11.43px; font-weight: 700; }
 .periodSelection > div { display: flex; gap: 8px; }
 .periodSelection button { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 10px; border: 1px solid #dfe3ea; border-radius: 6px; color: #596273; background: #fff; font-size:11.43px; white-space: nowrap; }
 .periodSelection button.selected { border-color: #8677e9; color: #655aca; background: #faf9ff; }
@@ -457,6 +459,8 @@
   .electricalSection .toggle, .electricalSection > label, .voltageCurrentFields { width: 100%; max-width: none; }
   .powerHelp { grid-column: 1; grid-row: auto; width: 100%; margin-top: 15px; }
   .usageSection { padding-right: 0; }
+  .slotSummary { align-items: flex-start; flex-wrap: wrap; }
+  .timePeriodSummary { width: 100%; margin-left: 0; }
   .suggestedValue { max-width: 100%; }
   .usageLayout, .referenceTimeSlot { width: 100%; max-width: none; }
   .referenceTimeSlot { grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); }
