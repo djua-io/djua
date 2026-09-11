@@ -2055,3 +2055,8 @@ option,
 .dashboardHealth {
   display: none;
 }
+
+/* The product rail starts with usage insights, without the catalogue-status summary. */
+.catalogueRail > section:first-child {
+  display: none;
+}
