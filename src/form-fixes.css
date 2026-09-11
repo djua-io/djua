@@ -1041,7 +1041,7 @@
 .paymentPlanDetail .paymentTotal { margin-top: 15px; }
 .paymentPlanDetail .paymentTotal span { font-size:12.57px; }
 .paymentPlanDetail .paymentTotal strong { color: #ff5a00; font-size:19.43px; }
-.recommendationQuoteActions { display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px; }
+.recommendationQuoteActions { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 2px; }
 .recommendationQuoteActions .button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; padding: 0 12px; font-size:12.57px; }
 .recommendationQuoteActions .button:last-child { justify-content: space-between; }
 
