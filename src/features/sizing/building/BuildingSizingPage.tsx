@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, ChevronUp, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
-import { Appliance, copyCommonBuildingApplianceDefaults, sizing } from '../../../domain/sizing'
+import { Appliance, commonBuildingAppliancesForFloors, sizing } from '../../../domain/sizing'
 import { Button, Page } from '../../../shared/ui'
 import { SizingEnergySummary } from '../energy-summary/SizingEnergySummary'
 import buildingProfileComfort from '../../../assets/building-profile-comfort.png'
@@ -21,7 +21,7 @@ const profiles: Array<{ id: ProfileId; title: string; description: string; image
   { id: 'comfort', title: 'Confort', description: 'Plus d’équipements pour un meilleur confort', image: buildingProfileComfort, dailyKwh: 2.65, peakKw: 1.75, color: 'green' },
 ]
 
-const commonBuildingAppliancesKey = 'djua-building-common-appliances'
+const commonBuildingAppliancesKey = 'djua-building-common-appliances-v2'
 const commonEquipmentLabels: Record<string, string> = { 'Ampoule LED': 'Éclairage commun' }
 
 const clamp = (value: number, minimum: number, maximum = 99) => Math.min(maximum, Math.max(minimum, value))
@@ -35,8 +35,8 @@ export function BuildingSizingPage() {
   const [sameProfile, setSameProfile] = useState(false)
   const [singleProfile, setSingleProfile] = useState<ProfileId>('standard')
   const [distribution, setDistribution] = useState<Record<ProfileId, number>>({ essential: 0, standard: 2, comfort: 0 })
-  const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => browserStorage.get(commonBuildingAppliancesKey, copyCommonBuildingApplianceDefaults()))
-  const [commonEquipmentOpen, setCommonEquipmentOpen] = useState(true)
+  const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => browserStorage.get(commonBuildingAppliancesKey, commonBuildingAppliancesForFloors(1)))
+  const [commonEquipmentOpen, setCommonEquipmentOpen] = useState(false)
   useEffect(() => browserStorage.set(commonBuildingAppliancesKey, commonAppliances), [commonAppliances])
   const configuredHomes = Object.values(distribution).reduce((total, value) => total + value, 0)
   const difference = homes - configuredHomes
@@ -61,6 +61,15 @@ export function BuildingSizingPage() {
       const comfort = Math.min(current.comfort, Math.max(0, nextHomes - essential))
       return { essential, comfort, standard: nextHomes - essential - comfort }
     })
+  }
+  const updateFloors = (value: number) => {
+    const nextFloors = clamp(value, 1)
+    setFloors(nextFloors)
+    setCommonAppliances(current => current.map(item => {
+      if (item.id === 'building-common-lighting') return { ...item, quantity: nextFloors * 3 }
+      if (item.id === 'building-common-cctv') return { ...item, quantity: nextFloors * 2 }
+      return item
+    }))
   }
   const updateDistribution = (profile: Exclude<ProfileId, 'standard'>, value: number) => setDistribution(current => {
     const maximum = homes - current[profile === 'essential' ? 'comfort' : 'essential']
@@ -109,7 +118,7 @@ export function BuildingSizingPage() {
           <h2 id="building-sizing-title">Parlez-nous du bâtiment</h2>
 
           <div className="buildingCounters">
-            <Counter illustration={buildingCounterFloors} label="Nombre d’étages" value={floors} onChange={setFloors} minimum={1} />
+            <Counter illustration={buildingCounterFloors} label="Nombre d’étages" value={floors} onChange={updateFloors} minimum={1} />
             <Counter illustration={buildingCounterHomes} label="Nombre de logements" value={homes} onChange={updateHomes} minimum={1} />
           </div>
 

@@ -285,7 +285,7 @@ const buildingProfileAppliancePresets:Record<BuildingProfileId,{title:string;ite
   ]}
 }
 const buildingProfileApplianceKey=(profile:BuildingProfileId)=>`djua-building-profile-${profile}-items`
-const commonBuildingAppliancesKey='djua-building-common-appliances'
+const commonBuildingAppliancesKey='djua-building-common-appliances-v2'
 function Appliances({directStart=false,buildingProfile=false}:{directStart?:boolean;buildingProfile?:boolean}){
   const nav=useNavigate();
   const location=useLocation();

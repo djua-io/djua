@@ -13,6 +13,7 @@
 .buildingSingleProfileHeading { display: block; }
 .buildingSingleProfile > aside { margin-top: 10px; }
 .buildingCommonApplianceVisual { width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; }
+.buildingCommonApplianceVisual.sprite-bulb { background-color: #f2f5f9; }
 .buildingSizingCard .buildingCommonEquipmentItem .applianceVisualImage img { transform: scale(1.9); }
 .buildingSizingCard .buildingCommonEquipmentItem .applianceVisual-cctv img { transform: scale(3.45); }
 .buildingSizingCard .buildingCommonEquipmentItem .applianceVisual-pump img { transform: scale(3.55); }

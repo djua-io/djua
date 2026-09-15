@@ -35,11 +35,14 @@ export const applianceFromCatalog = (id: string, name: string, hours: number, qu
 }
 
 /** Initial common loads for a building. Consumers must clone this array before editing it. */
-export const commonBuildingApplianceDefaults: Appliance[] = [
-  applianceFromCatalog('building-common-lighting', 'Ampoule LED', 7, 12, 'Jour'),
-  applianceFromCatalog('building-common-cctv', 'Caméras / CCTV', 6, 8, 'Les deux'),
-  applianceFromCatalog('building-common-pump', 'Pompe à eau', 1.3, 2, 'Jour'),
+/** Baseline shared loads scale with floor count before a salesperson customizes them. */
+export const commonBuildingAppliancesForFloors = (floors: number): Appliance[] => [
+  applianceFromCatalog('building-common-lighting', 'Ampoule LED', 7, Math.max(1, floors) * 3, 'Jour'),
+  applianceFromCatalog('building-common-cctv', 'Caméras / CCTV', 6, Math.max(1, floors) * 2, 'Les deux'),
+  applianceFromCatalog('building-common-pump', 'Pompe à eau', 1.3, 1, 'Jour'),
 ]
+
+export const commonBuildingApplianceDefaults: Appliance[] = commonBuildingAppliancesForFloors(1)
 
 export const copyCommonBuildingApplianceDefaults = () => commonBuildingApplianceDefaults.map(item => ({ ...item }))
 export const seedAppliances: Appliance[] = [
