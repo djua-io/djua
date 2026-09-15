@@ -1,103 +1,51 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  Activity,
-  Battery,
-  CalendarDays,
-  CheckCircle2,
-  ChevronDown,
-  ChevronRight,
-  CircleCheck,
-  Clock3,
-  House,
-  Lightbulb,
-  MapPin,
-  PanelTop,
-  PlugZap,
-  Radio,
-  ShieldCheck,
-  Signal,
-  Sun,
-  UserRound,
-  Wrench,
-} from 'lucide-react'
+import { Activity, Battery, CalendarDays, CheckCircle2, ChevronDown, ChevronRight, CircleAlert, Clock3, House, Lightbulb, MapPin, Minus, PanelTop, PlugZap, Signal, Sun, UserRound, Wrench } from 'lucide-react'
 import './installation-integrity.css'
 
-const components = [
-  { icon: Sun, label: 'Panneaux solaires', expected: 'Connecté', current: 'Connecté', status: 'Connecté', detail: 'Production normale (358 W)' },
-  { icon: Battery, label: 'Batterie', expected: 'Connecté', current: 'Connecté', status: 'Connecté', detail: 'En charge (25,4 V)' },
-  { icon: Activity, label: 'Onduleur', expected: 'Connecté', current: 'Connecté', status: 'Actif', detail: 'Fonctionnement normal (221 V en sortie)' },
-  { icon: PlugZap, label: 'Sortie AC / charge', expected: 'Connecté', current: 'Connecté', status: 'Actif', detail: 'Alimentation des charges (774 W)' },
-  { icon: MapPin, label: 'GPS', expected: 'Connecté', current: 'Connecté', status: 'OK', detail: 'Position reçue (il y a 2 min)' },
-  { icon: Signal, label: 'GSM', expected: 'Connecté', current: 'Connecté', status: 'OK', detail: 'Communication active (signal 4G)' },
-]
+type IntegrityTone = 'complete' | 'warning' | 'critical' | 'unknown'
+type IntegrityComponent = { icon: typeof Sun; label: string; expected: string; current: string; status: string; detail: string; tone: IntegrityTone }
+type IntegrityCheck = { icon: typeof Sun; title: string; values: [string, string][]; tone?: IntegrityTone }
 
-const checks = [
+const baseComponents: IntegrityComponent[] = [
+  { icon: Sun, label: 'Panneaux solaires', expected: 'Connecté', current: 'Connecté', status: 'Connecté', detail: 'Production normale (358 W)', tone: 'complete' },
+  { icon: Battery, label: 'Batterie', expected: 'Connecté', current: 'Connecté', status: 'Connecté', detail: 'En charge (25,4 V)', tone: 'complete' },
+  { icon: Activity, label: 'Onduleur', expected: 'Connecté', current: 'Connecté', status: 'Actif', detail: 'Fonctionnement normal (221 V en sortie)', tone: 'complete' },
+  { icon: PlugZap, label: 'Sortie AC / charge', expected: 'Connecté', current: 'Connecté', status: 'Actif', detail: 'Alimentation des charges (774 W)', tone: 'complete' },
+  { icon: MapPin, label: 'GPS', expected: 'Connecté', current: 'Connecté', status: 'OK', detail: 'Position reçue (il y a 2 min)', tone: 'complete' },
+  { icon: Signal, label: 'GSM', expected: 'Connecté', current: 'Connecté', status: 'OK', detail: 'Communication active (signal 4G)', tone: 'complete' },
+]
+const baseChecks: IntegrityCheck[] = [
   { icon: Sun, title: 'Solaire', values: [['42,6 V', 'Tension'], ['8,4 A', 'Courant'], ['358 W', 'Puissance']] },
   { icon: Battery, title: 'Batterie', values: [['25,4 V', 'Tension'], ['3,2 A', 'Courant'], ['En charge', 'État']] },
   { icon: Activity, title: 'Sortie AC', values: [['221 V', 'Tension'], ['3,5 A', 'Courant'], ['774 W', 'Puissance']] },
   { icon: MapPin, title: 'GPS', values: [['Position reçue', 'Position'], ['il y a 2 min', 'Dernière donnée']] },
   { icon: Signal, title: 'GSM', values: [['4G (bon signal)', 'Communication']] },
 ]
+const withComponentChanges = (changes: Record<string, Partial<IntegrityComponent>>) => baseComponents.map(component => ({ ...component, ...changes[component.label] }))
+const withCheckChanges = (changes: Record<string, Partial<IntegrityCheck>>) => baseChecks.map(check => ({ ...check, ...changes[check.title] }))
+
+type IntegrityState = {
+  tone: IntegrityTone; client: string; site: string; location: string; lastData: string; kitValue: string; kitNote: string; connectedValue: string; connectedNote: string; verification: string; verificationNote: string; statusTitle: string; statusNote: string; global: string; simpleTitle: string; simpleNote: string; adviceTitle: string; adviceNote: string; footerTitle: string; footerNote: string; components: IntegrityComponent[]; checks: IntegrityCheck[]; banner?: string
+}
+
+const integrityStates: Record<string, IntegrityState> = {
+  'INS-00482': { tone: 'complete', client: 'Jean Kabeya', site: 'Maison individuelle', location: 'Gombe, Kinshasa', lastData: 'il y a 2 min', kitValue: 'Complet', kitNote: 'Tous les composants présents et connectés', connectedValue: '6 / 6 connectés', connectedNote: '100 % des composants', verification: 'il y a 2 min', verificationNote: 'Vérification automatique', statusTitle: 'Aucun composant manquant', statusNote: 'L’installation est complète', global: 'En ligne', simpleTitle: 'Le kit est complet et fonctionne normalement', simpleNote: 'Tous les composants essentiels sont présents et connectés. L’installation communique correctement et ne présente pas d’anomalie sur son intégrité.', adviceTitle: 'L’installation est structurellement complète.', adviceNote: 'Tous les éléments requis du kit sont détectés et connectés. L’installation dispose de ses 6 composants essentiels et communique normalement.', footerTitle: 'Aucune anomalie détectée', footerNote: 'Aucune anomalie détectée sur l’intégrité du kit.', components: baseComponents, checks: baseChecks },
+  'INS-00841': { tone: 'warning', client: 'Kivu Market SARL', site: 'Commerce', location: 'Gombe, Kinshasa', lastData: 'il y a 2 min', kitValue: 'Incomplet', kitNote: '1 composant manquant ou non connecté', connectedValue: '5 / 6 connectés', connectedNote: '83 % des composants', verification: 'il y a 2 min', verificationNote: 'Vérification automatique', statusTitle: '1 composant manquant', statusNote: 'L’installation n’est pas complète', global: 'À vérifier', simpleTitle: 'Un composant essentiel n’est pas détecté.', simpleNote: 'Le kit n’est pas complet. Un composant essentiel (Batterie) est manquant ou non connecté. Veuillez vérifier l’installation.', adviceTitle: 'Le kit n’est pas complet.', adviceNote: '1 composant essentiel est manquant ou hors ligne. L’installation ne peut pas fonctionner de manière optimale tant que tous les composants ne sont pas connectés.', footerTitle: '1 anomalie détectée', footerNote: 'Vérifiez les composants ci-dessus pour rétablir l’intégrité du kit.', components: withComponentChanges({ Batterie: { current: 'Non connecté', status: 'Non connecté', detail: 'Aucune communication (0 V)', tone: 'warning' } }), checks: withCheckChanges({ Batterie: { values: [['—', 'Tension'], ['—', 'Courant'], ['Absent', 'État']], tone: 'warning' } }) },
+  'INS-00912': { tone: 'critical', client: 'Sarah Ilunga', site: 'Maison individuelle', location: 'Ngaliema, Kinshasa', lastData: 'il y a 2 h 15', kitValue: 'Dégradé', kitNote: '3 composants sur 6 connectés', connectedValue: '3 / 6 connectés', connectedNote: '50 % des composants', verification: 'il y a 2 h 15', verificationNote: 'Vérification automatique', statusTitle: '3 composants manquants / en erreur', statusNote: 'Une intervention est nécessaire', global: 'Critique', simpleTitle: 'Le kit n’est pas complet et nécessite une intervention.', simpleNote: 'Certains composants essentiels sont manquants ou non fonctionnels. Une intervention sur site est requise pour rétablir le fonctionnement du kit.', adviceTitle: 'L’installation présente plusieurs anomalies.', adviceNote: '3 composants requis sont en erreur ou non connectés. La batterie n’est pas détectée, la sortie AC est inactive et le module GSM est hors ligne.', footerTitle: 'Plusieurs anomalies détectées', footerNote: '3 composants sur 6 sont en erreur ou non connectés. Une intervention est nécessaire.', components: withComponentChanges({ Batterie: { current: 'Non détecté', status: 'Non détecté', detail: 'Aucune communication (0 V)', tone: 'critical' }, 'Sortie AC / charge': { current: 'Inactive', status: 'Inactive', detail: 'Aucune alimentation (0 W)', tone: 'critical' }, GSM: { current: 'Hors ligne', status: 'Hors ligne', detail: 'Pas de communication (depuis 2 h 15)', tone: 'critical' } }), checks: withCheckChanges({ Solaire: { values: [['42,1 V', 'Tension'], ['7,6 A', 'Courant'], ['312 W', 'Puissance']] }, Batterie: { values: [['0,0 V', 'Tension'], ['0,0 A', 'Courant'], ['Non détecté', 'État']], tone: 'critical' }, 'Sortie AC': { values: [['0 V', 'Tension'], ['0,0 A', 'Courant'], ['0 W', 'Puissance']], tone: 'critical' }, GSM: { values: [['Hors ligne', 'Communication']], tone: 'critical' } }) },
+  'INS-01024': { tone: 'unknown', client: 'École La Source', site: 'École', location: 'Kintambo, Kinshasa', lastData: 'il y a plus de 24 h', kitValue: 'Vérification impossible', kitNote: 'Données insuffisantes pour confirmer l’état du kit', connectedValue: '4 / 6 vérifiables', connectedNote: '2 composants sans données', verification: 'il y a plus de 24 h', verificationNote: 'Aucune vérification récente', statusTitle: 'Données manquantes : 2 composants', statusNote: 'GPS, GSM', global: 'Données indisponibles', simpleTitle: 'Impossible de confirmer l’intégrité du kit pour le moment.', simpleNote: 'Certains composants ne transmettent pas de données. L’installation pourrait être correctement en fonctionnement, mais Djua ne reçoit pas suffisamment d’informations pour le confirmer.', adviceTitle: 'Le kit ne transmet pas actuellement toutes ses données.', adviceNote: 'Djua ne peut pas vérifier l’intégrité de l’installation car un ou plusieurs composants ne sont plus en communication (GPS, GSM).', footerTitle: 'Impossible de détecter des anomalies', footerNote: 'Djua ne dispose pas de suffisamment de données pour analyser l’intégrité du kit.', banner: 'Le kit ne transmet actuellement pas suffisamment de données. Djua ne peut pas confirmer l’intégrité de tous les composants.', components: withComponentChanges({ GPS: { current: '—', status: 'Inconnu', detail: 'Aucune donnée reçue', tone: 'unknown' }, GSM: { current: '—', status: 'Inconnu', detail: 'Aucune donnée reçue', tone: 'unknown' } }), checks: withCheckChanges({ GPS: { values: [['—', 'Position'], ['Aucune donnée', 'Dernière donnée']], tone: 'unknown' }, GSM: { values: [['—', 'Communication']], tone: 'unknown' } }) },
+}
 
 export function InstallationIntegrityPage() {
   const navigate = useNavigate()
   const { id = 'INS-00482' } = useParams()
-
-  return <section className="workspacePage installationIntegrityPage">
-    <header className="workspaceHeading installationIntegrityHeading">
-      <div>
-        <span><h1>Jean Kabeya</h1><b className="installationIntegrityOnline"><i />En ligne</b></span>
-        <p>{id}<em>•</em>Maison individuelle<em>•</em>Gombe, Kinshasa<em>•</em>Dernière donnée reçue : il y a 2 min</p>
-      </div>
-      <div className="installationIntegrityActions">
-        <button type="button"><CalendarDays size={17} />30 derniers jours<ChevronDown size={16} /></button>
-        <button type="button" onClick={() => navigate('/interventions')}><Wrench size={16} />Créer une intervention</button>
-      </div>
-    </header>
-
-    <nav className="installationTabs installationIntegrityTabs" aria-label="Navigation de l’installation">
-      <button type="button" onClick={() => navigate(`/installations/${id}`)}>Vue d’ensemble</button>
-      <button type="button">Énergie</button>
-      <button type="button" className="active" aria-current="page">Intégrité du kit</button>
-      <button type="button" onClick={() => navigate(`/installations/${id}/localisation`)}>Localisation</button>
-      <button type="button">Alertes</button>
-      <button type="button">Historique</button>
-    </nav>
-
-    <div className="installationIntegrityLayout">
-      <div className="installationIntegrityMain" role="main">
-        <section className="installationIntegrityMetrics" aria-label="État de l’intégrité du kit">
-          <Metric icon={CheckCircle2} label="État du kit" value="Complet" note="Tous les composants présents et connectés" />
-          <Metric icon={PanelTop} label="Composants requis" value="6 / 6 connectés" note="100 % des composants" />
-          <Metric icon={Clock3} label="Dernière vérification" value="il y a 2 min" note="Vérification automatique" />
-        </section>
-
-        <section className="installationIntegrityComponents">
-          <header><h2>État des composants requis</h2></header>
-          <div className="installationIntegrityTable" role="table" aria-label="État des composants requis">
-            <div className="installationIntegrityTableHead" role="row"><span>Composant</span><span>État attendu</span><span>État actuel</span><span>Statut</span><span>Détails</span><span /></div>
-            {components.map(({ icon: Icon, label, expected, current, status, detail }) => <article role="row" key={label}>
-              <span><i><Icon size={19} /></i><b>{label}</b></span><span>{expected}</span><span>{current}</span><span><em><i />{status}</em></span><span>{detail}</span><button type="button" aria-label={`Voir les détails de ${label}`}><ChevronRight size={18} /></button>
-            </article>)}
-          </div>
-        </section>
-
-        <section className="installationIntegrityTechnical">
-          <header><h2>Vérifications techniques <small>Pour les techniciens</small></h2><button type="button">Voir plus de détails <ChevronDown size={16} /></button></header>
-          <div>{checks.map(({ icon: Icon, title, values }) => <article key={title}><i><Icon size={18} /></i><span><b>{title}</b><div>{values.map(([value, label]) => <strong key={label}>{value}<small>{label}</small></strong>)}</div></span></article>)}</div>
-          <footer><i><CircleCheck size={23} /></i><span><b>Aucune anomalie détectée</b><small>Aucune anomalie détectée sur l’intégrité du kit.</small></span></footer>
-        </section>
-      </div>
-
-      <aside className="installationIntegrityRail">
-        <section className="installationIntegritySummary"><h2>Résumé</h2><dl><dt><UserRound size={17} />Client</dt><dd>Jean Kabeya</dd><dt><PanelTop size={17} />Installation</dt><dd>{id}</dd><dt><House size={17} />Type</dt><dd>Maison individuelle</dd><dt><MapPin size={17} />Localisation</dt><dd>Gombe, Kinshasa</dd><dt><Activity size={17} />Statut global</dt><dd><b><i />En ligne</b></dd></dl></section>
-        <section className="installationIntegritySimple"><h2>Lecture simple</h2><div><i><Sun size={26} /></i><span><b>Le kit est complet et fonctionne normalement</b><small>Tous les composants essentiels sont présents et connectés. L’installation communique correctement et ne présente pas d’anomalie sur son intégrité.</small></span></div></section>
-        <section className="installationIntegrityAdvice"><i><Lightbulb size={26} /></i><span><h2>Interprétation Djua</h2><b>L’installation est structurellement complète.</b><p>Tous les éléments requis du kit sont détectés et connectés. L’installation dispose de ses 6 composants essentiels et communique normalement.</p></span></section>
-      </aside>
-    </div>
+  const state = integrityStates[id] ?? integrityStates['INS-00482']
+  const StateIcon = state.tone === 'complete' ? CheckCircle2 : state.tone === 'unknown' ? Minus : CircleAlert
+  return <section className={`workspacePage installationIntegrityPage tone-${state.tone}`}>
+    <header className="workspaceHeading installationIntegrityHeading"><div><span><h1>{state.client}</h1><b className="installationIntegrityOnline"><i />{state.global}</b></span><p>{id}<em>•</em>{state.site}<em>•</em>{state.location}<em>•</em>Dernière donnée reçue : {state.lastData}</p></div><div className="installationIntegrityActions"><button type="button"><CalendarDays size={17} />30 derniers jours<ChevronDown size={16} /></button><button type="button" onClick={() => navigate('/interventions')}><Wrench size={16} />Créer une intervention</button></div></header>
+    <nav className="installationTabs installationIntegrityTabs" aria-label="Navigation de l’installation"><button type="button" onClick={() => navigate(`/installations/${id}`)}>Vue d’ensemble</button><button type="button">Énergie</button><button type="button" className="active" aria-current="page">Intégrité du kit</button><button type="button" onClick={() => navigate(`/installations/${id}/localisation`)}>Localisation</button><button type="button">Alertes</button><button type="button">Historique</button></nav>
+    {state.banner && <section className="installationIntegrityBanner"><CircleAlert size={24} /><span><b>Vérification partielle uniquement</b><small>{state.banner}</small></span><button type="button">En savoir plus <ChevronRight size={16} /></button></section>}
+    <div className="installationIntegrityLayout"><div className="installationIntegrityMain" role="main"><section className="installationIntegrityMetrics" aria-label="État de l’intégrité du kit"><Metric icon={StateIcon} label="État du kit" value={state.kitValue} note={state.kitNote} tone={state.tone} /><Metric icon={PanelTop} label="Composants requis" value={state.connectedValue} note={state.connectedNote} tone={state.tone} /><Metric icon={Clock3} label="Dernière vérification" value={state.verification} note={state.verificationNote} tone={state.tone} /></section><section className="installationIntegrityComponents"><header><h2>État des composants requis</h2></header><div className="installationIntegrityTable" role="table" aria-label="État des composants requis"><div className="installationIntegrityTableHead" role="row"><span>Composant</span><span>État attendu</span><span>État actuel</span><span>Statut</span><span>Détails</span><span /></div>{state.components.map(({ icon: Icon, label, expected, current, status, detail, tone }) => <article role="row" className={`tone-${tone}`} key={label}><span><i><Icon size={19} /></i><b>{label}</b></span><span>{expected}</span><span>{current}</span><span><em><i />{status}</em></span><span>{detail}</span><button type="button" aria-label={`Voir les détails de ${label}`}><ChevronRight size={18} /></button></article>)}</div></section><section className="installationIntegrityTechnical"><header><h2>Vérifications techniques <small>Pour les techniciens</small></h2><button type="button">Voir plus de détails <ChevronDown size={16} /></button></header><div>{state.checks.map(({ icon: Icon, title, values, tone }) => <article className={tone ? `tone-${tone}` : ''} key={title}><i><Icon size={18} /></i><span><b>{title}</b><div>{values.map(([value, label]) => <strong key={label}>{value}<small>{label}</small></strong>)}</div></span></article>)}</div><footer><i><StateIcon size={23} /></i><span><b>{state.footerTitle}</b><small>{state.footerNote}</small></span></footer></section></div><aside className="installationIntegrityRail"><section className="installationIntegrityStatus"><i><StateIcon size={24} /></i><span><b>{state.statusTitle}</b><small>{state.statusNote}</small></span></section><section className="installationIntegritySummary"><h2>Résumé</h2><dl><dt><UserRound size={17} />Client</dt><dd>{state.client}</dd><dt><PanelTop size={17} />Installation</dt><dd>{id}</dd><dt><House size={17} />Type</dt><dd>{state.site}</dd><dt><MapPin size={17} />Localisation</dt><dd>{state.location}</dd><dt><Activity size={17} />Statut global</dt><dd><b><i />{state.global}</b></dd></dl></section><section className="installationIntegritySimple"><h2>Lecture simple</h2><div><i><StateIcon size={26} /></i><span><b>{state.simpleTitle}</b><small>{state.simpleNote}</small></span></div></section><section className="installationIntegrityAdvice"><i><Lightbulb size={26} /></i><span><h2>Interprétation Djua</h2><b>{state.adviceTitle}</b><p>{state.adviceNote}</p></span></section></aside></div>
   </section>
 }
 
-function Metric({ icon: Icon, label, value, note }: { icon: typeof CheckCircle2; label: string; value: string; note: string }) {
-  return <article><i><Icon size={24} /></i><span><small>{label}</small><b>{value}</b><em>{note}</em></span></article>
-}
+function Metric({ icon: Icon, label, value, note, tone }: { icon: typeof CheckCircle2; label: string; value: string; note: string; tone: IntegrityTone }) { return <article className={`tone-${tone}`}><i><Icon size={24} /></i><span><small>{label}</small><b>{value}</b><em>{note}</em></span></article> }
