@@ -268,6 +268,11 @@
 .applianceThumbnail.preview { width: 92px; height: 92px; margin: 0 auto 17px; border: 0; border-radius: 0; outline: 0; box-shadow: none; background-color: transparent; }
 .applianceThumbnail.applianceVisualImage { display: grid; place-items: center; overflow: hidden; }
 .applianceThumbnail.applianceVisualImage img { width: 100%; height: 100%; object-fit: contain; }
+.applianceThumbnail.applianceVisual-cctv img { transform: scale(1.35); }
+.applianceThumbnail.applianceVisual-pump img { transform: scale(1.25); }
+.applianceThumbnail.applianceVisual-elevator img { transform: scale(1.4); }
+.applianceThumbnail.applianceVisual-safety-light img { transform: scale(1.35); }
+.applianceThumbnail.applianceVisual-gate img { transform: scale(1.35); }
 .sprite-bulb { background-position: 0 0; }
 .sprite-fridge { background-position: 50% 0; }
 .sprite-blender { background-position: 100% 0; }
