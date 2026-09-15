@@ -6,6 +6,7 @@
 .installationLocationHeading p em { color: #9ba6b8; font-style: normal; }
 .installationLocationOnline { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; color: #099942; background: #e4faed; font-size: 13px; white-space: nowrap; }
 .installationLocationOnline i { width: 9px; height: 9px; border-radius: 50%; background: #08a843; }
+.installationLocationPage .installationLocationOnline.is-online { color: #099942; background: #e4faed; }.installationLocationPage .installationLocationOnline.is-online i { background: #08a843; }.installationLocationPage .installationLocationOnline.is-offline { color: #e4404d; background: #ffe8eb; }.installationLocationPage .installationLocationOnline.is-offline i { background: #e4404d; }
 .installationLocationOnline.offline { color: #e4404d; background: #ffe8eb; }.installationLocationOnline.offline i { background: #e4404d; }
 .installationLocationActions { display: flex; gap: 12px; }
 .installationLocationActions button { display: inline-flex; align-items: center; gap: 9px; min-height: 38px; padding: 0 13px; border: 1px solid #dce4ee; border-radius: 7px; color: #17243a; background: #fff; font-size: 13px; font-weight: 700; white-space: nowrap; }
