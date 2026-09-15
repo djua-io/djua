@@ -1,0 +1,21 @@
+.installationBoxDetails > header > span { display:flex; align-items:center; gap:10px; }
+.installationBoxDetails > header > span > i { display:grid; width:34px; height:34px; place-items:center; border-radius:50%; color:#23569a; background:#eef5ff; }
+.installationBoxDetails > header h2 { margin:0; }
+.installationBoxDetails > header p { margin:3px 0 0; color:#6b7890; font-size:11px; }
+.installationBoxDetails > header > b { display:inline-flex; align-items:center; gap:6px; padding:5px 9px; border-radius:999px; font-size:10px; }
+.installationBoxDetails > header > b i, .installationBoxSensors em i { width:7px; height:7px; border-radius:50%; background:currentColor; }
+.installationBoxDetails > header > b.online { color:#078b4d; background:#e6f8ee; }
+.installationBoxDetails > header > b.offline { color:#cf2335; background:#ffeaed; }
+.installationBoxDetailGrid { display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.9fr); gap:22px; padding:0 16px 17px; }
+.installationBoxDetailGrid > dl { display:grid; grid-template-columns:142px minmax(0,1fr); gap:10px; margin:0; }
+.installationBoxDetailGrid dt { color:#6b7890; font-size:11px; }
+.installationBoxDetailGrid dd { display:flex; align-items:center; gap:6px; min-width:0; margin:0; color:#1f2f49; font-size:11px; font-weight:700; }
+.installationBoxDetailGrid dd button { display:grid; width:24px; height:24px; place-items:center; padding:0; border:0; border-radius:5px; color:#496b9d; background:#f0f5fc; }
+.installationBoxSensors { padding-left:22px; border-left:1px solid #e3eaf1; }
+.installationBoxSensors h3 { margin:0; color:#22334f; font-size:13px; }
+.installationBoxSensors > p { margin:4px 0 9px; color:#6c7c96; font-size:10px; }
+.installationBoxSensors > span { display:grid; grid-template-columns:20px minmax(0,1fr) auto; gap:8px; align-items:center; min-height:27px; color:#365482; font-size:11px; }
+.installationBoxSensors > span > b { color:#30425d; }
+.installationBoxSensors em { display:inline-flex; align-items:center; gap:5px; color:#078b4d; font-size:10px; font-style:normal; }
+.installationBoxSensors em.warning { color:#e25900; }
+@media (max-width:700px) { .installationBoxDetailGrid { grid-template-columns:1fr; }.installationBoxSensors { padding:13px 0 0; border-top:1px solid #e3eaf1; border-left:0; }.installationBoxDetailGrid > dl { grid-template-columns:1fr; gap:4px; }.installationBoxDetailGrid dd { margin-bottom:8px; } }

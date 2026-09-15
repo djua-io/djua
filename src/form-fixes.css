@@ -2180,3 +2180,8 @@ option,
 .productDetailRecent {
   display: none;
 }
+
+/* Box details belong to the associated installation, not the settings directory. */
+.settingsDeviceDetails {
+  display: none;
+}
