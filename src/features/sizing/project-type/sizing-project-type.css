@@ -1,0 +1,212 @@
+.sizingProjectTypePage {
+  max-width: 1160px;
+  padding-top: 32px;
+}
+
+.sizingProjectTypePage > h1 {
+  margin-bottom: 4px;
+}
+
+.sizingProjectTypePage > .muted {
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.sizingProjectTypeLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 288px;
+  gap: 24px;
+  align-items: start;
+}
+
+.sizingProjectTypeCard,
+.sizingProjectTypePreview {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.sizingProjectTypeCard {
+  padding: 24px;
+}
+
+.sizingProjectTypeCard > header {
+  height: auto;
+  min-height: 0;
+  display: block;
+  position: static;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #edf0f2;
+  background: transparent;
+}
+
+.sizingProjectTypeCard h2,
+.sizingProjectTypePreview h2 {
+  margin: 0;
+  color: #171717;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.sizingProjectTypeChoices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.sizingProjectTypeChoices button {
+  min-height: 268px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 16px 18px;
+  border: 2px solid #e2e5ea;
+  border-radius: 10px;
+  color: #161b26;
+  background: #fff;
+  text-align: center;
+}
+
+.sizingProjectTypeChoices button:hover {
+  border-color: #f6b184;
+  background: #fffaf7;
+}
+
+.sizingProjectTypeChoices button.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  background: #fffaf7;
+}
+
+.sizingProjectTypeIllustration {
+  width: 142px;
+  height: 116px;
+  margin-bottom: 16px;
+  object-fit: contain;
+}
+
+.sizingProjectTypeChoices b {
+  font-size: 15px;
+}
+
+.sizingProjectTypeChoices small {
+  min-height: 52px;
+  margin: 7px 0 auto;
+  color: #687083;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.sizingProjectTypeHint {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin-top: 22px;
+  padding: 15px;
+  border: 1px solid #ffdfc9;
+  border-radius: 9px;
+  color: #555e6e;
+  background: linear-gradient(105deg, #fff7eb, #fffdfb);
+  font-size: 13.71px;
+}
+
+.sizingProjectTypeHint > svg {
+  flex: 0 0 auto;
+  color: #f29d22;
+}
+
+.sizingProjectTypeHint b,
+.sizingProjectTypeHint small {
+  display: block;
+}
+
+.sizingProjectTypeHint b {
+  color: #38332f;
+  font-size: 13px;
+}
+
+.sizingProjectTypeHint small {
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+.sizingProjectTypeUnavailable {
+  margin: 14px 0 0;
+  color: #9c4b11;
+  font-size: 12px;
+}
+
+.sizingProjectTypeCard > footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f2;
+}
+
+.sizingProjectTypePreview {
+  padding: 22px;
+}
+
+.sizingProjectTypePreview > h2 {
+  margin-bottom: 19px;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.sizingProjectTypePreview article {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.sizingProjectTypePreview article + article {
+  margin-top: 23px;
+}
+
+.sizingProjectTypePreview article > i {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #ed8508;
+  background: #fff1e6;
+}
+
+.sizingProjectTypePreview b,
+.sizingProjectTypePreview small {
+  display: block;
+}
+
+.sizingProjectTypePreview b {
+  color: #28231f;
+  font-size: 13px;
+}
+
+.sizingProjectTypePreview small {
+  margin-top: 3px;
+  color: #687083;
+  font-size: 12px;
+  line-height: 1.42;
+}
+
+@media (max-width: 900px) {
+  .sizingProjectTypeLayout { grid-template-columns: 1fr; }
+  .sizingProjectTypePreview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .sizingProjectTypePreview > h2 { grid-column: 1 / -1; margin: 0; }
+  .sizingProjectTypePreview article + article { margin-top: 0; }
+}
+
+@media (max-width: 680px) {
+  .sizingProjectTypePage { padding-inline: 18px; }
+  .sizingProjectTypeCard { padding: 18px; }
+  .sizingProjectTypeChoices { grid-template-columns: 1fr; }
+  .sizingProjectTypeChoices button { min-height: 196px; }
+  .sizingProjectTypeIllustration { width: 122px; height: 94px; margin-bottom: 11px; }
+  .sizingProjectTypePreview { grid-template-columns: 1fr; }
+  .sizingProjectTypePreview > h2 { grid-column: auto; }
+}
