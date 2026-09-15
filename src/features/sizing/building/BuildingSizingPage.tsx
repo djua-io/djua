@@ -109,7 +109,7 @@ export function BuildingSizingPage() {
       })
     browserStorage.set('djua-items', [...commonAppliances.map(item => ({ ...item })), ...housingLoads])
     browserStorage.set('djua-building-sizing-config', { floors, homes, sameProfile, singleProfile, distribution, commonAppliances })
-    navigate('/dimensionnements/nouveau/recommandation')
+    navigate('/dimensionnements/nouveau/recommandation?flow=building')
   }
   return (
     <Page className="buildingSizingPage" title="Dimensionner un immeuble / une résidence" sub="Décrivez le bâtiment, les logements et les équipements partagés afin de préparer une recommandation simple à présenter au client.">
