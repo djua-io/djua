@@ -112,10 +112,10 @@ export function BuildingSizingPage() {
     navigate('/dimensionnements/nouveau/recommandation')
   }
   return (
-    <Page className="buildingSizingPage" title="Nouveau dimensionnement" sub="Répondez à quelques questions simples pour recommander un kit solaire.">
+    <Page className="buildingSizingPage" title="Dimensionner un immeuble / une résidence" sub="Décrivez le bâtiment, les logements et les équipements partagés afin de préparer une recommandation simple à présenter au client.">
       <div className="buildingSizingLayout">
         <section className="buildingSizingCard" aria-labelledby="building-sizing-title">
-          <h2 id="building-sizing-title">Parlez-nous du bâtiment</h2>
+          <h2 id="building-sizing-title">Décrivez le bâtiment</h2>
 
           <div className="buildingCounters">
             <Counter illustration={buildingCounterFloors} label="Nombre d’étages" value={floors} onChange={updateFloors} minimum={1} />
@@ -124,30 +124,30 @@ export function BuildingSizingPage() {
 
           <section className="buildingCommonEquipment" aria-labelledby="common-equipment-title">
             <header>
-              <span><h3 id="common-equipment-title">Équipements à alimenter</h3><p>{commonEquipmentOpen ? 'Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).' : `${plural(commonAppliances.length, 'équipement')} sélectionné${commonAppliances.length > 1 ? 's' : ''}`}</p></span>
-              <div className="buildingCommonEquipmentActions"><button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Ajouter des éléments</button><button type="button" className="buildingCommonEquipmentCollapse" aria-expanded={commonEquipmentOpen} aria-label={commonEquipmentOpen ? 'Réduire les équipements à alimenter' : 'Afficher les équipements à alimenter'} onClick={() => setCommonEquipmentOpen(open => !open)}>{commonEquipmentOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</button></div>
+              <span><h3 id="common-equipment-title">Équipements communs à couvrir</h3><p>{commonEquipmentOpen ? 'Ajoutez les usages partagés que le système doit alimenter, par exemple l’éclairage des communs, les caméras ou la pompe.' : `${plural(commonAppliances.length, 'équipement')} commun${commonAppliances.length > 1 ? 's' : ''} inclus dans l’estimation`}</p></span>
+              <div className="buildingCommonEquipmentActions"><button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Gérer les équipements</button><button type="button" className="buildingCommonEquipmentCollapse" aria-expanded={commonEquipmentOpen} aria-label={commonEquipmentOpen ? 'Réduire les équipements communs' : 'Afficher les équipements communs'} onClick={() => setCommonEquipmentOpen(open => !open)}>{commonEquipmentOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</button></div>
             </header>
             {commonEquipmentOpen && <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{commonAppliances.map(item => <CommonEquipmentCard item={item} onRemove={() => setCommonAppliances(current => current.filter(candidate => candidate.id !== item.id))} key={item.id} />)}</div></div>}
           </section>
 
           <fieldset className="buildingProfileQuestion">
-            <legend>Les logements sont-ils tous similaires&nbsp;?</legend>
+            <legend>Les logements ont-ils le même niveau d’équipement&nbsp;?</legend>
             <div>
-              <label className={sameProfile ? 'selected' : ''}><input type="radio" name="building-profile-mode" checked={sameProfile} onChange={() => selectProfileMode(true)} /><span><b>Oui, même profil pour tous</b><small>Un seul type de logement dans le bâtiment</small></span></label>
-              <label className={!sameProfile ? 'selected' : ''}><input type="radio" name="building-profile-mode" checked={!sameProfile} onChange={() => selectProfileMode(false)} /><span><b>Non, plusieurs profils</b><small>Différents types de logements dans le bâtiment</small></span></label>
+              <label className={sameProfile ? 'selected' : ''}><input type="radio" name="building-profile-mode" checked={sameProfile} onChange={() => selectProfileMode(true)} /><span><b>Oui, un profil pour tous</b><small>Les logements ont des besoins comparables</small></span></label>
+              <label className={!sameProfile ? 'selected' : ''}><input type="radio" name="building-profile-mode" checked={!sameProfile} onChange={() => selectProfileMode(false)} /><span><b>Non, plusieurs profils</b><small>Répartissez les logements selon leur niveau d’équipement</small></span></label>
             </div>
           </fieldset>
 
           {sameProfile ? <section className="buildingSingleProfile" aria-labelledby="single-profile-title">
-            <div className="buildingSingleProfileHeading"><span><h3 id="single-profile-title">Quel profil correspond le mieux aux logements&nbsp;?</h3><p>Choisissez le niveau d’équipement le plus représentatif.</p></span></div>
+            <div className="buildingSingleProfileHeading"><span><h3 id="single-profile-title">Quel profil représente le mieux les logements&nbsp;?</h3><p>Choisissez avec le client le niveau d’équipement le plus courant dans le bâtiment.</p></span></div>
             <div className="buildingSingleProfileChoices">
               {profiles.map(profile => <article aria-pressed={singleProfile === profile.id} className={singleProfile === profile.id ? 'selected' : ''} key={profile.id} onClick={() => selectSingleProfile(profile.id)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectSingleProfile(profile.id) } }} role="button" tabIndex={0}><img src={profile.image} alt="" /><b>{profile.title}</b><small>{profile.description}</small><button type="button" className="buildingAdjustLink" onClick={event => { event.stopPropagation(); navigate(`/dimensionnements/nouveau/immeuble/profils/${profile.id}/appareils`) }}>Ajuster les équipements</button></article>)}
             </div>
-            <aside><Lightbulb size={22} /><span>Tous les {homes} logements seront configurés avec le profil <b>{profiles.find(profile => profile.id === singleProfile)?.title}</b>.</span></aside>
+            <aside><Lightbulb size={22} /><span>L’estimation appliquera le profil <b>{profiles.find(profile => profile.id === singleProfile)?.title}</b> aux {homes} logements.</span></aside>
           </section> : <>
             <section className="buildingProfiles">
-              <h3>Répartition des logements</h3>
-              <p>Indiquez combien de logements correspondent à chaque profil.</p>
+              <h3>Répartissez les logements par profil</h3>
+              <p>Avec le client, indiquez combien de logements correspondent à chaque niveau d’équipement.</p>
               <div className="buildingProfileGrid">
                 {profiles.map(profile => {
                   const isStandard = profile.id === 'standard'
@@ -164,8 +164,8 @@ export function BuildingSizingPage() {
             </section>
             <div className={`buildingConfigurationStatus ${isComplete ? 'complete' : 'incomplete'}`} role="status">{isComplete ? <CheckCircle2 size={20} /> : <CircleAlert size={20} />}<span>Total configuré : <b>{configuredHomes} / {homes} logements</b></span><strong>{statusCopy}</strong></div>
           </>}
-          <aside className="buildingSizingHint"><Lightbulb size={22} /><span>Djúa utilisera cette répartition pour estimer les besoins de l’ensemble du bâtiment.</span></aside>
-          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Retour</Button><Button disabled={!isComplete} onClick={continueToRecommendation}>Continuer <ArrowRight size={18} /></Button></footer>
+          <aside className="buildingSizingHint"><Lightbulb size={22} /><span>Djúa utilisera ces informations pour estimer les besoins du bâtiment et préparer une recommandation à partager avec le client.</span></aside>
+          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Changer de type de projet</Button><Button disabled={!isComplete} onClick={continueToRecommendation}>Voir la recommandation <ArrowRight size={18} /></Button></footer>
         </section>
 
         <SizingEnergySummary
@@ -176,7 +176,7 @@ export function BuildingSizingPage() {
           distributionTitle="Répartition des logements"
           distribution={profiles.map(profile => ({ label: profile.title, value: plural(distribution[profile.id], 'logement'), color: profile.color, weight: distribution[profile.id] }))}
           itemCount={{ label: 'Logements configurés', value: String(configuredHomes) }}
-          advice={{ title: 'Estimation évolutive', description: 'Le résumé se met à jour selon le nombre de logements et leur niveau d’équipement.' }}
+          advice={{ title: 'Estimation en direct', description: 'Ce résumé évolue avec le nombre de logements, leur profil et les équipements communs sélectionnés.' }}
         />
       </div>
     </Page>
@@ -189,5 +189,5 @@ function CommonEquipmentCard({ item, onRemove }: { item: Appliance; onRemove: ()
 }
 
 function Counter({ illustration, label, value, onChange, minimum }: { illustration: string; label: string; value: number; onChange: (value: number) => void; minimum: number }) {
-  return <article><i><img src={illustration} alt="" /></i><span><b>{label}</b><small>Ajustez selon le projet</small><div className="buildingCounterControl"><button type="button" aria-label={`Diminuer ${label}`} onClick={() => onChange(clamp(value - 1, minimum))} disabled={value <= minimum}><Minus size={21} /></button><input aria-label={label} type="number" inputMode="numeric" min={minimum} max="99" value={value} onChange={event => onChange(clamp(Number(event.target.value), minimum))} /><button type="button" aria-label={`Augmenter ${label}`} onClick={() => onChange(clamp(value + 1, minimum))}><Plus size={22} /></button></div></span></article>
+  return <article><i><img src={illustration} alt="" /></i><span><b>{label}</b><small>{label === 'Nombre d’étages' ? 'Comptez les niveaux à alimenter' : 'Comptez les logements à couvrir'}</small><div className="buildingCounterControl"><button type="button" aria-label={`Diminuer ${label}`} onClick={() => onChange(clamp(value - 1, minimum))} disabled={value <= minimum}><Minus size={21} /></button><input aria-label={label} type="number" inputMode="numeric" min={minimum} max="99" value={value} onChange={event => onChange(clamp(Number(event.target.value), minimum))} /><button type="button" aria-label={`Augmenter ${label}`} onClick={() => onChange(clamp(value + 1, minimum))}><Plus size={22} /></button></div></span></article>
 }

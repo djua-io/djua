@@ -37,18 +37,18 @@ const projectTypes: Array<{
 
 const previewPoints = [
   {
-    title: 'Les appareils à alimenter',
-    description: 'Préparez une liste, même approximative, des appareils utilisés sur le site.',
+    title: 'Les appareils à couvrir',
+    description: 'Notez, même approximativement, les appareils que le client souhaite alimenter.',
     icon: ListChecks,
   },
   {
     title: 'Les habitudes d’utilisation',
-    description: 'Notez les heures auxquelles chaque appareil fonctionne dans la journée.',
+    description: 'Demandez quand les appareils sont généralement utilisés, surtout le soir et la nuit.',
     icon: Clock3,
   },
   {
-    title: 'Le lieu d’installation',
-    description: 'Indiquez l’adresse ou le quartier pour affiner la recommandation solaire.',
+    title: 'Le lieu du projet',
+    description: 'L’adresse ou le quartier aide à préparer une recommandation adaptée au site.',
     icon: MapPin,
   },
 ]
@@ -68,13 +68,13 @@ export function SizingProjectTypePage() {
   return (
     <Page
       className="sizingProjectTypePage"
-      title="Nouveau dimensionnement"
-      sub="Répondez à quelques questions simples pour recommander un kit solaire."
+      title="Préparer un nouveau devis"
+      sub="Choisissez le projet du client : Djúa vous guidera ensuite pour recueillir les besoins et préparer une recommandation claire."
     >
       <div className="sizingProjectTypeLayout">
         <section className="sizingProjectTypeCard" aria-labelledby="sizing-project-type-title">
           <header>
-            <h2 id="sizing-project-type-title">Quel type de projet&nbsp;?</h2>
+            <h2 id="sizing-project-type-title">Quel projet souhaitez-vous dimensionner&nbsp;?</h2>
           </header>
 
           <div className="sizingProjectTypeChoices">
@@ -100,27 +100,27 @@ export function SizingProjectTypePage() {
           <aside className="sizingProjectTypeHint">
             <Lightbulb size={22} />
             <span>
-              <b>Djúa adaptera les prochaines questions selon le type de projet.</b>
-              <small>Vous n’avez pas besoin de connaissances techniques.</small>
+              <b>Djúa adaptera les questions à la situation du client.</b>
+              <small>Commencez avec les informations disponibles : vous pourrez les compléter avec le client.</small>
             </span>
           </aside>
 
           {selectedType && !canContinue && (
             <p className="sizingProjectTypeUnavailable" role="status">
-              Ce parcours sera disponible prochainement. Sélectionnez «&nbsp;Maison individuelle&nbsp;» ou «&nbsp;Immeuble / résidence&nbsp;» pour continuer.
+              Le parcours commerce sera bientôt disponible. Pour l’instant, vous pouvez préparer un devis pour une maison individuelle ou un immeuble / une résidence.
             </p>
           )}
 
           <footer>
             <Button secondary onClick={() => navigate('/devis')}>Annuler</Button>
             <Button disabled={!canContinue} onClick={continueSizing}>
-              Continuer <ArrowRight size={18} />
+              Continuer vers les besoins <ArrowRight size={18} />
             </Button>
           </footer>
         </section>
 
         <aside className="sizingProjectTypePreview" aria-label="Informations à préparer">
-          <h2>Pour bien préparer le dimensionnement</h2>
+          <h2>Préparez l’échange avec le client</h2>
           {previewPoints.map(({ title, description, icon: Icon }) => (
             <article key={title}>
               <i><Icon size={22} /></i>

@@ -31,7 +31,7 @@ export function SizingEnergySummary({
   itemCount,
   advice = {
     title: 'Conseil Djúa',
-    description: 'Ajoutez les appareils manquants ou ajustez les heures d’utilisation pour obtenir un dimensionnement précis.',
+    description: 'Vérifiez avec le client les appareils et leurs horaires : une estimation cohérente suffit pour préparer la recommandation.',
   },
   className = '',
 }: SizingEnergySummaryProps) {
@@ -46,15 +46,15 @@ export function SizingEnergySummary({
   const donutStyle = { background: `conic-gradient(${segments.join(', ')})` } as CSSProperties
 
   return (
-    <aside className={['energy', 'applianceEnergy', 'sizingEnergySummary', className].filter(Boolean).join(' ')} aria-label="Résumé énergétique">
-      <Card title="Résumé énergétique">
+    <aside className={['energy', 'applianceEnergy', 'sizingEnergySummary', className].filter(Boolean).join(' ')} aria-label="Estimation des besoins">
+      <Card title="Estimation des besoins">
         <div className="energyChart">
           <small>Consommation quotidienne</small>
           <strong>{dailyConsumption}<em> / jour</em></strong>
           <svg viewBox="0 0 220 72" aria-hidden="true"><defs><linearGradient id="energyFill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#ff5a00" stopOpacity=".22" /><stop offset="1" stopColor="#ff5a00" stopOpacity="0" /></linearGradient></defs><path d="M4 62 L36 58 L70 52 L100 45 L132 38 L162 26 L194 9 L216 5 L216 68 L4 68 Z" fill="url(#energyFill)" /><polyline points="4,62 36,58 70,52 100,45 132,38 162,26 194,9 216,5" fill="none" stroke="#ff5a00" strokeWidth="2" />{[4, 36, 70, 100, 132, 162, 194, 216].map((x, index) => <circle cx={x} cy={[62, 58, 52, 45, 38, 26, 9, 5][index]} r="2.5" fill="#ff5a00" key={x} />)}</svg>
         </div>
-        <div className="energyMetric"><small>Puissance installée</small><strong>{installedPower} <em>kW</em></strong></div>
-        <div className="energyMetric"><small>Puissance simultanée estimée</small><strong>{simultaneousPower} <em>kW</em></strong></div>
+        <div className="energyMetric"><small>Puissance nécessaire estimée</small><strong>{installedPower} <em>kW</em></strong></div>
+        <div className="energyMetric"><small>Pic de puissance estimé</small><strong>{simultaneousPower} <em>kW</em></strong></div>
         <div className="usageDistribution">
           <small>{distributionTitle}</small>
           <div><i style={donutStyle} /><span>{distribution.map(item => <Fragment key={item.label}><b><em className={item.color} />{item.label}</b><strong>{item.value}</strong></Fragment>)}</span></div>
