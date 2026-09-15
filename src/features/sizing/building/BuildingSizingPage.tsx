@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Camera, CheckCircle2, ChevronDown, ChevronUp, CircleAlert, Droplets, Lightbulb, Minus, Plus, Settings, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
 import { Button, Page } from '../../../shared/ui'
 import { SizingEnergySummary } from '../energy-summary/SizingEnergySummary'
 import buildingProfileComfort from '../../../assets/building-profile-comfort.png'
@@ -8,10 +8,13 @@ import buildingCounterFloors from '../../../assets/building-counter-floors.png'
 import buildingCounterHomes from '../../../assets/building-counter-homes.png'
 import buildingProfileEssential from '../../../assets/building-profile-essential.png'
 import buildingProfileStandard from '../../../assets/building-profile-standard.png'
+import buildingCommonLighting from '../../../assets/building-common-lighting.png'
+import buildingCommonCctv from '../../../assets/building-common-cctv.png'
+import buildingCommonPump from '../../../assets/building-common-pump.png'
 import './building-sizing.css'
 
 type ProfileId = 'essential' | 'standard' | 'comfort'
-type CommonEquipmentId = 'lighting' | 'cctv' | 'pump' | 'elevator' | 'ventilation' | 'gate'
+type CommonEquipmentId = 'lighting' | 'cctv' | 'pump'
 
 const profiles: Array<{ id: ProfileId; title: string; description: string; image: string; dailyKwh: number; peakKw: number; color: 'orange' | 'yellow' | 'green' }> = [
   { id: 'essential', title: 'Essentiel', description: 'Le minimum pour les besoins de base', image: buildingProfileEssential, dailyKwh: .95, peakKw: .55, color: 'orange' },
@@ -19,13 +22,10 @@ const profiles: Array<{ id: ProfileId; title: string; description: string; image
   { id: 'comfort', title: 'Confort', description: 'Plus d’équipements pour un meilleur confort', image: buildingProfileComfort, dailyKwh: 2.65, peakKw: 1.75, color: 'green' },
 ]
 
-const commonEquipment: Array<{ id: CommonEquipmentId; title: string; unit: string; icon: typeof Lightbulb; dailyKwh: number; peakKw: number }> = [
-  { id: 'lighting', title: 'Éclairage commun', unit: 'point lumineux', icon: Lightbulb, dailyKwh: .07, peakKw: .012 },
-  { id: 'cctv', title: 'Caméras / CCTV', unit: 'caméra', icon: Camera, dailyKwh: .12, peakKw: .02 },
-  { id: 'pump', title: 'Pompe à eau', unit: 'pompe', icon: Droplets, dailyKwh: .7, peakKw: .55 },
-  { id: 'elevator', title: 'Ascenseur', unit: 'ascenseur', icon: Settings, dailyKwh: 1.2, peakKw: 1.5 },
-  { id: 'ventilation', title: 'Ventilation commune', unit: 'ventilateur', icon: Settings, dailyKwh: .18, peakKw: .04 },
-  { id: 'gate', title: 'Portail automatique', unit: 'portail', icon: Settings, dailyKwh: .08, peakKw: .18 },
+const commonEquipment: Array<{ id: CommonEquipmentId; title: string; unit: string; image: string; dailyKwh: number; peakKw: number }> = [
+  { id: 'lighting', title: 'Éclairage commun', unit: 'point lumineux', image: buildingCommonLighting, dailyKwh: .07, peakKw: .012 },
+  { id: 'cctv', title: 'Caméras / CCTV', unit: 'caméra', image: buildingCommonCctv, dailyKwh: .12, peakKw: .02 },
+  { id: 'pump', title: 'Pompe à eau', unit: 'pompe', image: buildingCommonPump, dailyKwh: .7, peakKw: .55 },
 ]
 
 const clamp = (value: number, minimum: number, maximum = 99) => Math.min(maximum, Math.max(minimum, value))
@@ -39,9 +39,7 @@ export function BuildingSizingPage() {
   const [sameProfile, setSameProfile] = useState(false)
   const [singleProfile, setSingleProfile] = useState<ProfileId>('standard')
   const [distribution, setDistribution] = useState<Record<ProfileId, number>>({ essential: 0, standard: 2, comfort: 0 })
-  const [commonEquipmentOpen, setCommonEquipmentOpen] = useState(false)
-  const [commonEquipmentPickerOpen, setCommonEquipmentPickerOpen] = useState(false)
-  const [commonEquipmentQuantities, setCommonEquipmentQuantities] = useState<Record<CommonEquipmentId, number>>({ lighting: 12, cctv: 8, pump: 2, elevator: 0, ventilation: 0, gate: 0 })
+  const [commonEquipmentQuantities, setCommonEquipmentQuantities] = useState<Record<CommonEquipmentId, number>>({ lighting: 12, cctv: 8, pump: 2 })
   const configuredHomes = Object.values(distribution).reduce((total, value) => total + value, 0)
   const difference = homes - configuredHomes
   const isComplete = difference === 0
@@ -100,12 +98,12 @@ export function BuildingSizingPage() {
             <Counter illustration={buildingCounterHomes} label="Nombre de logements" value={homes} onChange={updateHomes} minimum={1} />
           </div>
 
-          <section className={`buildingCommonEquipment ${commonEquipmentOpen ? 'expanded' : 'collapsed'}`} aria-labelledby="common-equipment-title">
+          <section className="buildingCommonEquipment" aria-labelledby="common-equipment-title">
             <header>
-              <i><Settings size={23} /></i><span><h3 id="common-equipment-title">Quels équipements communs faut-il aussi alimenter&nbsp;?</h3><p>Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).</p>{!commonEquipmentOpen && <small>{selectedCommonEquipment.length} éléments sélectionnés</small>}</span>
-              <button type="button" className="buildingCommonEquipmentToggle" onClick={() => { setCommonEquipmentOpen(open => !open); setCommonEquipmentPickerOpen(false) }}><Plus size={17} />Ajouter des éléments{commonEquipmentOpen ? <ChevronUp size={17} /> : <ChevronDown size={17} />}</button>
+              <span><h3 id="common-equipment-title">Quels équipements communs faut-il aussi alimenter&nbsp;?</h3><p>Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).</p></span>
+              <button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils')}><Plus size={17} />Ajouter des éléments</button>
             </header>
-            {commonEquipmentOpen && <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{selectedCommonEquipment.map(item => <CommonEquipmentCard item={item} quantity={commonEquipmentQuantities[item.id]} onChange={value => updateCommonEquipment(item.id, value)} onRemove={() => updateCommonEquipment(item.id, 0)} key={item.id} />)}<button type="button" className="buildingCommonEquipmentAdd" onClick={() => setCommonEquipmentPickerOpen(open => !open)}><Plus size={24} /><b>Ajouter un élément</b><small>Éclairage, caméras, pompe, ascenseur, etc.</small></button></div>{commonEquipmentPickerOpen && <div className="buildingCommonEquipmentPicker" role="group" aria-label="Ajouter un équipement commun">{commonEquipment.filter(item => commonEquipmentQuantities[item.id] === 0).map(item => { const Icon = item.icon; return <button type="button" onClick={() => { updateCommonEquipment(item.id, 1); setCommonEquipmentPickerOpen(false) }} key={item.id}><Icon size={17} />{item.title}</button> })}</div>}</div>}
+            <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{selectedCommonEquipment.map(item => <CommonEquipmentCard item={item} quantity={commonEquipmentQuantities[item.id]} onRemove={() => updateCommonEquipment(item.id, 0)} key={item.id} />)}</div></div>
           </section>
 
           <fieldset className="buildingProfileQuestion">
@@ -161,9 +159,8 @@ export function BuildingSizingPage() {
   )
 }
 
-function CommonEquipmentCard({ item, quantity, onChange, onRemove }: { item: typeof commonEquipment[number]; quantity: number; onChange: (value: number) => void; onRemove: () => void }) {
-  const Icon = item.icon
-  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${item.title}`} onClick={onRemove}><X size={15} /></button><i><Icon size={27} /></i><span><b>{item.title}</b><div><button type="button" aria-label={`Retirer un ${item.unit}`} onClick={() => onChange(quantity - 1)}><Minus size={14} /></button><strong>× {quantity}</strong><button type="button" aria-label={`Ajouter un ${item.unit}`} onClick={() => onChange(quantity + 1)}><Plus size={14} /></button></div></span></article>
+function CommonEquipmentCard({ item, quantity, onRemove }: { item: typeof commonEquipment[number]; quantity: number; onRemove: () => void }) {
+  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${item.title}`} onClick={onRemove}><X size={15} /></button><img src={item.image} alt="" /><span><b>{item.title}</b><strong>× {quantity}</strong></span></article>
 }
 
 function Counter({ illustration, label, value, onChange, minimum }: { illustration: string; label: string; value: number; onChange: (value: number) => void; minimum: number }) {
