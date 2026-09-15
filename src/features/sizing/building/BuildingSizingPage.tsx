@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plug, Plus, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
 import { Appliance, copyCommonBuildingApplianceDefaults, sizing } from '../../../domain/sizing'
-import applianceSprite from '../../../assets/appliance-sprite.png'
 import { Button, Page } from '../../../shared/ui'
 import { SizingEnergySummary } from '../energy-summary/SizingEnergySummary'
 import buildingProfileComfort from '../../../assets/building-profile-comfort.png'
@@ -10,9 +9,8 @@ import buildingCounterFloors from '../../../assets/building-counter-floors.png'
 import buildingCounterHomes from '../../../assets/building-counter-homes.png'
 import buildingProfileEssential from '../../../assets/building-profile-essential.png'
 import buildingProfileStandard from '../../../assets/building-profile-standard.png'
-import buildingCommonCctv from '../../../assets/building-common-cctv.png'
-import buildingCommonPump from '../../../assets/building-common-pump.png'
 import { browserStorage } from '../../../shared/lib/browser-storage'
+import { ApplianceVisual } from '../appliances/ApplianceVisual'
 import './building-sizing.css'
 
 type ProfileId = 'essential' | 'standard' | 'comfort'
@@ -158,14 +156,7 @@ export function BuildingSizingPage() {
 
 function CommonEquipmentCard({ item, onRemove }: { item: Appliance; onRemove: () => void }) {
   const label = commonEquipmentLabels[item.name] || item.name
-  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${label}`} onClick={onRemove}><X size={15} /></button><CommonEquipmentVisual item={item} /><span><b>{label}</b><strong>× {item.quantity}</strong></span></article>
-}
-
-function CommonEquipmentVisual({ item }: { item: Appliance }) {
-  if (item.name === 'Ampoule LED') return <i className="buildingCommonApplianceSprite sprite-bulb" style={{ backgroundImage: `url(${applianceSprite})` }} aria-label={item.name} />
-  if (item.name === 'Caméras / CCTV') return <img src={buildingCommonCctv} alt="" />
-  if (item.name === 'Pompe à eau') return <img src={buildingCommonPump} alt="" />
-  return <i className="buildingCommonApplianceFallback"><Plug size={25} /></i>
+  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${label}`} onClick={onRemove}><X size={15} /></button><ApplianceVisual name={item.name} variant="card" className="buildingCommonApplianceVisual" /><span><b>{label}</b><strong>× {item.quantity}</strong></span></article>
 }
 
 function Counter({ illustration, label, value, onChange, minimum }: { illustration: string; label: string; value: number; onChange: (value: number) => void; minimum: number }) {
