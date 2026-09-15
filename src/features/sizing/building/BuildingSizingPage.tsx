@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, ChevronUp, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
 import { Appliance, copyCommonBuildingApplianceDefaults, sizing } from '../../../domain/sizing'
 import { Button, Page } from '../../../shared/ui'
 import { SizingEnergySummary } from '../energy-summary/SizingEnergySummary'
@@ -36,6 +36,7 @@ export function BuildingSizingPage() {
   const [singleProfile, setSingleProfile] = useState<ProfileId>('standard')
   const [distribution, setDistribution] = useState<Record<ProfileId, number>>({ essential: 0, standard: 2, comfort: 0 })
   const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => browserStorage.get(commonBuildingAppliancesKey, copyCommonBuildingApplianceDefaults()))
+  const [commonEquipmentOpen, setCommonEquipmentOpen] = useState(true)
   useEffect(() => browserStorage.set(commonBuildingAppliancesKey, commonAppliances), [commonAppliances])
   const configuredHomes = Object.values(distribution).reduce((total, value) => total + value, 0)
   const difference = homes - configuredHomes
@@ -82,6 +83,25 @@ export function BuildingSizingPage() {
     : difference > 0
       ? `Il manque ${plural(difference, 'logement')}`
       : `Excédent de ${plural(Math.abs(difference), 'logement')}`
+  const continueToRecommendation = () => {
+    const housingLoads = profiles
+      .filter(profile => distribution[profile.id] > 0)
+      .map(profile => {
+        const watts = Math.round((profile.peakKw * 1000) / .24)
+        return {
+          id: `building-profile-${profile.id}`,
+          name: `Logement ${profile.title}`,
+          category: 'Logement',
+          watts,
+          hours: Number((profile.dailyKwh * 1000 / watts).toFixed(2)),
+          quantity: distribution[profile.id],
+          period: 'Les deux' as const,
+        }
+      })
+    browserStorage.set('djua-items', [...commonAppliances.map(item => ({ ...item })), ...housingLoads])
+    browserStorage.set('djua-building-sizing-config', { floors, homes, sameProfile, singleProfile, distribution, commonAppliances })
+    navigate('/dimensionnements/nouveau/recommandation')
+  }
   return (
     <Page className="buildingSizingPage" title="Nouveau dimensionnement" sub="Répondez à quelques questions simples pour recommander un kit solaire.">
       <div className="buildingSizingLayout">
@@ -95,10 +115,10 @@ export function BuildingSizingPage() {
 
           <section className="buildingCommonEquipment" aria-labelledby="common-equipment-title">
             <header>
-              <span><h3 id="common-equipment-title">Quels équipements communs faut-il aussi alimenter&nbsp;?</h3><p>Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).</p></span>
-              <button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Ajouter des éléments</button>
+              <span><h3 id="common-equipment-title">Équipements à alimenter</h3><p>{commonEquipmentOpen ? 'Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).' : `${plural(commonAppliances.length, 'équipement')} sélectionné${commonAppliances.length > 1 ? 's' : ''}`}</p></span>
+              <div className="buildingCommonEquipmentActions"><button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Ajouter des éléments</button><button type="button" className="buildingCommonEquipmentCollapse" aria-expanded={commonEquipmentOpen} aria-label={commonEquipmentOpen ? 'Réduire les équipements à alimenter' : 'Afficher les équipements à alimenter'} onClick={() => setCommonEquipmentOpen(open => !open)}>{commonEquipmentOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</button></div>
             </header>
-            <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{commonAppliances.map(item => <CommonEquipmentCard item={item} onRemove={() => setCommonAppliances(current => current.filter(candidate => candidate.id !== item.id))} key={item.id} />)}</div></div>
+            {commonEquipmentOpen && <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{commonAppliances.map(item => <CommonEquipmentCard item={item} onRemove={() => setCommonAppliances(current => current.filter(candidate => candidate.id !== item.id))} key={item.id} />)}</div></div>}
           </section>
 
           <fieldset className="buildingProfileQuestion">
@@ -136,7 +156,7 @@ export function BuildingSizingPage() {
             <div className={`buildingConfigurationStatus ${isComplete ? 'complete' : 'incomplete'}`} role="status">{isComplete ? <CheckCircle2 size={20} /> : <CircleAlert size={20} />}<span>Total configuré : <b>{configuredHomes} / {homes} logements</b></span><strong>{statusCopy}</strong></div>
           </>}
           <aside className="buildingSizingHint"><Lightbulb size={22} /><span>Djúa utilisera cette répartition pour estimer les besoins de l’ensemble du bâtiment.</span></aside>
-          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Retour</Button><Button disabled={!isComplete} onClick={() => navigate('/dimensionnements/nouveau/appareils')}>Continuer <ArrowRight size={18} /></Button></footer>
+          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Retour</Button><Button disabled={!isComplete} onClick={continueToRecommendation}>Continuer <ArrowRight size={18} /></Button></footer>
         </section>
 
         <SizingEnergySummary
