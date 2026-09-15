@@ -13,5 +13,11 @@
 .buildingSingleProfileHeading { display: block; }
 .buildingSingleProfile > aside { margin-top: 10px; }
 .buildingCommonApplianceVisual { width: 56px; height: 56px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; }
+.buildingCommonEquipmentItem .applianceVisualImage img { transform: scale(1.9); }
+.buildingCommonEquipmentItem .applianceVisual-cctv img { transform: scale(2.45); }
+.buildingCommonEquipmentItem .applianceVisual-pump img { transform: scale(2.05); }
+.buildingCommonEquipmentItem .applianceVisual-elevator img { transform: scale(1.45); }
+.buildingCommonEquipmentItem .applianceVisual-safety-light img { transform: scale(1.75); }
+.buildingCommonEquipmentItem .applianceVisual-gate img { transform: scale(1.65); }
 @media (max-width: 1240px) { .buildingSizingLayout { grid-template-columns: 1fr; }.buildingEnergyRail { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 14px; }.buildingEnergyTip { margin-top: 0; } }
 @media (max-width: 680px) { .buildingSizingPage { padding-inline: 18px; }.buildingSizingCard { padding: 18px; }.buildingSizingCard h2 { font-size: 23px; }.buildingCounters, .buildingProfileQuestion > div, .buildingProfileGrid, .buildingSingleProfileChoices, .buildingCommonEquipmentSelected, .buildingEnergyRail { grid-template-columns: 1fr; }.buildingCounters article { min-height: 0; }.buildingProfileGrid article { min-height: 0; }.buildingProfileGrid img { height: 140px; }.buildingProfileGrid .buildingCounterControl { max-width: 170px; width: 100%; }.buildingSingleProfileHeading { flex-direction: column; }.buildingCommonEquipment > header { align-items: flex-start; flex-direction: column; }.buildingCommonEquipmentToggle { margin-left: 0; }.buildingEnergyTip { margin-top: 14px; } }

@@ -39,7 +39,7 @@ export function ApplianceVisual({ name, variant = 'row', className = '' }: { nam
   if (sprite) return <div className={`applianceThumbnail ${variant} ${sprite} ${className}`} style={{ backgroundImage: `url(${applianceSprite})` }} role="img" aria-label={name} />
 
   const image = visual && imageByVisual[visual]
-  if (image) return <div className={`applianceThumbnail applianceVisualImage ${variant} ${className}`} role="img" aria-label={name}><img src={image} alt="" /></div>
+  if (image) return <div className={`applianceThumbnail applianceVisualImage applianceVisual-${visual} ${variant} ${className}`} role="img" aria-label={name}><img src={image} alt="" /></div>
 
   const Icon = Plug
   return <div className={`deviceicon applianceVisualFallback ${variant === 'preview' ? 'big' : ''} ${className}`} role="img" aria-label={name}><Icon size={variant === 'preview' ? 45 : 27} /></div>
