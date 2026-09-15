@@ -84,11 +84,11 @@ function OpenStreetMapGeofence({ mapMode, state }: { mapMode: 'Plan' | 'Satellit
       const map = L.map(elementRef.current, { zoomControl: true, attributionControl: true }).setView(focalPoint, state.tone === 'critical' ? 14 : 15)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map)
       const marker = (tone: LocationTone, glyph: string) => L.divIcon({ className: `installationLocationMapPin tone-${tone}`, html: `<span><b>${glyph}</b></span>`, iconSize: [44, 50], iconAnchor: [22, 50] })
-      const circleTone = state.tone === 'warning' ? '#ff5a00' : state.tone === 'unknown' ? '#75829a' : '#0ba143'
-      const circleFill = state.tone === 'warning' ? '#ff9b63' : state.tone === 'unknown' ? '#cbd5e1' : '#44d475'
+      const circleTone = state.tone === 'critical' ? '#e4404d' : state.tone === 'warning' ? '#ff5a00' : state.tone === 'unknown' ? '#75829a' : '#0ba143'
+      const circleFill = state.tone === 'critical' ? '#ff8794' : state.tone === 'warning' ? '#ff9b63' : state.tone === 'unknown' ? '#cbd5e1' : '#44d475'
       L.circle(state.reference, { radius: state.radius, color: circleTone, weight: 2, dashArray: '6 5', fillColor: circleFill, fillOpacity: state.tone === 'unknown' ? .1 : .24 }).addTo(map)
       if (state.tone === 'unknown') L.marker(state.reference, { icon: marker('unknown', '?'), title: 'Position indisponible' }).addTo(map)
-      if (state.tone === 'critical') L.marker(state.reference, { icon: marker('complete', '⌂'), title: 'Position autorisée' }).addTo(map)
+      if (state.tone === 'critical') L.marker(state.reference, { icon: marker('critical', '⌂'), title: 'Position autorisée' }).addTo(map)
       if (state.current) L.marker(state.current, { icon: marker(state.tone, '⌂'), title: 'Position actuelle' }).addTo(map)
       if (state.current && state.tone === 'critical') L.polyline([state.reference, state.current], { color: '#e4404d', weight: 2, dashArray: '6 5' }).addTo(map)
       mapRef.current = map
