@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plus, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, CircleAlert, Lightbulb, Minus, Plug, Plus, X } from 'lucide-react'
+import { Appliance, copyCommonBuildingApplianceDefaults, sizing } from '../../../domain/sizing'
+import applianceSprite from '../../../assets/appliance-sprite.png'
 import { Button, Page } from '../../../shared/ui'
 import { SizingEnergySummary } from '../energy-summary/SizingEnergySummary'
 import buildingProfileComfort from '../../../assets/building-profile-comfort.png'
@@ -8,13 +10,12 @@ import buildingCounterFloors from '../../../assets/building-counter-floors.png'
 import buildingCounterHomes from '../../../assets/building-counter-homes.png'
 import buildingProfileEssential from '../../../assets/building-profile-essential.png'
 import buildingProfileStandard from '../../../assets/building-profile-standard.png'
-import buildingCommonLighting from '../../../assets/building-common-lighting.png'
 import buildingCommonCctv from '../../../assets/building-common-cctv.png'
 import buildingCommonPump from '../../../assets/building-common-pump.png'
+import { browserStorage } from '../../../shared/lib/browser-storage'
 import './building-sizing.css'
 
 type ProfileId = 'essential' | 'standard' | 'comfort'
-type CommonEquipmentId = 'lighting' | 'cctv' | 'pump'
 
 const profiles: Array<{ id: ProfileId; title: string; description: string; image: string; dailyKwh: number; peakKw: number; color: 'orange' | 'yellow' | 'green' }> = [
   { id: 'essential', title: 'Essentiel', description: 'Le minimum pour les besoins de base', image: buildingProfileEssential, dailyKwh: .95, peakKw: .55, color: 'orange' },
@@ -22,11 +23,8 @@ const profiles: Array<{ id: ProfileId; title: string; description: string; image
   { id: 'comfort', title: 'Confort', description: 'Plus d’équipements pour un meilleur confort', image: buildingProfileComfort, dailyKwh: 2.65, peakKw: 1.75, color: 'green' },
 ]
 
-const commonEquipment: Array<{ id: CommonEquipmentId; title: string; unit: string; image: string; dailyKwh: number; peakKw: number }> = [
-  { id: 'lighting', title: 'Éclairage commun', unit: 'point lumineux', image: buildingCommonLighting, dailyKwh: .07, peakKw: .012 },
-  { id: 'cctv', title: 'Caméras / CCTV', unit: 'caméra', image: buildingCommonCctv, dailyKwh: .12, peakKw: .02 },
-  { id: 'pump', title: 'Pompe à eau', unit: 'pompe', image: buildingCommonPump, dailyKwh: .7, peakKw: .55 },
-]
+const commonBuildingAppliancesKey = 'djua-building-common-appliances'
+const commonEquipmentLabels: Record<string, string> = { 'Ampoule LED': 'Éclairage commun' }
 
 const clamp = (value: number, minimum: number, maximum = 99) => Math.min(maximum, Math.max(minimum, value))
 const plural = (value: number, singular: string) => `${value} ${singular}${value === 1 ? '' : 's'}`
@@ -39,19 +37,21 @@ export function BuildingSizingPage() {
   const [sameProfile, setSameProfile] = useState(false)
   const [singleProfile, setSingleProfile] = useState<ProfileId>('standard')
   const [distribution, setDistribution] = useState<Record<ProfileId, number>>({ essential: 0, standard: 2, comfort: 0 })
-  const [commonEquipmentQuantities, setCommonEquipmentQuantities] = useState<Record<CommonEquipmentId, number>>({ lighting: 12, cctv: 8, pump: 2 })
+  const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => browserStorage.get(commonBuildingAppliancesKey, copyCommonBuildingApplianceDefaults()))
+  useEffect(() => browserStorage.set(commonBuildingAppliancesKey, commonAppliances), [commonAppliances])
   const configuredHomes = Object.values(distribution).reduce((total, value) => total + value, 0)
   const difference = homes - configuredHomes
   const isComplete = difference === 0
   const energy = useMemo(() => {
     const housingDaily = profiles.reduce((total, profile) => total + distribution[profile.id] * profile.dailyKwh, 0)
     const housingPeak = profiles.reduce((total, profile) => total + distribution[profile.id] * profile.peakKw, 0)
-    const commonDaily = commonEquipment.reduce((total, item) => total + commonEquipmentQuantities[item.id] * item.dailyKwh, 0)
-    const commonPeak = commonEquipment.reduce((total, item) => total + commonEquipmentQuantities[item.id] * item.peakKw, 0)
+    const commonSizing = sizing(commonAppliances)
+    const commonDaily = commonSizing.daily / 1000
+    const commonPeak = commonSizing.peak / 1000
     const daily = housingDaily + commonDaily
     const peak = housingPeak + commonPeak
     return { daily, peak, installed: peak * 1.28 }
-  }, [commonEquipmentQuantities, distribution])
+  }, [commonAppliances, distribution])
 
   const updateHomes = (value: number) => {
     const nextHomes = clamp(value, 1)
@@ -84,9 +84,6 @@ export function BuildingSizingPage() {
     : difference > 0
       ? `Il manque ${plural(difference, 'logement')}`
       : `Excédent de ${plural(Math.abs(difference), 'logement')}`
-  const selectedCommonEquipment = commonEquipment.filter(item => commonEquipmentQuantities[item.id] > 0)
-  const updateCommonEquipment = (id: CommonEquipmentId, quantity: number) => setCommonEquipmentQuantities(current => ({ ...current, [id]: clamp(quantity, 0) }))
-
   return (
     <Page className="buildingSizingPage" title="Nouveau dimensionnement" sub="Répondez à quelques questions simples pour recommander un kit solaire.">
       <div className="buildingSizingLayout">
@@ -101,9 +98,9 @@ export function BuildingSizingPage() {
           <section className="buildingCommonEquipment" aria-labelledby="common-equipment-title">
             <header>
               <span><h3 id="common-equipment-title">Quels équipements communs faut-il aussi alimenter&nbsp;?</h3><p>Sélectionnez les éléments présents dans le bâtiment (plusieurs choix possibles).</p></span>
-              <button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils')}><Plus size={17} />Ajouter des éléments</button>
+              <button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Ajouter des éléments</button>
             </header>
-            <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{selectedCommonEquipment.map(item => <CommonEquipmentCard item={item} quantity={commonEquipmentQuantities[item.id]} onRemove={() => updateCommonEquipment(item.id, 0)} key={item.id} />)}</div></div>
+            <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{commonAppliances.map(item => <CommonEquipmentCard item={item} onRemove={() => setCommonAppliances(current => current.filter(candidate => candidate.id !== item.id))} key={item.id} />)}</div></div>
           </section>
 
           <fieldset className="buildingProfileQuestion">
@@ -159,8 +156,16 @@ export function BuildingSizingPage() {
   )
 }
 
-function CommonEquipmentCard({ item, quantity, onRemove }: { item: typeof commonEquipment[number]; quantity: number; onRemove: () => void }) {
-  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${item.title}`} onClick={onRemove}><X size={15} /></button><img src={item.image} alt="" /><span><b>{item.title}</b><strong>× {quantity}</strong></span></article>
+function CommonEquipmentCard({ item, onRemove }: { item: Appliance; onRemove: () => void }) {
+  const label = commonEquipmentLabels[item.name] || item.name
+  return <article className="buildingCommonEquipmentItem"><button type="button" className="buildingCommonEquipmentRemove" aria-label={`Retirer ${label}`} onClick={onRemove}><X size={15} /></button><CommonEquipmentVisual item={item} /><span><b>{label}</b><strong>× {item.quantity}</strong></span></article>
+}
+
+function CommonEquipmentVisual({ item }: { item: Appliance }) {
+  if (item.name === 'Ampoule LED') return <i className="buildingCommonApplianceSprite sprite-bulb" style={{ backgroundImage: `url(${applianceSprite})` }} aria-label={item.name} />
+  if (item.name === 'Caméras / CCTV') return <img src={buildingCommonCctv} alt="" />
+  if (item.name === 'Pompe à eau') return <img src={buildingCommonPump} alt="" />
+  return <i className="buildingCommonApplianceFallback"><Plug size={25} /></i>
 }
 
 function Counter({ illustration, label, value, onChange, minimum }: { illustration: string; label: string; value: number; onChange: (value: number) => void; minimum: number }) {
