@@ -1167,6 +1167,7 @@ function SettingsAccountScreen({navItems,section,onSelect}:{navItems:[string,Rea
 }
 function Settings(){
   const [section,setSection]=useState('Organisation')
+  useEffect(()=>{if(section==='Boîtiers Djua')setSection('Organisation')},[section])
   const [editing,setEditing]=useState(false)
   const [language,setLanguage]=useState('Français')
   const [dateFormat,setDateFormat]=useState('31/08/2026')
@@ -1174,7 +1175,7 @@ function Settings(){
   const [roleFilter,setRoleFilter]=useState('Tous les rôles')
   const [teamFilter,setTeamFilter]=useState('Toutes les équipes')
   const [inviteSent,setInviteSent]=useState(false)
-  const navItems:[string,React.ElementType][]=[['Organisation',I.Home],['Utilisateurs & accès',I.UsersRound],['Shops & équipes',I.Store],['Dimensionnement',I.ClipboardList],['Monitoring & alertes',I.Radio],['Boîtiers Djua',I.Cpu],['Notifications',I.Bell],['Devis',I.FileText],['Intégrations',I.Link2],['Mon compte',I.UserRound]]
+  const navItems:[string,React.ElementType][]=[['Organisation',I.Home],['Utilisateurs & accès',I.UsersRound],['Shops & équipes',I.Store],['Dimensionnement',I.ClipboardList],['Monitoring & alertes',I.Radio],['Notifications',I.Bell],['Devis',I.FileText],['Intégrations',I.Link2],['Mon compte',I.UserRound]]
   const details=[['Nom de l’organisation','Orange Énergie'],['Pays','République démocratique du Congo'],['Fuseau horaire','Africa/Kinshasa (UTC+1)'],['Devise commerciale','USD ($)'],['Adresse','Avenue du Haut Commandement, Gombe, Kinshasa, RDC'],['Site web','https://www.orange.com'],['Contact principal','contact@orange-energie.cd · +243 81 23 45 678']]
   const users=[
     {name:'Chris M.',email:'chris.m@orange-energie.cd',initials:'CM',role:'Administrateur',team:'Siège',access:'Tous les shops',status:'Actif',tone:'purple'},
@@ -1195,7 +1196,6 @@ function Settings(){
   if(section==='Shops & équipes') return <SettingsShopsScreen navItems={navItems} section={section} onSelect={setSection}/>
   if(section==='Dimensionnement') return <SettingsSizingScreen navItems={navItems} section={section} onSelect={setSection}/>
   if(section==='Monitoring & alertes') return <SettingsMonitoringScreen navItems={navItems} section={section} onSelect={setSection}/>
-  if(section==='Boîtiers Djua') return <SettingsDevicesScreen navItems={navItems} section={section} onSelect={setSection}/>
   if(section==='Notifications') return <SettingsNotificationsScreen navItems={navItems} section={section} onSelect={setSection}/>
   if(section==='Devis') return <SettingsQuotesDocumentsScreen navItems={navItems} section={section} onSelect={setSection}/>
   if(section==='Intégrations') return <SettingsIntegrationsScreen navItems={navItems} section={section} onSelect={setSection}/>
