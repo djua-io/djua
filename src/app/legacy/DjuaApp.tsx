@@ -16,7 +16,7 @@ import siteWorkshop from '../../assets/site-workshop.png'
 import siteSchool from '../../assets/site-school.png'
 import {browserStorage as store} from '../../shared/lib/browser-storage'
 import {Badge, Button, Card, DataTable, ExportMenu, Input, Modal, Page, Select} from '../../shared/ui'
-import { InstallationIntegrityPage, InstallationLocationPage } from '../../features/installations'
+import { InstallationIntegrityPage, InstallationLocationPage, InstallationPeriodFilter, useInstallationPeriod } from '../../features/installations'
 import { ApplianceVisual, SizingEnergySummary } from '../../features/sizing'
 
 type Status='Brouillon'|'Finalisé'|'Partagé'|'Accepté'|'Refusé'|'Expiré'
@@ -789,9 +789,7 @@ function InstallationDetail(){
   const {id}=useParams()
   const navigate=useNavigate()
   const installation=parkInstallations.find(item=>item.id===id)||parkInstallations[0]
-  const [period,setPeriod]=useState('30 derniers jours')
-  const [periodMenuOpen,setPeriodMenuOpen]=useState(false)
-  const dateFilterRef=useRef<HTMLDivElement>(null)
+  const {period,setPeriod,search}=useInstallationPeriod()
   const [todayKey,setTodayKey]=useState(kinshasaDateKey)
   const [chartStartDate,setChartStartDate]=useState(()=>addDateKeyDays(todayKey,-29))
   const [chartEndDate,setChartEndDate]=useState(todayKey)
@@ -801,12 +799,6 @@ function InstallationDetail(){
   const [chartCustomRange,setChartCustomRange]=useState(false)
   const [chartPickerOpen,setChartPickerOpen]=useState(false)
   const chartDateRef=useRef<HTMLDivElement>(null)
-  useEffect(()=>{
-    if(!periodMenuOpen)return
-    const closeMenu=(event:MouseEvent)=>{if(!dateFilterRef.current?.contains(event.target as Node))setPeriodMenuOpen(false)}
-    document.addEventListener('mousedown',closeMenu)
-    return ()=>document.removeEventListener('mousedown',closeMenu)
-  },[periodMenuOpen])
   useEffect(()=>{
     if(!chartPickerOpen)return
     const closePicker=(event:MouseEvent)=>{if(!chartDateRef.current?.contains(event.target as Node))setChartPickerOpen(false)}
@@ -833,7 +825,7 @@ function InstallationDetail(){
   const dateFromKey=(value:string)=>new Date(value+'T12:00:00')
   const dateKey=(value:Date)=>`${value.getFullYear()}-${String(value.getMonth()+1).padStart(2,'0')}-${String(value.getDate()).padStart(2,'0')}`
   const addDays=(value:string,days:number)=>{const next=dateFromKey(value);next.setDate(next.getDate()+days);return dateKey(next)}
-  const setPeriodRange=(value:string)=>{const days=getPeriodDays(value);setPeriod(value);setChartEndDate(todayKey);setChartStartDate(addDays(todayKey,-(days-1)));setChartCustomRange(false);setPeriodMenuOpen(false)}
+  const setPeriodRange=(value:typeof period)=>{const days=getPeriodDays(value);setPeriod(value);setChartEndDate(todayKey);setChartStartDate(addDays(todayKey,-(days-1)));setChartCustomRange(false)}
   const lastCalendarMonth=useMemo(()=>{const date=dateFromKey(todayKey);date.setMonth(date.getMonth()-1);return dateKey(new Date(date.getFullYear(),date.getMonth(),1))},[todayKey])
   const openChartPicker=()=>{setDraftStartDate(chartStartDate);setDraftEndDate(chartEndDate);setCalendarMonth(chartStartDate.slice(0,7)+'-01'>lastCalendarMonth?lastCalendarMonth:chartStartDate.slice(0,7)+'-01');setChartPickerOpen(true)}
   const chooseChartDate=(value:string)=>{if(value>todayKey)return;if(!draftStartDate||draftEndDate){setDraftStartDate(value);setDraftEndDate('');return}if(value<draftStartDate){setDraftStartDate(value);return}if(value>draftStartDate)setDraftEndDate(value)}
@@ -886,8 +878,8 @@ function InstallationDetail(){
   ].filter(Boolean) as {icon:React.ElementType;tone:'normal'|'watch'|'critical';title:string;detail:string;time:string}[]
   const Metric=({icon:Icon,title,kind,pill,pillKind,children}:{icon:React.ElementType;title:string;kind:'normal'|'watch'|'online'|'secure'|'critical';pill:string;pillKind:'normal'|'watch'|'critical'|'offline'|'high'|'low'|'online'|'secure';children:React.ReactNode})=><article className={'installationMetric '+kind}><i><Icon size={25}/></i><div><header><b>{title}</b><ParkPill text={pill} kind={pillKind}/></header>{children}</div></article>
   return <section className="workspacePage installationDetailPage">
-    <header className="workspaceHeading installationDetailHead"><div><span><h1>{installation.client}</h1><ParkPill text={communicationLabel} kind={communicationPillKind}/></span><p>{installation.id}<b>•</b>{installation.site}<b>•</b>{installation.location}, Kinshasa<b>•</b>Dernière donnée reçue : {installation.last}</p></div><div><div className="installationDateFilter" ref={dateFilterRef}><button className="parcDateRange" type="button" aria-haspopup="listbox" aria-expanded={periodMenuOpen} onClick={()=>setPeriodMenuOpen(open=>!open)}><I.CalendarDays size={17}/>{period}<I.ChevronDown size={16}/></button>{periodMenuOpen&&<div className="installationDateMenu" role="listbox" aria-label="Période affichée">{Object.keys(periodDetails).map(option=><button type="button" role="option" aria-selected={period===option} className={period===option?'selected':''} key={option} onClick={()=>setPeriodRange(option)}>{option}{period===option&&<I.Check size={16}/>}</button>)}</div>}</div><button className="installationPrimaryAction" onClick={()=>navigate('/interventions')}><I.Wrench size={16}/>Créer une intervention</button></div></header>
-    <nav className="installationTabs"><button className="active">Vue d’ensemble</button><button type="button" onClick={()=>navigate(`/installations/${installation.id}/integrite`)}>Intégrité du kit</button><button type="button" onClick={()=>navigate(`/installations/${installation.id}/localisation`)}>Localisation</button></nav>
+    <header className="workspaceHeading installationDetailHead"><div><span><h1>{installation.client}</h1><ParkPill text={communicationLabel} kind={communicationPillKind}/></span><p>{installation.id}<b>•</b>{installation.site}<b>•</b>{installation.location}, Kinshasa<b>•</b>Dernière donnée reçue : {installation.last}</p></div><div><InstallationPeriodFilter period={period} onChange={setPeriodRange}/><button className="installationPrimaryAction" onClick={()=>navigate('/interventions')}><I.Wrench size={16}/>Créer une intervention</button></div></header>
+    <nav className="installationTabs"><button className="active">Vue d’ensemble</button><button type="button" onClick={()=>navigate({pathname:`/installations/${installation.id}/integrite`,search})}>Intégrité du kit</button><button type="button" onClick={()=>navigate({pathname:`/installations/${installation.id}/localisation`,search})}>Localisation</button></nav>
     <section className="installationMetricGrid">
       <Metric icon={I.Sun} title="Production solaire" kind={productionLow?'watch':'normal'} pill={installation.production} pillKind={productionPillKind}><div className="twoValues"><span><small>{selectedPeriod.productionLabel}</small><b>{selectedPeriod.productionValue}</b></span><span><small>Actuellement</small><b>{currentProduction}</b></span></div></Metric>
       <Metric icon={I.BarChart3} title="Consommation" kind={consumptionHigh||consumptionLow?'watch':'normal'} pill={installation.consumption} pillKind={consumptionPillKind}><div className="twoValues"><span><small>Habituellement</small><b>320 W</b></span><span><small>Actuellement</small><b>{currentConsumption}</b></span></div></Metric>

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Activity, CalendarDays, ChevronDown, CircleAlert, CircleDot, Clock3, Crosshair, House, MapPin, ShieldCheck, Signal, UserRound, Wrench } from 'lucide-react'
+import { Activity, ChevronDown, CircleAlert, CircleDot, Clock3, Crosshair, House, MapPin, ShieldCheck, Signal, UserRound, Wrench } from 'lucide-react'
 import { getInstallationHeader, type InstallationHeader } from '../../../domain/installations'
+import { InstallationPeriodFilter, useInstallationPeriod } from '../InstallationPeriodFilter'
 import { loadLeaflet } from '../../../shared/lib/leaflet'
 import './installation-location.css'
 
@@ -53,6 +54,7 @@ export function InstallationLocationPage() {
   const [mapMode, setMapMode] = useState<'Plan' | 'Satellite'>('Plan')
   const state = locationStates[id] ?? locationStates['INS-00482']
   const header = getInstallationHeader(id)
+  const { period, setPeriod, search } = useInstallationPeriod()
   const StateIcon = state.tone === 'complete' ? ShieldCheck : state.tone === 'unknown' ? CircleDot : CircleAlert
   const details = [
     { icon: Crosshair, label: 'Position de référence', value: '-4.3208, 15.3075', note: 'Gombe, Kinshasa' },
@@ -63,8 +65,8 @@ export function InstallationLocationPage() {
     { icon: ShieldCheck, label: 'Statut global', value: state.geofenceStatus, tone: state.tone },
   ]
   return <section className={`workspacePage installationLocationPage tone-${state.tone}`}>
-    <header className="workspaceHeading installationLocationHeading"><div><span><h1>{header.client}</h1><b className={`installationLocationOnline is-${header.connection}`}><i />{header.connectionLabel}</b></span><p>{header.id}<em>•</em>{header.site}<em>•</em>{header.location}<em>•</em>Dernière donnée reçue : {header.lastData}</p></div><div className="installationLocationActions"><button type="button"><CalendarDays size={17} />30 derniers jours<ChevronDown size={16} /></button><button type="button" className="installationLocationPrimaryAction" onClick={() => navigate('/interventions')}><Wrench size={16} />Créer une intervention</button></div></header>
-    <nav className="installationTabs installationLocationTabs" aria-label="Navigation de l’installation"><button type="button" onClick={() => navigate(`/installations/${id}`)}>Vue d’ensemble</button><button type="button" onClick={() => navigate(`/installations/${id}/integrite`)}>Intégrité du kit</button><button type="button" className="active" aria-current="page">Localisation</button></nav>
+    <header className="workspaceHeading installationLocationHeading"><div><span><h1>{header.client}</h1><b className={`installationLocationOnline is-${header.connection}`}><i />{header.connectionLabel}</b></span><p>{header.id}<em>•</em>{header.site}<em>•</em>{header.location}<em>•</em>Dernière donnée reçue : {header.lastData}</p></div><div className="installationLocationActions"><InstallationPeriodFilter period={period} onChange={setPeriod}/><button type="button" className="installationLocationPrimaryAction" onClick={() => navigate('/interventions')}><Wrench size={16} />Créer une intervention</button></div></header>
+    <nav className="installationTabs installationLocationTabs" aria-label="Navigation de l’installation"><button type="button" onClick={() => navigate({ pathname: `/installations/${id}`, search })}>Vue d’ensemble</button><button type="button" onClick={() => navigate({ pathname: `/installations/${id}/integrite`, search })}>Intégrité du kit</button><button type="button" className="active" aria-current="page">Localisation</button></nav>
     <div className="installationLocationLayout"><main><section className="installationLocationMetrics" aria-label="État de la localisation"><Metric icon={MapPin} label={state.positionLabel} value={state.positionValue} note={state.positionNote} tone={state.tone} /><Metric icon={state.tone === 'unknown' ? Signal : CircleDot} label={state.secondLabel} value={state.secondValue} note={state.secondNote} tone={state.tone} /><Metric icon={Clock3} label="Dernière position reçue" value={state.lastPosition} note={state.lastPositionNote} tone={state.tone} /><Metric icon={StateIcon} label="Statut géofence" value={state.geofenceStatus} note={state.geofenceNote} tone={state.tone} /></section><section className={'installationLocationMap '+mapMode.toLowerCase()} aria-label="Carte de localisation de l’installation"><OpenStreetMapGeofence mapMode={mapMode} state={state} /><div className="installationLocationMapControls" role="group" aria-label="Type de carte">{(['Plan', 'Satellite'] as const).map(mode => <button type="button" className={mapMode === mode ? 'selected' : ''} onClick={() => setMapMode(mode)} key={mode}>{mode}</button>)}</div><MapLegend state={state} /></section>{state.events && <LocationEvents events={state.events} />}</main><aside className="installationLocationRail"><LocationSummary header={header} state={state} /><section className="installationLocationSimple"><h2>Lecture simple</h2><div><i><StateIcon size={25} /></i><span><b>{state.simpleTitle}</b><small>{state.simpleNote}</small></span></div></section><section className="installationLocationDetails"><h2>Détails géofence</h2>{details.map(({ icon: Icon, label, value, note, tone }) => <article className={tone ? `tone-${tone}` : ''} key={label}><Icon size={21} /><span>{label}</span><b>{value}<small>{note}</small></b></article>)}</section></aside></div>
   </section>
 }
