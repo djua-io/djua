@@ -2203,6 +2203,41 @@ option,
   line-height: 1.45;
 }
 
+/* Card introductions need to reserve their own space before form controls.
+   This keeps multi-line guidance readable on narrower desktop layouts. */
+.settingsMain .settingsCard > header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  min-height: 0;
+}
+
+.settingsMain .settingsCard > header > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.settingsMain .settingsCard > header h3 {
+  line-height: 1.28;
+}
+
+.settingsMain .settingsCard > header p {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.settingsMain .settingsSizingCard > header {
+  padding-bottom: 16px;
+}
+
+.settingsMain .settingsSizingCard > .settingsSizingFields,
+.settingsMain .settingsSizingCard.settingsRecommendation > div {
+  padding-top: 16px;
+}
+
 .settingsRail {
   gap: 16px;
 }
