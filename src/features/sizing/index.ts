@@ -1,4 +1,6 @@
 export { SizingProjectTypePage } from './project-type/SizingProjectTypePage'
 export { BuildingSizingPage } from './building/BuildingSizingPage'
+export { SizingCustomerDetailsPage, SIZING_CUSTOMER_CONTEXT_KEY } from './customer-details/SizingCustomerDetailsPage'
+export type { SizingCustomerContext } from './customer-details/SizingCustomerDetailsPage'
 export { SizingEnergySummary } from './energy-summary/SizingEnergySummary'
 export { ApplianceVisual } from './appliances/ApplianceVisual'

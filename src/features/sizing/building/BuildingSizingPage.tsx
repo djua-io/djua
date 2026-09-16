@@ -109,7 +109,7 @@ export function BuildingSizingPage() {
       })
     browserStorage.set('djua-items', [...commonAppliances.map(item => ({ ...item })), ...housingLoads])
     browserStorage.set('djua-building-sizing-config', { floors, homes, sameProfile, singleProfile, distribution, commonAppliances })
-    navigate('/dimensionnements/nouveau/recommandation?flow=building')
+    navigate('/dimensionnements/nouveau/coordonnees?flow=building')
   }
   return (
     <Page className="buildingSizingPage" title="Dimensionner un immeuble / une résidence" sub="Décrivez le bâtiment, les logements et les équipements partagés afin de préparer une recommandation simple à présenter au client.">
@@ -165,7 +165,7 @@ export function BuildingSizingPage() {
             <div className={`buildingConfigurationStatus ${isComplete ? 'complete' : 'incomplete'}`} role="status">{isComplete ? <CheckCircle2 size={20} /> : <CircleAlert size={20} />}<span>Total configuré : <b>{configuredHomes} / {homes} logements</b></span><strong>{statusCopy}</strong></div>
           </>}
           <aside className="buildingSizingHint"><Lightbulb size={22} /><span>Djúa utilisera ces informations pour estimer les besoins du bâtiment et préparer une recommandation à partager avec le client.</span></aside>
-          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Changer de type de projet</Button><Button disabled={!isComplete} onClick={continueToRecommendation}>Voir la recommandation <ArrowRight size={18} /></Button></footer>
+          <footer><Button secondary onClick={() => navigate('/dimensionnements/nouveau')}><ArrowLeft size={17} />Changer de type de projet</Button><Button disabled={!isComplete} onClick={continueToRecommendation}>Continuer <ArrowRight size={18} /></Button></footer>
         </section>
 
         <SizingEnergySummary
