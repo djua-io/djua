@@ -1,0 +1,14 @@
+.settingsOrganizationGeneral { padding:0 18px 18px; }
+.settingsOrganizationGeneral > header { padding-inline:0; }
+.settingsOrganizationGeneral dl { display:grid; gap:13px; margin:17px 0 0; }
+.settingsOrganizationGeneral dl > div { display:grid; grid-template-columns:150px minmax(0,1fr); gap:12px; align-items:start; }
+.settingsOrganizationGeneral dt { color:#647499; font-size:11px; }
+.settingsOrganizationGeneral dd { margin:0; color:#263650; font-size:12px; line-height:1.45; }
+.settingsOrganizationGeneral input { width:100%; border:1px solid #dce4ee; border-radius:5px; padding:6px 8px; color:#263650; font:inherit; font-size:12px; }
+.settingsOrganizationPreferences { margin-top:13px; padding-bottom:16px; }
+.settingsOrganizationPreferences > div { display:grid; gap:11px; padding:16px 18px; }
+.settingsOrganizationPreferences label { display:grid; grid-template-columns:1fr 320px; align-items:center; gap:18px; color:#617299; font-size:11px; }
+.settingsOrganizationPreferences select { height:36px; padding:0 10px; border:1px solid #dce4ee; border-radius:6px; color:#293a55; background:#fff; font:inherit; font-size:12px; }
+.settingsOrganizationPreferences > p { display:flex; align-items:center; gap:9px; margin:3px 18px 0; padding:11px; border-radius:6px; color:#5575a5; background:#f0f6fe; font-size:10px; }
+.settingsOrganizationPreferences > p svg { color:#0878f9; }
+@media (max-width:760px) { .settingsOrganizationGeneral dl > div, .settingsOrganizationPreferences label { grid-template-columns:1fr; gap:6px; } }
