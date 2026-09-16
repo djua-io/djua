@@ -2232,3 +2232,46 @@ option,
     padding-bottom: 11px;
   }
 }
+
+/* Installation summaries must show complete operational states, not truncate them. */
+.installationMetric header {
+  align-items: flex-start;
+}
+
+.installationMetric header > b {
+  line-height: 1.25;
+}
+
+.installationMetric .parkPill {
+  flex: 0 0 auto;
+}
+
+.twoValues b {
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  line-height: 1.22;
+  white-space: normal;
+}
+
+.technicalCard article small {
+  overflow: visible;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.installationAlerts article {
+  align-items: flex-start;
+}
+
+.installationAlerts article small {
+  overflow: visible;
+  line-height: 1.35;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.installationAlerts time {
+  padding-top: 2px;
+}
