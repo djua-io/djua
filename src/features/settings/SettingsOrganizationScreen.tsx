@@ -38,7 +38,7 @@ export function SettingsOrganizationScreen({ navItems, section, onSelect }: Sett
         </dl></section>
         <section className="settingsCard settingsOrganizationPreferences"><header><Settings size={22} /><span><h3>Préférences de l’organisation</h3><p>Paramètres appliqués à tous les utilisateurs.</p></span></header><div><label>Langue de l’interface<select value={language} onChange={event => setLanguage(event.target.value)}><option>Français</option><option>English</option></select></label><label>Format de date<select value={dateFormat} onChange={event => setDateFormat(event.target.value)}><option>31/08/2026</option><option>08/31/2026</option></select></label></div><p><Info size={18} />Ces préférences s’appliquent à tous les utilisateurs de votre organisation.</p></section>
       </main>
-      <aside className="settingsRail settingsOrganizationRail"><section><header><Info size={22} /><h3>Informations légales</h3></header><dl><dt>Raison sociale</dt><dd>Orange Énergie RDC</dd><dt>N° d’enregistrement</dt><dd>CD/KIN/RCCM/20-B-01234</dd><dt>N° d’identification fiscale</dt><dd>A1234567Z</dd></dl></section><section className="settingsAdvice"><Info size={24} /><span><h3>Conseil Djua</h3><p>Gardez les coordonnées de votre organisation à jour afin que les documents commerciaux restent exacts.</p></span></section></aside>
+      <aside className="settingsRail settingsOrganizationRail"><section><header><Info size={22} /><h3>Informations légales</h3></header><dl><dt>Raison sociale</dt><dd>Orange Énergie RDC</dd><dt>N° d’enregistrement</dt><dd>CD/KIN/RCCM/20-B-01234</dd><dt>N° d’identification fiscale</dt><dd>A1234567Z</dd></dl></section></aside>
     </div>
   </section>
 }
