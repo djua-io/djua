@@ -4,7 +4,10 @@
 .settingsOrganizationGeneral dl > div { display:grid; grid-template-columns:150px minmax(0,1fr); gap:12px; align-items:start; }
 .settingsOrganizationGeneral dt { color:#647499; font-size:11px; }
 .settingsOrganizationGeneral dd { margin:0; color:#263650; font-size:12px; line-height:1.45; }
-.settingsOrganizationGeneral input { width:100%; border:1px solid #dce4ee; border-radius:5px; padding:6px 8px; color:#263650; font:inherit; font-size:12px; }
+.settingsOrganizationGeneral input,
+.settingsOrganizationGeneral select { box-sizing:border-box; width:100%; min-height:34px; border:1px solid #dce4ee; border-radius:5px; color:#263650; background:#fff; font:inherit; font-size:12px; }
+.settingsOrganizationGeneral input { padding:6px 8px; }
+.settingsOrganizationGeneral select { padding:0 8px; }
 .settingsOrganizationPreferences { margin-top:13px; padding-bottom:16px; }
 .settingsOrganizationPreferences > div { display:grid; gap:11px; padding:16px 18px; }
 .settingsOrganizationPreferences label { display:grid; grid-template-columns:1fr 320px; align-items:center; gap:18px; color:#617299; font-size:11px; }
