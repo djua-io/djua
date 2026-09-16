@@ -2181,3 +2181,54 @@ option,
 .settingsDeviceDetails {
   display: none;
 }
+
+/* Shared rhythm for every settings option: headings introduce each section consistently. */
+.settingsMain > header {
+  margin-bottom: 20px;
+  padding: 2px 2px 17px;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.settingsMain > :not(header) + :not(header) {
+  margin-top: 16px;
+}
+
+.settingsMain .settingsCard > header {
+  margin: 0;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.settingsMain .settingsCard > header p {
+  line-height: 1.45;
+}
+
+.settingsRail {
+  gap: 16px;
+}
+
+.settingsRail > section {
+  padding: 18px;
+}
+
+.settingsRail > section > header {
+  margin: 0 0 14px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+@media (max-width: 760px) {
+  .settingsMain > header {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+  }
+
+  .settingsMain .settingsCard > header,
+  .settingsRail > section {
+    padding: 16px;
+  }
+
+  .settingsRail > section > header {
+    padding-bottom: 11px;
+  }
+}
