@@ -526,6 +526,22 @@
 .sidebarFooter .avatar { color: #6c3b22; background: linear-gradient(135deg, #f8d9c7, #c58d67); }
 .sidebarFooter .avatar svg { stroke-width: 1.8; }
 .sidebarFooter .profile > svg { color: #202630; }
+.profileMenu { position: relative; }
+.profileRoleMenu { position: absolute; z-index: 12; left: 0; bottom: calc(100% + 8px); width: 280px; padding: 8px; border: 1px solid #dfe5ed; border-radius: 10px; background: #fff; box-shadow: 0 12px 28px rgba(23, 32, 51, .14); }
+.profileRoleMenu > header { display: block; height: auto; margin: 0 4px 7px; padding: 7px 7px 10px; border-bottom: 1px solid #edf1f5; background: transparent; }
+.profileRoleMenu > header b, .profileRoleMenu > header small { display: block; }
+.profileRoleMenu > header b { color: #1f2a3c; font-size: 12px; }
+.profileRoleMenu > header small { margin-top: 2px; color: #72809a; font-size: 11px; }
+.profileRoleMenu > button { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; width: 100%; gap: 9px; padding: 9px 8px; border: 0; border-radius: 7px; color: #263650; background: transparent; text-align: left; }
+.profileRoleMenu > button:hover, .profileRoleMenu > button.selected { background: #fff3eb; }
+.profileRoleMenu > button > i { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 7px; color: #5a69a5; background: #f1f3ff; font-style: normal; }
+.profileRoleMenu > button:nth-of-type(2) > i { color: #cc5b12; background: #fff0e4; }
+.profileRoleMenu > button:nth-of-type(3) > i { color: #2563c8; background: #eaf3ff; }
+.profileRoleMenu > button:nth-of-type(4) > i { color: #0c8f54; background: #e9f9ef; }
+.profileRoleMenu > button span { display: grid; min-width: 0; gap: 1px; }
+.profileRoleMenu > button b { font-size: 12px; }
+.profileRoleMenu > button small { color: #71809a; font-size: 10px; line-height: 1.25; }
+.profileRoleMenu > button > svg { color: #ff5a00; }
 .sidebarFooter .help { margin-top: 0; border: 0; color: #3f4857; cursor: pointer; }
 .sidebarFooter .help > svg { flex: 0 0 auto; margin-top: 2px; color: #647084; }
 .sidebarFooter .help b { font-size:12.57px; }
