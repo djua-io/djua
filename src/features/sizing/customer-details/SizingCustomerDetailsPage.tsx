@@ -11,6 +11,8 @@ export type SizingCustomerContext = {
   firstName: string
   lastName: string
   phone: string
+  address: string
+  budget?: { amount: number; frequency: 'monthly' | 'total' }
   location: MapCoordinates
   locationLabel: string
 }
@@ -86,6 +88,9 @@ export function SizingCustomerDetailsPage() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [budget, setBudget] = useState('')
+  const [budgetFrequency, setBudgetFrequency] = useState<'monthly' | 'total'>('monthly')
   const [point, setPoint] = useState<MapCoordinates>({ lat: -4.3276, lng: 15.3136 })
 
   const complete = Boolean(firstName.trim() && lastName.trim() && phone.trim())
@@ -93,12 +98,16 @@ export function SizingCustomerDetailsPage() {
   const installationLabel = buildingFlow ? 'Localisation du bâtiment' : 'Localisation de l’installation'
   const continueToRecommendation = () => {
     if (!complete) return
+    const budgetAmount = Number(budget)
+    const resolvedAddress = address.trim()
     browserStorage.set(SIZING_CUSTOMER_CONTEXT_KEY, {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       phone: phone.trim(),
+      address: resolvedAddress,
+      ...(budgetAmount > 0 ? { budget: { amount: budgetAmount, frequency: budgetFrequency } } : {}),
       location: point,
-      locationLabel: `Position sélectionnée : ${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}`,
+      locationLabel: resolvedAddress || `Position sélectionnée : ${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}`,
     })
     navigate(`/dimensionnements/nouveau/recommandation${buildingFlow ? '?flow=building' : ''}`)
   }
@@ -113,10 +122,12 @@ export function SizingCustomerDetailsPage() {
             <label>Nom <em>*</em><input value={firstName} onChange={event => setFirstName(event.target.value)} autoComplete="family-name" /></label>
             <label>Postnom <em>*</em><input value={lastName} onChange={event => setLastName(event.target.value)} autoComplete="given-name" /></label>
             <label>Numéro de téléphone <em>*</em><span className="sizingCustomerPhone"><Phone size={17} /><input value={phone} onChange={event => setPhone(event.target.value)} inputMode="tel" autoComplete="tel" placeholder="Ex. : +243 81 234 5678" /></span></label>
+            <label className="sizingCustomerBudgetField">Budget indicatif <small>facultatif</small><span className="sizingCustomerBudgetControl"><input value={budget} onChange={event => setBudget(event.target.value)} inputMode="decimal" type="number" min="0" placeholder="Ex. : 120" /><select aria-label="Type de budget" value={budgetFrequency} onChange={event => setBudgetFrequency(event.target.value as 'monthly' | 'total')}><option value="monthly">par mois</option><option value="total">au total</option></select><b>$</b></span><small>Montant que le client envisage de consacrer au système.</small></label>
           </div>
         </section>
         <section className="sizingCustomerLocationSection" aria-labelledby="customer-location-title">
           <header><span><h3 id="customer-location-title"><MapPin size={19} />{installationLabel}</h3><p>Placez le repère sur l’emplacement où le système sera installé.</p></span></header>
+          <label className="sizingCustomerAddressField">Adresse ou repère <small>facultatif</small><input value={address} onChange={event => setAddress(event.target.value)} autoComplete="street-address" placeholder="Ex. : Avenue Kasa-Vubu, Gombe, Kinshasa" /><small>Ajoutez l’adresse, le quartier ou un point de repère pour faciliter l’intervention.</small></label>
           <LocationMap value={point} onChange={setPoint} />
           <p className="sizingCustomerCoordinates"><MapPin size={16} />Position sélectionnée : <b>{point.lat.toFixed(5)}, {point.lng.toFixed(5)}</b></p>
         </section>
