@@ -44,6 +44,22 @@ const workspaceProfiles=[
   {id:'sales',label:'Commercial',description:'Création et suivi des devis',icon:I.UserRound},
   {id:'technician',label:'Technicien',description:'Accès au parc et aux installations',icon:I.Wrench},
 ] as const
+type WorkspaceProfileId=(typeof workspaceProfiles)[number]['id']
+type WorkspaceNavigationItem={label:keyof typeof names;to:string}
+const workspaceNavigation:Record<WorkspaceProfileId,WorkspaceNavigationItem[]>={
+  admin:[{label:'Devis',to:'/devis'},{label:'Parc solaire',to:'/installations'},{label:'Catalogue',to:'/produits'},{label:'Rapports',to:'/rapports'},{label:'Paramètres',to:'/parametres'}],
+  'shop-admin':[...nav].map(([label,to])=>({label:label as keyof typeof names,to})),
+  sales:[{label:'Tableau de bord',to:'/dashboard'},{label:'Devis',to:'/devis'},{label:'Parc solaire',to:'/installations'},{label:'Rapports',to:'/rapports'}],
+  technician:[{label:'Tableau de bord',to:'/dashboard'},{label:'Parc solaire',to:'/installations'},{label:'Rapports',to:'/rapports'}],
+}
+const profileHome=(profileId:WorkspaceProfileId)=>profileId==='admin'?'/rapports':'/dashboard'
+const canCreateQuotes=(profileId:WorkspaceProfileId)=>profileId==='sales'||profileId==='shop-admin'
+function profileCanAccessPath(profileId:WorkspaceProfileId,pathname:string){
+  if(profileId==='admin'&&(pathname==='/'||pathname.startsWith('/dashboard')))return false
+  if(profileId==='technician'&&(pathname.startsWith('/devis')||pathname.startsWith('/dimensionnements')))return false
+  if((profileId==='sales'||profileId==='technician')&&(pathname.startsWith('/produits')||pathname.startsWith('/parametres')))return false
+  return true
+}
 function sizingBackNavigation(pathname:string,search:string):BackNavigation{
   const sizingId=pathname.split('/')[2]||'jean'
   const flow=new URLSearchParams(search).get('flow')
@@ -71,7 +87,7 @@ function Layout({children}:{children:React.ReactNode}){
   const {pathname,search}=useLocation();
   const navigate=useNavigate();
   const [profileMenuOpen,setProfileMenuOpen]=useState(false);
-  const [activeProfileId,setActiveProfileId]=useState<(typeof workspaceProfiles)[number]['id']>('sales');
+  const [activeProfileId,setActiveProfileId]=useState<WorkspaceProfileId>('sales');
   const isSizingFlow=pathname.startsWith('/dimensionnements/');
   const sizingId=pathname.split('/')[2]||'jean';
   const isRecommendation=pathname.endsWith('/recommandation');
@@ -82,7 +98,11 @@ function Layout({children}:{children:React.ReactNode}){
   const isProductCreate=pathname==='/produits/nouveau';
   const isProductDetail=/^\/produits\/[^/]+$/.test(pathname)&&!isProductCreate;
   const activeProfile=workspaceProfiles.find(profile=>profile.id===activeProfileId)!;
-  return <div className="shell"><aside><Link to="/dashboard" className="brand shopBrand"><i>S</i><span>Shop Victoire</span></Link><Link to="/dimensionnements/nouveau" className="newQuote"><I.FilePlus2 size={17}/> Nouveau devis</Link><nav>{nav.map(([n,p])=>{const Icon=names[n];return <NavLink to={p} key={p} className={({isActive})=>isActive?'active':''}><Icon size={18}/>{n}</NavLink>})}</nav><div className="sidebarFooter"><div className="profileMenu"><button type="button" className="profile" aria-expanded={profileMenuOpen} aria-haspopup="menu" aria-label="Compte de Chris M." onClick={()=>setProfileMenuOpen(open=>!open)}><span className="avatar"><I.UserRound size={18}/></span><span><b>Chris M.</b><small>{activeProfile.label}</small></span><I.ChevronDown size={16}/></button>{profileMenuOpen&&<div className="profileRoleMenu" role="menu" aria-label="Profils disponibles"><header><b>Profils disponibles</b><small>Sélectionnez le profil actif</small></header>{workspaceProfiles.map(profile=>{const Icon=profile.icon;const selected=profile.id===activeProfileId;return <button type="button" role="menuitemradio" aria-checked={selected} className={selected?'selected':''} key={profile.id} onClick={()=>{setActiveProfileId(profile.id);setProfileMenuOpen(false)}}><i><Icon size={17}/></i><span><b>{profile.label}</b><small>{profile.description}</small></span>{selected&&<I.Check size={17}/>}</button>})}</div>}</div><button type="button" className="help"><I.CircleHelp size={18}/><span><b>Besoin d’aide ?</b><small>Consultez notre centre d’aide</small></span></button></div></aside><main><header className={'quotesHeader '+(isRecommendation||isPaymentConfiguration?'recommendationHeader':'')}>{isInstallationDetail?<button className="plain installationBackHeader" onClick={()=>navigate('/installations')}><I.ArrowLeft size={19}/><span>Retour au parc</span></button>:isProductCreate||isProductDetail?<button className="plain installationBackHeader" onClick={()=>navigate('/produits')}><I.ArrowLeft size={19}/><span>Retour au catalogue</span></button>:backNavigation?<button className="plain installationBackHeader" aria-label={backNavigation.label} onClick={()=>navigate(backNavigation.to)}><I.ArrowLeft size={19}/><span>{backNavigation.label}</span></button>:null}<span className="spacer"/><label className="globalSearch"><I.Search size={17}/><input placeholder="Rechercher un client, un devis…"/><kbd>⌘ K</kbd></label><button className="headerBell" aria-label="Notifications"><I.Bell size={19}/><i/></button></header>{children}</main></div>
+  const navigation=workspaceNavigation[activeProfileId];
+  useEffect(()=>{
+    if(!profileCanAccessPath(activeProfileId,pathname))navigate(profileHome(activeProfileId),{replace:true});
+  },[activeProfileId,navigate,pathname]);
+  return <div className="shell"><aside><Link to={profileHome(activeProfileId)} className="brand shopBrand"><i>S</i><span>Shop Victoire</span></Link>{canCreateQuotes(activeProfileId)&&<Link to="/dimensionnements/nouveau" className="newQuote"><I.FilePlus2 size={17}/> Nouveau devis</Link>}<nav>{navigation.map(({label,to})=>{const Icon=names[label];return <NavLink to={to} key={to} className={({isActive})=>isActive?'active':''}><Icon size={18}/>{label}</NavLink>})}</nav><div className="sidebarFooter"><div className="profileMenu"><button type="button" className="profile" aria-expanded={profileMenuOpen} aria-haspopup="menu" aria-label="Compte de Chris M." onClick={()=>setProfileMenuOpen(open=>!open)}><span className="avatar"><I.UserRound size={18}/></span><span><b>Chris M.</b><small>{activeProfile.label}</small></span><I.ChevronDown size={16}/></button>{profileMenuOpen&&<div className="profileRoleMenu" role="menu" aria-label="Profils disponibles"><header><b>Profils disponibles</b><small>Sélectionnez le profil actif</small></header>{workspaceProfiles.map(profile=>{const Icon=profile.icon;const selected=profile.id===activeProfileId;return <button type="button" role="menuitemradio" aria-checked={selected} className={selected?'selected':''} key={profile.id} onClick={()=>{setActiveProfileId(profile.id);setProfileMenuOpen(false)}}><i><Icon size={17}/></i><span><b>{profile.label}</b><small>{profile.description}</small></span>{selected&&<I.Check size={17}/>}</button>})}</div>}</div><button type="button" className="help"><I.CircleHelp size={18}/><span><b>Besoin d’aide ?</b><small>Consultez notre centre d’aide</small></span></button></div></aside><main><header className={'quotesHeader '+(isRecommendation||isPaymentConfiguration?'recommendationHeader':'')}>{isInstallationDetail?<button className="plain installationBackHeader" onClick={()=>navigate('/installations')}><I.ArrowLeft size={19}/><span>Retour au parc</span></button>:isProductCreate||isProductDetail?<button className="plain installationBackHeader" onClick={()=>navigate('/produits')}><I.ArrowLeft size={19}/><span>Retour au catalogue</span></button>:backNavigation?<button className="plain installationBackHeader" aria-label={backNavigation.label} onClick={()=>navigate(backNavigation.to)}><I.ArrowLeft size={19}/><span>{backNavigation.label}</span></button>:null}<span className="spacer"/><label className="globalSearch"><I.Search size={17}/><input placeholder="Rechercher un client, un devis…"/><kbd>⌘ K</kbd></label><button className="headerBell" aria-label="Notifications"><I.Bell size={19}/><i/></button></header>{children}</main></div>
 }
 function fmt(n:number){return n>=1000?`${(n/1000).toFixed(2)} kWh`:`${Math.round(n)} Wh`}
 function kinshasaDateKey(){const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Kinshasa',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(part=>part.type!=='literal').map(part=>[part.type,part.value]));return `${parts.year}-${parts.month}-${parts.day}`}
