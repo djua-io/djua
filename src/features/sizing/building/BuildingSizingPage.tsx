@@ -11,9 +11,10 @@ import buildingProfileEssential from '../../../assets/building-profile-essential
 import buildingProfileStandard from '../../../assets/building-profile-standard.png'
 import { browserStorage } from '../../../shared/lib/browser-storage'
 import { ApplianceVisual } from '../appliances/ApplianceVisual'
+import { BuildingProfileId, buildingCommonAppliancesStorageKey, readBuildingProfileAppliances, readBuildingSizingConfiguration, saveBuildingSizingConfiguration } from './building-storage'
 import './building-sizing.css'
 
-type ProfileId = 'essential' | 'standard' | 'comfort'
+type ProfileId = BuildingProfileId
 
 const profiles: Array<{ id: ProfileId; title: string; description: string; image: string; dailyKwh: number; peakKw: number; color: 'orange' | 'yellow' | 'green' }> = [
   { id: 'essential', title: 'Essentiel', description: 'Le minimum pour les besoins de base', image: buildingProfileEssential, dailyKwh: .95, peakKw: .55, color: 'orange' },
@@ -21,36 +22,66 @@ const profiles: Array<{ id: ProfileId; title: string; description: string; image
   { id: 'comfort', title: 'Confort', description: 'Plus d’équipements pour un meilleur confort', image: buildingProfileComfort, dailyKwh: 2.65, peakKw: 1.75, color: 'green' },
 ]
 
-const commonBuildingAppliancesKey = 'djua-building-common-appliances-v2'
 const commonEquipmentLabels: Record<string, string> = { 'Ampoule LED': 'Éclairage commun' }
 
 const clamp = (value: number, minimum: number, maximum = 99) => Math.min(maximum, Math.max(minimum, value))
 const plural = (value: number, singular: string) => `${value} ${singular}${value === 1 ? '' : 's'}`
 
+const readInitialConfiguration = () => {
+  const saved = readBuildingSizingConfiguration()
+  const homes = clamp(Number(saved?.homes) || 2, 1)
+  const floors = clamp(Number(saved?.floors) || 1, 1)
+  const singleProfile = profiles.some(profile => profile.id === saved?.singleProfile) ? saved!.singleProfile : 'standard'
+  const sameProfile = saved?.sameProfile === true
+  const savedDistribution = saved?.distribution
+  const essential = clamp(Number(savedDistribution?.essential) || 0, 0, homes)
+  const comfort = clamp(Number(savedDistribution?.comfort) || 0, 0, homes - essential)
+  const distribution = sameProfile
+    ? { essential: 0, standard: 0, comfort: 0, [singleProfile]: homes }
+    : { essential, standard: homes - essential - comfort, comfort }
+  return { floors, homes, sameProfile, singleProfile, distribution, commonAppliances: saved?.commonAppliances }
+}
+
 /** Collects the building configuration before appliance-level sizing begins. */
 export function BuildingSizingPage() {
   const navigate = useNavigate()
-  const [floors, setFloors] = useState(1)
-  const [homes, setHomes] = useState(2)
-  const [sameProfile, setSameProfile] = useState(false)
-  const [singleProfile, setSingleProfile] = useState<ProfileId>('standard')
-  const [distribution, setDistribution] = useState<Record<ProfileId, number>>({ essential: 0, standard: 2, comfort: 0 })
-  const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => browserStorage.get(commonBuildingAppliancesKey, commonBuildingAppliancesForFloors(1)))
+  const [initialConfiguration] = useState(readInitialConfiguration)
+  const [floors, setFloors] = useState(initialConfiguration.floors)
+  const [homes, setHomes] = useState(initialConfiguration.homes)
+  const [sameProfile, setSameProfile] = useState(initialConfiguration.sameProfile)
+  const [singleProfile, setSingleProfile] = useState<ProfileId>(initialConfiguration.singleProfile)
+  const [distribution, setDistribution] = useState<Record<ProfileId, number>>(initialConfiguration.distribution)
+  const [commonAppliances, setCommonAppliances] = useState<Appliance[]>(() => initialConfiguration.commonAppliances?.length ? initialConfiguration.commonAppliances : browserStorage.get(buildingCommonAppliancesStorageKey, commonBuildingAppliancesForFloors(1)))
+  const [profileAppliances] = useState<Record<ProfileId, Appliance[]>>(() => ({
+    essential: readBuildingProfileAppliances('essential'),
+    standard: readBuildingProfileAppliances('standard'),
+    comfort: readBuildingProfileAppliances('comfort'),
+  }))
   const [commonEquipmentOpen, setCommonEquipmentOpen] = useState(false)
-  useEffect(() => browserStorage.set(commonBuildingAppliancesKey, commonAppliances), [commonAppliances])
+  const persistConfiguration = () => saveBuildingSizingConfiguration({ floors, homes, sameProfile, singleProfile, distribution, commonAppliances })
+  useEffect(() => browserStorage.set(buildingCommonAppliancesStorageKey, commonAppliances), [commonAppliances])
+  useEffect(() => { persistConfiguration() }, [floors, homes, sameProfile, singleProfile, distribution, commonAppliances])
   const configuredHomes = Object.values(distribution).reduce((total, value) => total + value, 0)
   const difference = homes - configuredHomes
   const isComplete = difference === 0
   const energy = useMemo(() => {
-    const housingDaily = profiles.reduce((total, profile) => total + distribution[profile.id] * profile.dailyKwh, 0)
-    const housingPeak = profiles.reduce((total, profile) => total + distribution[profile.id] * profile.peakKw, 0)
+    const housingDaily = profiles.reduce((total, profile) => {
+      const customized = profileAppliances[profile.id]
+      const dailyKwh = customized.length ? sizing(customized).daily / 1000 : profile.dailyKwh
+      return total + distribution[profile.id] * dailyKwh
+    }, 0)
+    const housingPeak = profiles.reduce((total, profile) => {
+      const customized = profileAppliances[profile.id]
+      const peakKw = customized.length ? sizing(customized).peak / 1000 : profile.peakKw
+      return total + distribution[profile.id] * peakKw
+    }, 0)
     const commonSizing = sizing(commonAppliances)
     const commonDaily = commonSizing.daily / 1000
     const commonPeak = commonSizing.peak / 1000
     const daily = housingDaily + commonDaily
     const peak = housingPeak + commonPeak
     return { daily, peak, installed: peak * 1.28 }
-  }, [commonAppliances, distribution])
+  }, [commonAppliances, distribution, profileAppliances])
 
   const updateHomes = (value: number) => {
     const nextHomes = clamp(value, 1)
@@ -87,28 +118,38 @@ export function BuildingSizingPage() {
     setSingleProfile(profile)
     setDistribution({ essential: 0, standard: 0, comfort: 0, [profile]: homes })
   }
+  const adjustProfileEquipment = (profile: ProfileId) => {
+    persistConfiguration()
+    navigate(`/dimensionnements/nouveau/immeuble/profils/${profile}/appareils`)
+  }
+  const adjustCommonEquipment = () => {
+    persistConfiguration()
+    navigate('/dimensionnements/nouveau/appareils?scope=common')
+  }
   const statusCopy = difference === 0
     ? 'Répartition complète'
     : difference > 0
       ? `Il manque ${plural(difference, 'logement')}`
       : `Excédent de ${plural(Math.abs(difference), 'logement')}`
   const continueToRecommendation = () => {
-    const housingLoads = profiles
-      .filter(profile => distribution[profile.id] > 0)
-      .map(profile => {
+    const housingLoads = profiles.flatMap(profile => {
+        const configuredHomes = distribution[profile.id]
+        if (configuredHomes === 0) return []
+        const customized = profileAppliances[profile.id]
+        if (customized.length) return customized.map(item => ({ ...item, id: `building-profile-${profile.id}-${item.id}`, quantity: item.quantity * configuredHomes }))
         const watts = Math.round((profile.peakKw * 1000) / .24)
-        return {
+        return [{
           id: `building-profile-${profile.id}`,
           name: `Logement ${profile.title}`,
           category: 'Logement',
           watts,
           hours: Number((profile.dailyKwh * 1000 / watts).toFixed(2)),
-          quantity: distribution[profile.id],
+          quantity: configuredHomes,
           period: 'Les deux' as const,
-        }
+        }]
       })
     browserStorage.set('djua-items', [...commonAppliances.map(item => ({ ...item })), ...housingLoads])
-    browserStorage.set('djua-building-sizing-config', { floors, homes, sameProfile, singleProfile, distribution, commonAppliances })
+    persistConfiguration()
     navigate('/dimensionnements/nouveau/coordonnees?flow=building')
   }
   return (
@@ -125,7 +166,7 @@ export function BuildingSizingPage() {
           <section className="buildingCommonEquipment" aria-labelledby="common-equipment-title">
             <header>
               <span><h3 id="common-equipment-title">Équipements communs à couvrir</h3><p>{commonEquipmentOpen ? 'Ajoutez les usages partagés que le système doit alimenter, par exemple l’éclairage des communs, les caméras ou la pompe.' : `${plural(commonAppliances.length, 'équipement')} commun${commonAppliances.length > 1 ? 's' : ''} inclus dans l’estimation`}</p></span>
-              <div className="buildingCommonEquipmentActions"><button type="button" className="buildingCommonEquipmentToggle" onClick={() => navigate('/dimensionnements/nouveau/appareils?scope=common')}><Plus size={17} />Gérer les équipements</button><button type="button" className="buildingCommonEquipmentCollapse" aria-expanded={commonEquipmentOpen} aria-label={commonEquipmentOpen ? 'Réduire les équipements communs' : 'Afficher les équipements communs'} onClick={() => setCommonEquipmentOpen(open => !open)}>{commonEquipmentOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</button></div>
+              <div className="buildingCommonEquipmentActions"><button type="button" className="buildingCommonEquipmentToggle" onClick={adjustCommonEquipment}><Plus size={17} />Gérer les équipements</button><button type="button" className="buildingCommonEquipmentCollapse" aria-expanded={commonEquipmentOpen} aria-label={commonEquipmentOpen ? 'Réduire les équipements communs' : 'Afficher les équipements communs'} onClick={() => setCommonEquipmentOpen(open => !open)}>{commonEquipmentOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</button></div>
             </header>
             {commonEquipmentOpen && <div className="buildingCommonEquipmentBody"><div className="buildingCommonEquipmentSelected">{commonAppliances.map(item => <CommonEquipmentCard item={item} onRemove={() => setCommonAppliances(current => current.filter(candidate => candidate.id !== item.id))} key={item.id} />)}</div></div>}
           </section>
@@ -141,7 +182,7 @@ export function BuildingSizingPage() {
           {sameProfile ? <section className="buildingSingleProfile" aria-labelledby="single-profile-title">
             <div className="buildingSingleProfileHeading"><span><h3 id="single-profile-title">Quel profil représente le mieux les logements&nbsp;?</h3><p>Choisissez avec le client le niveau d’équipement le plus courant dans le bâtiment.</p></span></div>
             <div className="buildingSingleProfileChoices">
-              {profiles.map(profile => <article aria-pressed={singleProfile === profile.id} className={singleProfile === profile.id ? 'selected' : ''} key={profile.id} onClick={() => selectSingleProfile(profile.id)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectSingleProfile(profile.id) } }} role="button" tabIndex={0}><img src={profile.image} alt="" /><b>{profile.title}</b><small>{profile.description}</small><button type="button" className="buildingAdjustLink" onClick={event => { event.stopPropagation(); navigate(`/dimensionnements/nouveau/immeuble/profils/${profile.id}/appareils`) }}>Ajuster les équipements</button></article>)}
+              {profiles.map(profile => <article aria-pressed={singleProfile === profile.id} className={singleProfile === profile.id ? 'selected' : ''} key={profile.id} onClick={() => selectSingleProfile(profile.id)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectSingleProfile(profile.id) } }} role="button" tabIndex={0}><img src={profile.image} alt="" /><b>{profile.title}</b><small>{profile.description}</small><button type="button" className="buildingAdjustLink" onClick={event => { event.stopPropagation(); adjustProfileEquipment(profile.id) }}>Ajuster les équipements</button></article>)}
             </div>
             <aside><Lightbulb size={22} /><span>L’estimation appliquera le profil <b>{profiles.find(profile => profile.id === singleProfile)?.title}</b> aux {homes} logements.</span></aside>
           </section> : <>
@@ -157,7 +198,7 @@ export function BuildingSizingPage() {
                   <img src={profile.image} alt="" />
                   <b>{profile.title}</b><small>{profile.description}</small>
                   <div className="buildingCounterControl"><button type="button" aria-label={`Retirer un logement ${profile.title}`} onClick={() => !isStandard && adjustDistribution(adjustableProfile, -1)} disabled={isStandard || distribution[profile.id] === 0}><Minus size={18} /></button><input aria-label={`Nombre de logements ${profile.title}`} type="number" inputMode="numeric" min="0" max={maximum} value={distribution[profile.id]} readOnly={isStandard} onChange={event => !isStandard && updateDistribution(adjustableProfile, Number(event.target.value))} /><button type="button" aria-label={`Ajouter un logement ${profile.title}`} onClick={() => !isStandard && adjustDistribution(adjustableProfile, 1)} disabled={isStandard || distribution[profile.id] >= maximum}><Plus size={19} /></button></div>
-                  <button type="button" className="buildingAdjustLink" onClick={() => navigate(`/dimensionnements/nouveau/immeuble/profils/${profile.id}/appareils`)}>Ajuster les équipements</button>
+                  <button type="button" className="buildingAdjustLink" onClick={() => adjustProfileEquipment(profile.id)}>Ajuster les équipements</button>
                 </article>
                 })}
               </div>
